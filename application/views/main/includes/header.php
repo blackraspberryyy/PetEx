@@ -16,7 +16,6 @@
         <script>
             $( document ).ready(function(){
                 $(".button-collapse").sideNav();
-                $('.tooltipped').tooltip({delay: 50});
                 $('.collapsible').collapsible();
                 $('.collapsible').collapsible({
                     accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
@@ -29,5 +28,4 @@
         
     </head>
     <body>
-        <?php date_default_timezone_set("Asia/Manila");?>
 
