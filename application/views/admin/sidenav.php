@@ -10,7 +10,9 @@
     .side-nav-active a, .side-nav-active i{
         color:#2e7d32 !important;
     }
+    
 </style>
+
 <ul id="admin-nav" class="side-nav fixed z-depth-1">
     <li>
         <div class="user-view">
@@ -30,12 +32,4 @@
     <li class = "<?= $wholeUrl == $this->config->base_url()."admin/auditTrail" ? "side-nav-active" : ""?>"><a class="waves-effect" href="<?= $this->config->base_url()?>admin/auditTrail"><i class="fa fa-list fa-2x"></i>Audit Trail</a></li>
     <li class = "<?= $wholeUrl == $this->config->base_url()."admin/settings" ? "side-nav-active" : ""?>"><a class="waves-effect" href="<?= $this->config->base_url()?>admin/settings"><i class="fa fa-gear fa-2x"></i>Settings</a></li>
     <li class = "<?= $wholeUrl == $this->config->base_url()."admin/logout" ? "side-nav-active" : ""?>"><a class="waves-effect" href="<?= $this->config->base_url()?>admin/logout"><i class="fa fa-sign-out fa-2x"></i>Logout</a></li>
-    
-    
-<!--    <li><div class="divider"></div></li>
-    <li><a class="subheader">Adoption System Content</a></li>
-    <li><a class="waves-effect" href="#!"><i class="fa fa-plus"></i>Add Animal</a></li>
-    <li><a class="waves-effect" href="#!"><i class="fa fa-pencil"></i>Update Animal</a></li>
-    <li><a class="waves-effect" href="#!"><i class="fa fa-remove"></i>Remove Animal</a></li>
--->
 </ul>
