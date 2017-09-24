@@ -17,9 +17,9 @@
             <div class="background">
               <img src="<?= $this->config->base_url()?>images/background/office.jpg">
             </div>
-            <a href="#"><img class="circle z-depth-2" src="<?= $this->config->base_url()?>images/profile/jc.png"></a>
-            <a href="#!name"><span class="white-text name">Juan Carlo Valencia</span></a>
-            <a href="#"><span class="white-text email">Administrator</span></a>
+            <a href="<?= $this->config->base_url()?>admin"><img class="circle z-depth-2" src="<?= $this->config->base_url()?>images/profile/jc.png"></a>
+            <a href="<?= $this->config->base_url()?>admin"><span class="white-text name">Juan Carlo Valencia</span></a>
+            <a href="<?= $this->config->base_url()?>admin"><span class="white-text email">Administrator</span></a>
         </div>
     </li>
     

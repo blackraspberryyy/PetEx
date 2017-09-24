@@ -33,22 +33,34 @@
                                         echo '<p class = "grey-text">Adopted</p>';
                                         break;
                                     }
-                                    
                                 }
                             ?>
-                            
-                            
                         </div>
                         <div class="card-reveal">
                             <span class="card-title grey-text text-darken-4"><?= $pet->name?><i class="material-icons right">close</i></span>
                             <p><?= $pet->breed?> | <?= $pet->sex?></p>
-                            <p class = "green-text">Adoptable</p>
+                            <?php
+                                switch ($pet->status){
+                                    case "adoptable":{
+                                        echo '<p class = "green-text">Adoptable</p>';
+                                        break;
+                                    }
+                                    case "nonAdoptable":{
+                                        echo '<p class = "red-text">Not Adoptable</p>';
+                                        break;
+                                    }
+                                    case "adopted":{
+                                        echo '<p class = "grey-text">Adopted</p>';
+                                        break;
+                                    }
+                                }
+                            ?>
                             <p class = "grey-text"><?= $pet->description?></p>
                         </div>
                         <div class="card-action">
-                            <a href ="#" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="Pet History Log"><i class = "fa fa-history fa-lg"></i></a>
-                            <a href ="#" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit Pet Details"><i class = "fa fa-pencil-square-o fa-lg"></i></a>
-                            <a href ="#" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="See Interested Adopters"><i class = "fa fa-users fa-lg"></i></a>
+                            <a href ="<?=base_url()?>admin/petDatabaseLog/<?=$pet->pet_id?>" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="Pet History Log"><i class = "fa fa-history fa-lg"></i></a>
+                            <a href ="<?=base_url()?>admin/petDatabaseUpdate/<?=$pet->pet_id?>" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit Pet Details"><i class = "fa fa-pencil-square-o fa-lg"></i></a>
+                            <a href ="<?=base_url()?>admin/petDatabaseAdopters/<?=$pet->pet_id?>" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="See Interested Adopters"><i class = "fa fa-users fa-lg"></i></a>
                         </div>
                     </div>
                 </div>

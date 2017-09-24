@@ -9,7 +9,7 @@
 </style>
 <div class ="navbar-fixed">
     <nav>
-        <div class="nav-wrapper blue lighten-2 ">
+        <div class="nav-wrapper yellow darken-1 ">
             <a href="<?= $this->config->base_url()?>admin" class = "col s6"><img class="brand-logo center" src = "<?= $this->config->base_url()?>images/logo/logo.png" height = "58" ></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"> <i class="material-icons">menu</i></a>
             <ul class="side-nav" id="mobile-demo">

@@ -21,10 +21,6 @@ class Admin extends CI_Controller{
     
     public function petDatabase(){
         $allPets = $this->admin_model->fetch("pet");
-        
-        
-        
-        
         $data = array(
             'title' => 'Admin | Pet Database',
             'wholeUrl' => base_url(uri_string()),
@@ -36,6 +32,49 @@ class Admin extends CI_Controller{
         $this->load->view("admin/petDatabase");
         $this->load->view("admin/includes/footer");
     }
+    
+    public function petDatabaseLog(){
+        $allPets = $this->admin_model->fetch("pet");
+        $data = array(
+            'title' => 'Admin | Pet Database',
+            'wholeUrl' => base_url(uri_string()),
+            'pets' => $allPets,
+        );
+        $this->load->view("admin/includes/header", $data);
+        $this->load->view("admin/navbar");
+        $this->load->view("admin/sidenav");
+        $this->load->view("admin/petDatabaseLog");
+        $this->load->view("admin/includes/footer");
+    }
+    
+    public function petDatabaseUpdate(){
+        $allPets = $this->admin_model->fetch("pet");
+        $data = array(
+            'title' => 'Admin | Pet Database',
+            'wholeUrl' => base_url(uri_string()),
+            'pets' => $allPets,
+        );
+        $this->load->view("admin/includes/header", $data);
+        $this->load->view("admin/navbar");
+        $this->load->view("admin/sidenav");
+        $this->load->view("admin/petDatabase");
+        $this->load->view("admin/includes/footer");
+    }
+    
+    public function petDatabaseAdopters(){
+        $allPets = $this->admin_model->fetch("pet");
+        $data = array(
+            'title' => 'Admin | Pet Database',
+            'wholeUrl' => base_url(uri_string()),
+            'pets' => $allPets,
+        );
+        $this->load->view("admin/includes/header", $data);
+        $this->load->view("admin/navbar");
+        $this->load->view("admin/sidenav");
+        $this->load->view("admin/petDatabase");
+        $this->load->view("admin/includes/footer");
+    }
+    
     
     public function adoptables(){
         $data = array(
