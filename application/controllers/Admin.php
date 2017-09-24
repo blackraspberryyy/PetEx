@@ -20,7 +20,7 @@ class Admin extends CI_Controller{
     }
     
     public function petDatabase(){
-        $allPets = $this->admin_model->fetch("pet");
+        $allPets = $this->admin_model->fetchjoin("pet", 'user', 'pet.user_id = user.user_id');
         $data = array(
             'title' => 'Admin | Pet Database',
             'wholeUrl' => base_url(uri_string()),
@@ -34,11 +34,11 @@ class Admin extends CI_Controller{
     }
     
     public function petDatabaseLog(){
-        $allPets = $this->admin_model->fetch("pet");
+        $selectedPets = $this->admin_model->fetch('pet', array('pet_id' => $this->uri->segment(3))) ;
         $data = array(
             'title' => 'Admin | Pet Database',
             'wholeUrl' => base_url(uri_string()),
-            'pets' => $allPets,
+            'pet' => $selectedPets,
         );
         $this->load->view("admin/includes/header", $data);
         $this->load->view("admin/navbar");
@@ -48,16 +48,16 @@ class Admin extends CI_Controller{
     }
     
     public function petDatabaseUpdate(){
-        $allPets = $this->admin_model->fetch("pet");
+        $selectedPets = $this->admin_model->fetch('pet', array('pet_id' => $this->uri->segment(3))) ;
         $data = array(
             'title' => 'Admin | Pet Database',
             'wholeUrl' => base_url(uri_string()),
-            'pets' => $allPets,
+            'pet' => $selectedPets,
         );
         $this->load->view("admin/includes/header", $data);
         $this->load->view("admin/navbar");
         $this->load->view("admin/sidenav");
-        $this->load->view("admin/petDatabase");
+        $this->load->view("admin/petDatabaseUpdate");
         $this->load->view("admin/includes/footer");
     }
     
@@ -71,7 +71,7 @@ class Admin extends CI_Controller{
         $this->load->view("admin/includes/header", $data);
         $this->load->view("admin/navbar");
         $this->load->view("admin/sidenav");
-        $this->load->view("admin/petDatabase");
+        //$this->load->view("admin/petDatabase");
         $this->load->view("admin/includes/footer");
     }
     
