@@ -12,7 +12,7 @@ class Main extends CI_Controller{
             'wholeUrl' => base_url(uri_string()),
         );
         $this->load->view("main/includes/header", $data);
-        $this->load->view("main/index.php");
+        $this->load->view("main/index");
         $this->load->view("main/includes/footer");
     }
 }
