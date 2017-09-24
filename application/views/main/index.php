@@ -222,6 +222,7 @@
                         <div class="portfolio-item grid print photography">
                             <div class="portfolio">
                                 <a href="<?= $this->config->base_url() ?>images/img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
+
                                     <img src="<?= $this->config->base_url() ?>images/img/works/1.png" alt="" />
                                     <div class="portfolio-overlay">
                                         <div class="thumb-info">
