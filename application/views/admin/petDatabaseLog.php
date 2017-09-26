@@ -12,9 +12,9 @@
                  <ul class="collection">
                     <li class="collection-item avatar">
                         <img src="<?= $this->config->base_url()?>images/profile/jc.png" alt="" class="circle z-depth-2">
-                        <span class="title"><?=$pet->name?> is added on Pet Database</span>
+                        <span class="title"><?=$pet->pet_name?> is added on Pet Database</span>
                         <p class = "grey-text">
-                            <?= date('F j, Y | g:i a',$pet->added_at)?>
+                            <?= date('F j, Y | g:i a',$pet->pet_added_at)?>
                             <br/>
                             by Juan Carlo Valencia
                         </p>
