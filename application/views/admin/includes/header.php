@@ -16,6 +16,8 @@
         <script>
             $( document ).ready(function(){
                 $('select').material_select();
+                $('.materialboxed').materialbox();
+                $('.modal').modal();
                 $(".button-collapse").sideNav();
                 $('.tooltipped').tooltip({delay: 50});
                 $('.collapsible').collapsible();
