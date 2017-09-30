@@ -20,7 +20,7 @@ class Admin extends CI_Controller{
     }
     
     public function petDatabase(){
-        $allPets = $this->admin_model->fetchjoin("pet", 'user', 'pet.user_id = user.user_id');
+        $allPets = $this->admin_model->fetch("pet");
         $data = array(
             'title' => 'Admin | Pet Database',
             'wholeUrl' => base_url(uri_string()),
@@ -72,19 +72,6 @@ class Admin extends CI_Controller{
         $this->load->view("admin/navbar");
         $this->load->view("admin/sidenav");
         //$this->load->view("admin/petDatabase");
-        $this->load->view("admin/includes/footer");
-    }
-    
-    
-    public function adoptables(){
-        $data = array(
-            'title' => 'Admin | Adoptables',
-            'wholeUrl' => base_url(uri_string()),
-        );
-        $this->load->view("admin/includes/header", $data);
-        $this->load->view("admin/navbar");
-        $this->load->view("admin/sidenav");
-        $this->load->view("admin/adoptables");
         $this->load->view("admin/includes/footer");
     }
     
