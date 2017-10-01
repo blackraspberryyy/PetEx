@@ -10,8 +10,6 @@
         <link rel="stylesheet" href="<?= $this->config->base_url()?>assets/materialize/css/materialize.css"/>
         <!--<script src="<?= $this->config->base_url()?>assets/materialize/js/materialize.js"></script>-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        
-        
         <!--"Document.ready scripts"-->
         <script>
             $( document ).ready(function(){
@@ -32,5 +30,7 @@
         
     </head>
     <body>
-        <?php date_default_timezone_set("Asia/Manila");?>
+        <?php 
+            date_default_timezone_set("Asia/Manila");
+        ?>
 
