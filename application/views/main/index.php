@@ -50,7 +50,7 @@
 </section>
 <!-- end spacer section -->
 <!-- section: team -->
-<section id="about" class="section">
+<section id="aboutBg" class="section">
     <div class="container">
         <h4>About Us</h4>
         <div class="row">
@@ -70,46 +70,48 @@
         </div>
         <div class="row">
             <div class="span2 offset1 flyIn">
-                <div class="people markusPic">
+                <div class="people ">
                     <img class="team-thumb img-circle" src="<?= $this->config->base_url() ?>images/img/team/markusMatFinal.png" alt="" />
-                    <div class="overlay" style="height:80px;">
-                        <h2 class="devName"> Angelo Markus B. <strong>Zaguirre</strong></h2>
-                        <p class="devRole">
-                            Webmaster
-                        </p>
-                    </div>
+                    <h5 class="devName"> Angelo Markus B. <strong>Zaguirre</strong></h5>
+                    <hr>
+                    <p class="devRole" style="color:green">
+                        <strong>Webmaster</strong>
+                    </p>
                 </div>
             </div>
             <div class="span2 flyIn">
-                <div class="people jcPic">
+                <div class="people ">
                     <img class="team-thumb img-circle " src="<?= $this->config->base_url() ?>images/img/team/jcMatFinal.png" alt="" />
-                    <div class="overlay" style="height:80px;">
-                        <h2 class="devName"> Juan Carlo D.R <strong>Valencia</strong></h2>
-                        <p class="devRole">
-                            Programmer
+                    <div style="height:80px;">
+                        <h5 class="devName"> Juan Carlo D.R. <strong>Valencia</strong></h5>
+                        <hr>
+                        <p class="devRole" style="color:green">
+                            <strong>Project Manager</strong>
                         </p>
                     </div>
                 </div>
             </div>
 
             <div class="span2 flyIn">
-                <div class="people allenPic">
+                <div class="people ">
                     <img class="team-thumb img-circle " src="<?= $this->config->base_url() ?>images/img/team/allenMatFinal.png" alt="" />
-                    <div class="overlay" style="height:80px;">
-                        <h2 class="devName"> Allen T. <strong>Torres</strong></h2>
-                        <p class="devRole">
-                            Quality Assurance
+                    <div style="height:80px;">
+                        <h5 class="devName"> Allen T. <strong><br>Torres</strong></h5>
+                        <hr>
+                        <p class="devRole" style="color:green">
+                            <strong>Quality Assurance</strong>
                         </p>
                     </div>
                 </div>
             </div>
             <div class="span2 flyIn">
-                <div class="people joshPic">
+                <div class="people ">
                     <img class="team-thumb img-circle "  src="<?= $this->config->base_url() ?>images/img/team/joshMatFinal.png" alt="" />
-                    <div class="overlay" style="height:80px;">
-                        <h2 class="devName"> Joshua C. <strong>Vitug</strong></h2>
-                        <p class="devRole">
-                            Write and Editor
+                    <div style="height:80px;">
+                        <h5 class="devName"> Joshua C. <strong><br>Vitug</strong></h5>
+                        <hr>
+                        <p class="devRole" style="color:green">
+                            <strong>Writer and Editor</strong>
                         </p>
                     </div>
                 </div>
@@ -120,233 +122,99 @@
 </section>
 <!-- end section: team -->
 <!-- section: services -->
-<section id="services" class="section orange">
+<section id="services" class="section green">
     <div class="container">
-        <h4>Features</h4>
+        <h4>Services</h4>
         <!-- Four columns -->
         <div class="row">
-            <div class="span3 animated-fast flyIn">
-                <div class="service-box">
-                    <img src="<?= $this->config->base_url() ?>images/img/icons/laptop.png" alt="" />
-                    <h2>Pet Adoption</h2>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    </p>
+            <div id="menu-main">
+                <div class="span4 animated-fast flyIn">
+                    <div class="service-box">
+                        <a href="#petAdoption"><img class = "featuresPic" src="<?= $this->config->base_url() ?>images/img/icons/petAdoption.png" alt="" /></a>        
+                        <h2>Pet Adoption</h2>
+                    </div>
                 </div>
-            </div>
-            <div class="span3 animated flyIn">
-                <div class="service-box">
-                    <img src="<?= $this->config->base_url() ?>images/img/icons/lab.png" alt="" />
-                    <h2>Web development</h2>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    </p>
+                <div class="span4 animated flyIn">
+                    <div class="service-box">
+                        <a href="#petLocate" ><img class = "featuresPic" src="<?= $this->config->base_url() ?>images/img/icons/petLocate.png" alt="" /></a>
+                        <h2>Locate your Pet</h2>
+                    </div>
                 </div>
-            </div>
-            <div class="span3 animated-fast flyIn">
-                <div class="service-box">
-                    <img src="<?= $this->config->base_url() ?>images/img/icons/camera.png" alt="" />
-                    <h2>Photography</h2>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    </p>
-                </div>
-            </div>
-            <div class="span3 animated-slow flyIn">
-                <div class="service-box">
-                    <img src="<?= $this->config->base_url() ?>images/img/icons/basket.png" alt="" />
-                    <h2>Ecommerce</h2>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    </p>
+                <div class="span4 animated-fast flyIn">
+                    <div class="service-box">
+                        <a href="#petHistory"><img class = "featuresPic" src="<?= $this->config->base_url() ?>images/img/icons/petHistory.png" alt="" /></a>
+                        <h2>Pet History/Log</h2>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 <!-- end section: services -->
-<!-- section: works -->
-<section id="works" class="section">
-    <div class="container clearfix">
-        <h4>Our Works</h4>
-        <!-- portfolio filter -->
+<!-- section: petAdoption -->
+<section id="petAdoption" class="section">
+    <div class="container clearfix" >
+        <h4>Pet Adoption</h4>
         <div class="row">
-            <div id="filters" class="span12">
-                <ul class="clearfix">
-                    <li><a href="#" data-filter="*" class="active">
-                            <h5>All</h5>
-                        </a></li>
-                    <li><a href="#" data-filter=".web">
-                            <h5>Web</h5>
-                        </a></li>
-                    <li><a href="#" data-filter=".print">
-                            <h5>Print</h5>
-                        </a></li>
-                    <li><a href="#" data-filter=".design">
-                            <h5>Design</h5>
-                        </a></li>
-                    <li><a href="#" data-filter=".photography">
-                            <h5>Photography</h5>
-                        </a></li>
-                </ul>
-            </div>
-            <!-- END PORTFOLIO FILTERING -->
-        </div>
-        <div class="row">
-            <div class="span12">
-                <div id="portfolio-wrap">
-                    <!-- portfolio item -->
-                    <div class="portfolio-item grid print photography">
-                        <div class="portfolio">
-                            <a href="<?= $this->config->base_url() ?>images/img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
+            <div class="span6">
+                <div class="row">
+                    <div class="span1"></div>
+                    <div class="span4"><br><br><br>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-                                <img src="<?= $this->config->base_url() ?>images/img/works/1.png" alt="" />
-                                <div class="portfolio-overlay">
-                                    <div class="thumb-info">
-                                        <h5>Portfolio name</h5>
-                                        <i class="icon-plus icon-2x"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
                     </div>
-                    <!-- end portfolio item -->
-                    <!-- portfolio item -->
-                    <div class="portfolio-item grid print design web">
-                        <div class="portfolio">
-                            <a href="<?= $this->config->base_url() ?>images/img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
-                                <img src="<?= $this->config->base_url() ?>images/img/works/2.png" alt="" />
-                                <div class="portfolio-overlay">
-                                    <div class="thumb-info">
-                                        <h5>Portfolio name</h5>
-                                        <i class="icon-plus icon-2x"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- end portfolio item -->
-                    <!-- portfolio item -->
-                    <div class="portfolio-item grid print design">
-                        <div class="portfolio">
-                            <a href="<?= $this->config->base_url() ?>images/img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
-                                <img src="<?= $this->config->base_url() ?>images/img/works/3.png" alt="" />
-                                <div class="portfolio-overlay">
-                                    <div class="thumb-info">
-                                        <h5>Portfolio name</h5>
-                                        <i class="icon-plus icon-2x"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- end portfolio item -->
-                    <!-- portfolio item -->
-                    <div class="portfolio-item grid photography web">
-                        <div class="portfolio">
-                            <a href="<?= $this->config->base_url() ?>images/img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
-                                <img src="<?= $this->config->base_url() ?>images/img/works/4.png" alt="" />
-                                <div class="portfolio-overlay">
-                                    <div class="thumb-info">
-                                        <h5>Portfolio name</h5>
-                                        <i class="icon-plus icon-2x"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- end portfolio item -->
-                    <!-- portfolio item -->
-                    <div class="portfolio-item grid photography web">
-                        <div class="portfolio">
-                            <a href="<?= $this->config->base_url() ?>images/img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
-                                <img src="<?= $this->config->base_url() ?>images/img/works/5.png" alt="" />
-                                <div class="portfolio-overlay">
-                                    <div class="thumb-info">
-                                        <h5>Portfolio name</h5>
-                                        <i class="icon-plus icon-2x"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- end portfolio item -->
-                    <!-- portfolio item -->
-                    <div class="portfolio-item grid photography web">
-                        <div class="portfolio">
-                            <a href="<?= $this->config->base_url() ?>images/img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
-                                <img src="<?= $this->config->base_url() ?>images/img/works/6.png" alt="" />
-                                <div class="portfolio-overlay">
-                                    <div class="thumb-info">
-                                        <h5>Portfolio name</h5>
-                                        <i class="icon-plus icon-2x"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- end portfolio item -->
-                    <!-- portfolio item -->
-                    <div class="portfolio-item grid photography web">
-                        <div class="portfolio">
-                            <a href="<?= $this->config->base_url() ?>images/img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
-                                <img src="<?= $this->config->base_url() ?>images/img/works/7.png" alt="" />
-                                <div class="portfolio-overlay">
-                                    <div class="thumb-info">
-                                        <h5>Portfolio name</h5>
-                                        <i class="icon-plus icon-2x"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- end portfolio item -->
-                    <!-- portfolio item -->
-                    <div class="portfolio-item grid photography">
-                        <div class="portfolio">
-                            <a href="<?= $this->config->base_url() ?>images/img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
-                                <img src="<?= $this->config->base_url() ?>images/img/works/8.png" alt="" />
-                                <div class="portfolio-overlay">
-                                    <div class="thumb-info">
-                                        <h5>Portfolio name</h5>
-                                        <i class="icon-plus icon-2x"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- end portfolio item -->
-                    <!-- portfolio item -->
-                    <div class="portfolio-item grid photography web">
-                        <div class="portfolio">
-                            <a href="<?= $this->config->base_url() ?>images/img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
-                                <img src="<?= $this->config->base_url() ?>images/img/works/9.png" alt="" />
-                                <div class="portfolio-overlay">
-                                    <div class="thumb-info">
-                                        <h5>Portfolio name</h5>
-                                        <i class="icon-plus icon-2x"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- end portfolio item -->
-                    <!-- portfolio item -->
-                    <div class="portfolio-item grid design web">
-                        <div class="portfolio">
-                            <a href="<?= $this->config->base_url() ?>images/img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
-                                <img src="<?= $this->config->base_url() ?>images/img/works/10.png" alt="" />
-                                <div class="portfolio-overlay">
-                                    <div class="thumb-info">
-                                        <h5>Portfolio name</h5>
-                                        <i class="icon-plus icon-2x"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- end portfolio item -->
+                    <div class="span1"></div>
                 </div>
+            </div>
+            <div class="span6">
+                <br>
+                <img  src="<?= $this->config->base_url() ?>images/img/icons/dummy.png" alt="" />
+            </div>
+        </div>
+    </div>
+</section>
+<!-- spacer section -->
+<!-- section: petLocate -->
+<section id="petLocate" class="section">
+    <div class="container clearfix">
+        <h4>Locate your Pet</h4>
+        <div class="row">
+            <div class="span6">
+                <br>
+                <img  src="<?= $this->config->base_url() ?>images/img/icons/dummy.png" alt="" />
+            </div>
+            <div class="span6">
+                <div class="row">
+                    <div class="span1"></div>
+                    <div class="span4"><br><br><br>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                    </div>
+                    <div class="span1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- spacer section -->
+<!-- section: petHistory -->
+<section id="petHistory" class="section">
+    <div class="container clearfix" >
+        <h4>Pet History/Log</h4>
+        <div class="row">
+            <div class="span6">
+                <div class="row">
+                    <div class="span1"></div>
+                    <div class="span4"><br><br><br>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                    </div>
+                    <div class="span1"></div>
+                </div>
+            </div>
+            <div class="span6">
+                <br>
+                <img  src="<?= $this->config->base_url() ?>images/img/icons/dummy.png" alt="" />
             </div>
         </div>
     </div>
@@ -366,97 +234,6 @@
         </div>
     </div>
 </section>
-<!-- end spacer section -->
-<!-- section: blog -->
-<section id="blog" class="section">
-    <div class="container">
-        <h4>Our Blog</h4>
-        <!-- Three columns -->
-        <div class="row">
-            <div class="span3">
-                <div class="home-post">
-                    <div class="post-image">
-                        <img class="max-img" src="<?= $this->config->base_url() ?>images/img/blog/img1.jpg" alt="" />
-                    </div>
-                    <div class="post-meta">
-                        <i class="icon-file icon-2x"></i>
-                        <span class="date">June 19, 2013</span>
-                        <span class="tags"><a href="#">Design</a>, <a href="#">Blog</a></span>
-                    </div>
-                    <div class="entry-content">
-                        <h5><strong><a href="#">New design trends</a></strong></h5>
-                        <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. &hellip;
-                        </p>
-                        <a href="#" class="more">Read more</a>
-                    </div>
-                </div>
-            </div>
-            <div class="span3">
-                <div class="home-post">
-                    <div class="post-image">
-                        <img class="max-img" src="<?= $this->config->base_url() ?>images/img/blog/img2.jpg" alt="" />
-                    </div>
-                    <div class="post-meta">
-                        <i class="icon-file icon-2x"></i>
-                        <span class="date">June 19, 2013</span>
-                        <span class="tags"><a href="#">Design</a>, <a href="#">News</a></span>
-                    </div>
-                    <div class="entry-content">
-                        <h5><strong><a href="#">Retro is great</a></strong></h5>
-                        <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. &hellip;
-                        </p>
-                        <a href="#" class="more">Read more</a>
-                    </div>
-                </div>
-            </div>
-            <div class="span3">
-                <div class="home-post">
-                    <div class="post-image">
-                        <img class="max-img" src="<?= $this->config->base_url() ?>images/img/blog/img3.jpg" alt="" />
-                    </div>
-                    <div class="post-meta">
-                        <i class="icon-file icon-2x"></i>
-                        <span class="date">June 22, 2013</span>
-                        <span class="tags"><a href="#">Design</a>, <a href="#">Tips</a></span>
-                    </div>
-                    <div class="entry-content">
-                        <h5><strong><a href="#">Isometric mockup</a></strong></h5>
-                        <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. &hellip;
-                        </p>
-                        <a href="#" class="more">Read more</a>
-                    </div>
-                </div>
-            </div>
-            <div class="span3">
-                <div class="home-post">
-                    <div class="post-image">
-                        <img class="max-img" src="<?= $this->config->base_url() ?>images/img/blog/img4.jpg" alt="" />
-                    </div>
-                    <div class="post-meta">
-                        <i class="icon-file icon-2x"></i>
-                        <span class="date">June 27, 2013</span>
-                        <span class="tags"><a href="#">News</a>, <a href="#">Tutorial</a></span>
-                    </div>
-                    <div class="entry-content">
-                        <h5><strong><a href="#">Free icon set</a></strong></h5>
-                        <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. &hellip;
-                        </p>
-                        <a href="#" class="more">Read more</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="blankdivider30"></div>
-        <div class="aligncenter">
-            <a href="#" class="btn btn-large btn-theme">More blog post</a>
-        </div>
-    </div>
-</section>
-
 <!-- end spacer section -->
 <!-- section: contact -->
 <section id="contact" class="section green">
@@ -501,11 +278,32 @@
             </div>
             <!-- ./span12 -->
         </div>
+
+
     </div>
 </section>
+
 <footer>
     <div class="container">
         <div class="row">
+            <div class="span4">
+                <img src="<?= $this->config->base_url() ?>images/logo/logo.png" class = "footerIcon" alt="" />
+                <img src="<?= $this->config->base_url() ?>images/logo/paws.png" class = "footerIcon" alt="" />
+                <br>
+
+
+            </div>
+            <div class="span4">
+                <p><i class="icon-circled icon-bgdark icon-map-marker icon-2x"></i>
+                    P. Paredes, Sampaloc, Manila<br>
+                    &emsp; &emsp;  &nbsp;<strong> Metro Manila, Philippines/</strong><br>
+                    &emsp;  Aurora Blvd, Quezon City,<br><strong>1800 Metro Manila</strong></p>
+                <p><i class="icon-circled icon-bgdark icon-phone icon-2x"></i>
+                    <strong> 475-1688</strong></p>
+                <p><i class="icon-circled icon-bgdark icon-envelope icon-2x"></i>
+                    codebusters.solutions@gmail.com/<br>philpaws@paws.org.ph</p><br><br>
+                
+            </div>
             <div class="span6 offset3">
                 <ul class="social-networks">
                     <li><a href="#"><i class="icon-circled icon-bgdark icon-instagram icon-2x"></i></a></li>
@@ -514,18 +312,13 @@
                     <li><a href="#"><i class="icon-circled icon-bgdark icon-pinterest icon-2x"></i></a></li>
                 </ul>
                 <p class="copyright">
-                    &copy; Maxim Theme. All rights reserved.
-                <div class="credits">
-                    <!--
-                        All the links in the footer should remain intact.
-                        You can delete the links only if you purchased the pro version.
-                        Licensing information: https://bootstrapmade.com/license/
-                        Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Maxim
-                    -->
-                    <a href="https://bootstrapmade.com/">Free Bootstrap Themes</a> by BootstrapMade.com
-                </div>
+                    &copy; Codebusters. All rights reserved.
+                <p>JC VALENCIA | ANGELO MARKUS ZAGUIRRE | ALLEN TORRES | JOSHUA VITUG</p>
+                <p>Made with&nbsp;&nbsp;&nbsp;<i class="icon-circled icon-bgdark icon-heart icon-1x" style="color:red;"></i></p>
                 </p>
             </div>
+            <br>
+            <a href=""><button class="btn btn-success">Sign up for PetEx</button></a>
         </div>
     </div>
 
