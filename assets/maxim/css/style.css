@@ -476,6 +476,7 @@ section.spacer {
 
 .spacer.green,.section.green {
     background:#1bac91;
+
 }
 
 .spacer.green,.section.green h4 {
@@ -829,11 +830,12 @@ section#blog {
 section#about {
     background:#f2f2f2;
 }
-
+.featuresPic{
+    height:100px;   
+}
 .people {
     text-align:center;
 }
-
 .people h3 {
     margin-bottom:10px;
     font-weight:700;
