@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-
-        <link href ="<?= $this->config->base_url() ?>assets/maxim/css/bootstrap-responsive.css" rel="stylesheet">
         <link href ="<?= $this->config->base_url() ?>assets/maxim/css/style.css" rel="stylesheet">
+        <link href ="<?= $this->config->base_url() ?>assets/maxim/css/bootstrap-responsive.css" rel="stylesheet">
+
         <link href ="<?= $this->config->base_url() ?>assets/maxim/css/animatePic.css" rel="stylesheet">
         <link href="<?= $this->config->base_url() ?>assets/maxim/color/default.css" rel="stylesheet">
         <link rel="shortcut icon" href="<?= $this->config->base_url() ?>images/img/petexIcon.ico">
@@ -35,12 +35,23 @@
         }
         .navbar .navbar-inner{
             background: #388E3C ;
-            
+
         }
         .headerIcon{
             height:180px;
         }
-        
+        .footerIcon{
+            height:90px;
+            margin-left:20px
+        }
+        hr {
+            display: block;
+            height: 2px;
+            border: 0;
+            border-top: 1px solid #000;
+            margin: 1em 0;
+            padding: 0; 
+        }
         @media only screen and (max-width: 768px) {
             .navImg {
                 margin-top: -10px;
@@ -48,6 +59,16 @@
             .home-slide-content{
                 font-size:40px !important;
             }
+        }
+        .featuresPic{
+            max-height:200px;   
+        }
+        #aboutBg{
+            background: url(<?= base_url()?>images/img/bg/pawBg.jpg) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
         }
     </style>
     <body>
@@ -62,12 +83,10 @@
                         <!-- navigation -->
                         <nav class="pull-right nav-collapse collapse">
                             <ul id="menu-main" class="nav">
-                                <li><a title="team" href="#about">About</a></li>
-                                <li><a title="services" href="#services">Services</a></li>
-                                <li><a title="works" href="#works">Works</a></li>
-                                <li><a title="blog" href="#blog">Blog</a></li>
-                                <li><a title="contact" href="#contact">Contact</a></li>
-                                <li><a href="page.html">Page</a></li>
+                                <li><a title="Team" href="#about">About</a></li>
+                                <li><a title="Services" href="#services">Services</a></li>
+                                <li><a title="Contact" href="#contact">Contact</a></li>
+                                <li><a title="Login" href="page.html">Login</a></li>
                             </ul>
                         </nav>
                     </div>
