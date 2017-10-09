@@ -1,11 +1,11 @@
 <div class ="side-nav-offset">
     <div class ="container ">
-        <form action = "petDatabaseAdd_exec" enctype="multipart/form-data" method = "POST">
+        <form action = "petDatabaseAdd_exec" enctype="multipart/form-data" method = "POST" runat="server">
             <div class = "card row">
                 <nav class = "green darken-3">
                     <div class="col s12">
-                        <a href="<?= $this->config->base_url()?>admin/petDatabase" class="breadcrumb">Pet Database</a>
-                        <a href="<?= $wholeUrl?>" class="breadcrumb">Pet Registration</a>
+                        <a href="<?= $this->config->base_url() ?>admin/petDatabase" class="breadcrumb">Pet Database</a>
+                        <a href="<?= $wholeUrl ?>" class="breadcrumb">Pet Registration</a>
                     </div>
                 </nav>
                 <div class="card-content ">
@@ -116,7 +116,7 @@
                                     <div class="file-path-wrapper">
                                         <input class="file-path validate" type="text" placeholder = "No File Chosen">
                                     </div>
-                                  </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -125,10 +125,9 @@
                             <div class="card-content">
                                 <center>
 
-                                    <img class = "controlImgSize" src = "" id = "prev_image" />
+                                    <img class = "controlImgSize" src = "<?= $this->config->base_url()?>images/tools/upload_image.png" id = "prev_image" /><br><br>
 
-                                    <i class="fa fa-image fa-5x grey-text"></i><br>
-                                    <span class = "grey-text card-title">No File Chosen</span>
+                                    <span class = "grey-text card-title" id = "nofilechosen">No File Chosen</span>
                                 </center>
                             </div>
                         </div>
@@ -146,3 +145,21 @@
         </form>
     </div>
 </div>
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#prev_image').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#files").change(function () {
+        readURL(this);
+        $("#nofilechosen").text("");
+    });
+</script>

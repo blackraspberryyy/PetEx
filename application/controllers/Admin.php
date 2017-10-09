@@ -17,15 +17,15 @@ class Admin extends CI_Controller{
       return floor((time() - strtotime($birth_date)) / 2678400);
     }
     function GetImageExtension($imagetype){
-       if(empty($imagetype)) return false;
-       switch($imagetype){
-           case 'image/bmp': return '.bmp';
-           case 'image/gif': return '.gif';
-           case 'image/jpeg': return '.jpg';
-           case 'image/png': return '.png';
-           default: return false;
+        if(empty($imagetype)) return false;
+        switch($imagetype){
+            case 'image/bmp': return '.bmp';
+            case 'image/gif': return '.gif';
+            case 'image/jpeg': return '.jpg';
+            case 'image/png': return '.png';
+            default: return false;
         }
-    }
+     }
     //-------------------------------------
     
     public function index(){
@@ -68,38 +68,30 @@ class Admin extends CI_Controller{
     
     public function petDatabaseAdd_exec(){
         if (!empty($_FILES["pet_picture"]["name"])) {
-		$file_name=$_FILES["imageuploadEdit"]["name"];
-		$temp_name=$_FILES["imageuploadEdit"]["tmp_name"];
-		$imgtype=$_FILES["imageuploadEdit"]["type"];
-		$ext= GetImageExtension($imgtype);
+		$file_name=$_FILES["pet_picture"]["name"];
+		$temp_name=$_FILES["pet_picture"]["tmp_name"];
+		$imgtype=$_FILES["pet_picture"]["type"];
+		$ext= $this->GetImageExtension($imgtype);
 		$imagename=date("d-m-Y")."-".time().$ext;
-		$target_path = "images/".$imagename;
+		$target_path = "./images/animals/".$imagename;
 		
 		if(move_uploaded_file($temp_name, $target_path) ) {
-                    //DO METHOD HERE
+                    $imagePath = $target_path;
 		}else{
+                    echo "Unable to find the folder location";
 		   //exit("Error While uploading image on the server");
 		}
 	}else{
-                //DO METHOD WITHOUT PICTURE PROVIDED
+            if($this->input->post('pet_specie') == "canine"){
+                $imagePath = ".images/tools/dog_temp_pic.png";
+            }else{
+                $imagePath = ".images/tools/cat_temp_pic.png";
+            }
+            //DO METHOD WITHOUT PICTURE PROVIDED
 	}
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        //-----------------------------------------
-        $pet_bday = $this->input->post('pet_bday');
         $data = array(
             'pet_name' => $this->input->post('pet_name'),
-            'pet_bday' => strtotime($pet_bday),
+            'pet_bday' => strtotime($this->input->post('pet_bday')),
             'pet_specie' => $this->input->post('pet_specie'),
             'pet_sex' => $this->input->post('pet_sex'),
             'pet_breed' => $this->input->post('pet_breed'),
@@ -108,10 +100,18 @@ class Admin extends CI_Controller{
             'pet_admission' => $this->input->post('pet_admission'),
             'pet_description' => $this->input->post('pet_description'),
             'pet_history' => $this->input->post('pet_history'),
-            'pet_picture' => $this->input->post('pet_picture'),
+            'pet_picture' => $imagePath,
             'pet_added_at' => time(),
             'pet_updated_at' => time()
         );
+        
+        if($this->admin_model->singleinsert("pet", $data)){
+            redirect("admin/petDatabase");
+        }else{
+            echo "An Error Ocurred";
+        }
+        
+        
         echo "<pre>";
         print_r($data);
         echo "</pre>";
