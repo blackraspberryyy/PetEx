@@ -124,9 +124,7 @@
                         <div class="card grey lighten-4">
                             <div class="card-content">
                                 <center>
-
                                     <img class = "controlImgSize" src = "<?= $this->config->base_url()?>images/tools/upload_image.png" id = "prev_image" /><br><br>
-
                                     <span class = "grey-text card-title" id = "nofilechosen">No File Chosen</span>
                                 </center>
                             </div>
@@ -145,21 +143,3 @@
         </form>
     </div>
 </div>
-<script>
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#prev_image').attr('src', e.target.result);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    $("#files").change(function () {
-        readURL(this);
-        $("#nofilechosen").text("");
-    });
-</script>
