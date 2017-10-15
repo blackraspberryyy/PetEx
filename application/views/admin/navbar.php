@@ -18,6 +18,16 @@
         min-width: 40px;
         max-width: 150px; 
     }
+    .previewImageControlSize{
+        min-height: 40px;
+        max-height: 250px;
+        min-width: 40px;
+        max-width: 350px;
+    }
+    .petDatabaseImageSize{
+        height:230px;
+        background:#eee;
+    }
 </style>
 <div class ="navbar-fixed">
     <nav>

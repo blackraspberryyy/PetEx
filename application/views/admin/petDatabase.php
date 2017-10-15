@@ -14,8 +14,8 @@
             <?php foreach ($pets as $pet): ?>
                 <div class ="col s4">
                     <div class="card sticky-action hoverable medium">
-                        <div class="card-image">
-                            <img class="materialboxed" data-caption = "<?= $pet->pet_name ?>" src="<?= $this->config->base_url() . $pet->pet_picture ?>">
+                        <div class="card-image petDatabaseImageSize">
+                            <img class="materialboxed" data-caption = "<?= $pet->pet_name ?>" src="<?= $this->config->base_url().$pet->pet_picture ?>">
                         </div>
                         <div class="card-content">
                             <span class="card-title activator grey-text text-darken-4 " ><?= $pet->pet_name ?><i class="material-icons right">more_vert</i></span>
@@ -61,9 +61,10 @@
                             <p class = "grey-text"><?= $pet->pet_description ?></p>
                         </div>
                         <div class="card-action">
-                            <a href ="<?= base_url() ?>admin/petDatabaseLog/<?= $pet->pet_id ?>" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="Pet History Log"><i class = "fa fa-history fa-lg"></i></a>
-                            <a href ="<?= base_url() ?>admin/petDatabaseUpdate/<?= $pet->pet_id ?>" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit Pet Details"><i class = "fa fa-pencil-square-o fa-lg"></i></a>
+                            <a href ="<?= base_url() ?>admin/petDatabaseLog/<?= $pet->pet_id ?>" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="Animal History Log"><i class = "fa fa-history fa-lg"></i></a>
+                            <a href ="<?= base_url() ?>admin/petDatabaseUpdate/<?= $pet->pet_id ?>" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit Animal Details"><i class = "fa fa-pencil-square-o fa-lg"></i></a>
                             <a href ="<?= base_url() ?>admin/petDatabaseAdopters/<?= $pet->pet_id ?>" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="See Interested Adopters"><i class = "fa fa-users fa-lg"></i></a>
+                            <a href ="<?= base_url() ?>admin/petDatabaseRemove/<?= $pet->pet_id ?>" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="Remove Animal"><i class = "fa fa-remove fa-lg"></i></a>
                         </div>
                     </div>
                 </div>
