@@ -1,4 +1,11 @@
-
+<?php
+if (validation_errors()): {
+        echo '<script>';
+        echo 'swal("Oops!", "Your message did not send", "error");';
+        echo '</script>';
+    }
+    ?>
+<?php endif; ?>
 <!-- Header area -->
 <div id="header-wrapper" class="header-slider">
     <header class="clearfix">
@@ -161,7 +168,6 @@
                     <div class="span1"></div>
                     <div class="span4"><br><br><br>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
                     </div>
                     <div class="span1"></div>
                 </div>
@@ -188,7 +194,6 @@
                     <div class="span1"></div>
                     <div class="span4"><br><br><br>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
                     </div>
                     <div class="span1"></div>
                 </div>
@@ -235,13 +240,66 @@
     </div>
 </section>
 <!-- end spacer section -->
+
+<section id="blog" class="section">
+    <div class="container">
+        <h4>Pet Adoptables</h4>
+        <!-- Three columns -->
+        <div class="row">
+            <?php if (!$pets): ?>
+                <div class="span12">
+                    <center>
+                        <h1>Table is EMPTY</h1>
+                    </center>
+                </div>
+            <?php else: ?>
+                <?php $counter = 0; ?>
+                <?php foreach ($pets as $pet): ?> 
+                    <?php if ($pet->pet_status == 'adoptable'): ?>
+                        <div class="span3">
+                            <div class="home-post">
+                                <div class="post-image">
+                                    <img class="max-img" src="<?= $this->config->base_url() . $pet->pet_picture ?>" alt="" />
+                                </div>
+                                <div class="post-meta">
+                                    <i class="icon-info icon-2x"></i>
+                                    <span class="petName"><?= $pet->pet_name ?></span>
+                                </div>
+                                <div class="entry-content ">
+                                    <i class="icon-calendar">  </i><?= date('M. j, Y', $pet->pet_bday) ?><br><br>
+                                    <?php if ($pet->pet_sex == "Male" || $pet->pet_sex == "male"): ?>
+                                        <i class="fa fa-mars"> </i> <?= $pet->pet_sex ?><br><br>
+                                    <?php else: ?>
+                                        <i class="fa fa-venus"> </i> <?= $pet->pet_sex ?><br><br>
+                                    <?php endif; ?>
+                                    <i class="icon-info"> </i><?= $pet->pet_breed ?><br><br>
+                                    <i class="icon-check-sign" style="color:green"></i> <?= $pet->pet_status ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <?php
+                    if ($counter == 4): {
+                            break;
+                        }
+                        ?>
+                    <?php endif; ?>
+                    <?php $counter++; ?>
+                <?php endforeach; ?>
+            <?php endif ?>
+        </div>
+        <div class="blankdivider30"></div>
+    </div>
+</section>
 <!-- section: contact -->
 <section id="contact" class="section green">
     <div class="container">
         <h4>Get in Touch</h4>
-        <p>
-            Reque facer nostro et ius, cu persius mnesarchum disputando eam, clita prompta et mel vidisse phaedrum pri et. Facilisis posidonium ex his. Mutat iudico vis in, mea aeque tamquam scripserit an, mea eu ignota viderer probatus. Lorem legere consetetur ei eum. Sumo aeque assentior te eam, pri nominati posidonium consttuam
-        </p>
+        <center>
+            <p>
+                You can contact us through e-mail by filling up the form below.
+            </p>
+        </center>
         <div class="blankdivider30">
         </div>
         <div class="row">
@@ -252,23 +310,24 @@
                     <form action="" method="post" role="form" class="contactForm">
                         <div class="row">
                             <div class="span6">
-                                <div class="field your-name form-group">
-                                    <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
-                                    <div class="validation"></div>
+
+                                <div class="field your-name form-group  <?php if (!empty(form_error("name"))): ?>has-error<?php endif; ?>">
+                                    <input type="text" name="name" class="form-control" value="<?= set_value('name') ?>" id="name" placeholder="Your Name"/>
+                                    <?= form_error("name", "<div class = 'alert alert-danger'>", "</div>") ?>
                                 </div>
-                                <div class="field your-email form-group">
-                                    <input type="text" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
-                                    <div class="validation"></div>
+                                <div class="field your-email form-group <?php if (!empty(form_error("email"))): ?>has-error<?php endif; ?>">
+                                    <input type="text" class="form-control" name="email" value="<?= set_value('email') ?>"  id="email" placeholder="Your Email"  />
+                                    <?= form_error("email", "<div class = 'alert alert-danger'>", "</div>") ?>
                                 </div>
-                                <div class="field subject form-group">
-                                    <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
-                                    <div class="validation"></div>
+                                <div class="field subject form-group <?php if (!empty(form_error("subject"))): ?>has-error<?php endif; ?>">
+                                    <input type="text" class="form-control" name="subject" value="<?= set_value('subject') ?>" id="subject" placeholder="Subject" />
+                                    <?= form_error("subject", "<div class = 'alert alert-danger'>", "</div>") ?>
                                 </div>
                             </div>
                             <div class="span6">
-                                <div class="field message form-group">
-                                    <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
-                                    <div class="validation"></div>
+                                <div class="field message form-group <?php if (!empty(form_error("message"))): ?>has-error<?php endif; ?>">
+                                    <textarea class="form-control" name="message" value="<?= set_value('message') ?>"  placeholder="Message" rows="5"></textarea>
+                                    <?= form_error("message", "<div class = 'alert alert-danger'>", "</div>") ?>
                                 </div>
                                 <input type="submit" value="Send message" class="btn btn-theme pull-left">
                             </div>
@@ -299,10 +358,10 @@
                     &emsp; &emsp;  &nbsp;<strong> Metro Manila, Philippines/</strong><br>
                     &emsp;  Aurora Blvd, Quezon City,<br><strong>1800 Metro Manila</strong></p>
                 <p><i class="icon-circled icon-bgdark icon-phone icon-2x"></i>
-                    <strong> 475-1688</strong></p>
+                    <strong> 475-1688&emsp;/&emsp;09179763609</strong> </p>
                 <p><i class="icon-circled icon-bgdark icon-envelope icon-2x"></i>
                     codebusters.solutions@gmail.com/<br>philpaws@paws.org.ph</p><br><br>
-                
+
             </div>
             <div class="span6 offset3">
                 <ul class="social-networks">

@@ -39,8 +39,6 @@ CONTENTS:
 /* animation */
 @import url('animate.css');
 
-
-
 /* =========================================================
 01. General
 ============================================================ */
@@ -466,7 +464,6 @@ section.inner {
     color: #f7f7f7;
 }
 
-
 /* === section spacer === */
 
 section.spacer {
@@ -808,9 +805,9 @@ section#blog {
 .home-post .post-meta span {
     margin-top:10px;
 }
-.home-post .post-meta span.date {
+.home-post .post-meta span.petName {
     font-weight:700;
-    font-size:13px;
+    font-size:18px;
     float:left;
 }
 .home-post .post-meta span.tags {
