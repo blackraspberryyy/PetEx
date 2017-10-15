@@ -67,56 +67,70 @@ class Admin extends CI_Controller{
     }
     
     public function petDatabaseAdd_exec(){
-        if(!empty($_FILES["pet_picture"]["name"])) {
-		$file_name=$_FILES["pet_picture"]["name"];
-		$temp_name=$_FILES["pet_picture"]["tmp_name"];
-		$imgtype=$_FILES["pet_picture"]["type"];
-		$ext= $this->GetImageExtension($imgtype);
-		$imagename=date("d-m-Y")."-".time().$ext;
-		$target_path = "./images/animals/".$imagename;
-		
-		if(move_uploaded_file($temp_name, $target_path) ) {
-                    $imagePath = $target_path;
-		}else{
-                    echo "Unable to find the folder location";
-		   //redirect to oops
-		}
-	}else{
-            //DO METHOD WITHOUT PICTURE PROVIDED
-            if($this->input->post('pet_specie') == "canine"){
-                $imagePath = "images/tools/dog_temp_pic.png";
+        $this->form_validation->set_rules('pet_name', "Pet\'s Name", "required");
+        $this->form_validation->set_rules('pet_bday', "Pet\'s Birthday", "required");
+        $this->form_validation->set_rules('pet_breed', "Pet\'s Breed", "required");
+        $this->form_validation->set_rules('pet_description', "Pet\'s Description", "required");
+        if ($this->form_validation->run() == FALSE) {
+            //ERROR IN FORM
+            $data = array(
+                'title' => 'Admin | Pet Registration',
+                'wholeUrl' => base_url(uri_string()),
+            );
+            $this->load->view("admin/includes/header", $data);
+            $this->load->view("admin/navbar");
+            $this->load->view("admin/sidenav");
+            $this->load->view("admin/petDatabaseAdd");
+            $this->load->view("admin/includes/footer");
+        } else {
+            if(!empty($_FILES["pet_picture"]["name"])) {
+                    $file_name=$_FILES["pet_picture"]["name"];
+                    $temp_name=$_FILES["pet_picture"]["tmp_name"];
+                    $imgtype=$_FILES["pet_picture"]["type"];
+                    $ext= $this->GetImageExtension($imgtype);
+                    $imagename=date("d-m-Y")."-".time().$ext;
+                    $target_path = "./images/animals/".$imagename;
+
+                    if(move_uploaded_file($temp_name, $target_path) ) {
+                        $imagePath = $target_path;
+                    }else{
+                        echo "Unable to find the folder location";
+                       //redirect to oops
+                    }
             }else{
-                $imagePath = "images/tools/cat_temp_pic.png";
+                //DO METHOD WITHOUT PICTURE PROVIDED
+                if($this->input->post('pet_specie') == "canine"){
+                    $imagePath = "images/tools/dog_temp_pic.png";
+                }else{
+                    $imagePath = "images/tools/cat_temp_pic.png";
+                }
             }
-	}
-        $data = array(
-            'pet_name' => $this->input->post('pet_name'),
-            'pet_bday' => strtotime($this->input->post('pet_bday')),
-            'pet_specie' => $this->input->post('pet_specie'),
-            'pet_sex' => $this->input->post('pet_sex'),
-            'pet_breed' => $this->input->post('pet_breed'),
-            'pet_status' => $this->input->post('pet_status'),
-            'pet_neutered_spayed' => $this->input->post('pet_neutered_spayed'),
-            'pet_admission' => $this->input->post('pet_admission'),
-            'pet_description' => $this->input->post('pet_description'),
-            'pet_history' => $this->input->post('pet_history'),
-            'pet_picture' => $imagePath,
-            'pet_added_at' => time(),
-            'pet_updated_at' => time()
-        );
-        
-        if($this->admin_model->singleinsert("pet", $data)){
-            redirect($this->config->base_url()."admin/petDatabase");
-        }else{
-            echo "An Error Ocurred";
-            echo "<pre>";
-            print_r($data);
-            echo "</pre>";
-            //Redirect to oops
+            $data = array(
+                'pet_name' => $this->input->post('pet_name'),
+                'pet_bday' => strtotime($this->input->post('pet_bday')),
+                'pet_specie' => $this->input->post('pet_specie'),
+                'pet_sex' => $this->input->post('pet_sex'),
+                'pet_breed' => $this->input->post('pet_breed'),
+                'pet_status' => $this->input->post('pet_status'),
+                'pet_neutered_spayed' => $this->input->post('pet_neutered_spayed'),
+                'pet_admission' => $this->input->post('pet_admission'),
+                'pet_description' => $this->input->post('pet_description'),
+                'pet_history' => $this->input->post('pet_history'),
+                'pet_picture' => $imagePath,
+                'pet_added_at' => time(),
+                'pet_updated_at' => time()
+            );
+
+            if($this->admin_model->singleinsert("pet", $data)){
+                redirect($this->config->base_url()."admin/petDatabase");
+            }else{
+                echo "An Error Ocurred";
+                echo "<pre>";
+                print_r($data);
+                echo "</pre>";
+                //Redirect to oops
+            }
         }
-        
-        
-        
     }
     
     public function petDatabaseLog(){
@@ -148,64 +162,83 @@ class Admin extends CI_Controller{
     }
     
     public function petDatabaseUpdate_exec(){
-        $pet_id = $this->uri->segment(3);
-        $pets = $this->admin_model->fetch("pet", array("pet_id" => $pet_id));
-        if($pets){
-            if(!empty($_FILES["pet_picture"]["name"])) {
-		$file_name=$_FILES["pet_picture"]["name"];
-		$temp_name=$_FILES["pet_picture"]["tmp_name"];
-		$imgtype=$_FILES["pet_picture"]["type"];
-		$ext= $this->GetImageExtension($imgtype);
-		$imagename=date("d-m-Y")."-".time().$ext;
-		$target_path = "./images/animals/".$imagename;
-		
-		if(move_uploaded_file($temp_name, $target_path) ) {
-                    $imagePath = $target_path;
-		}else{
-                    echo "Unable to find the folder location";
-		   //redirect to oops
-		}
-            }else{
-                //DO METHOD WITHOUT PICTURE PROVIDED
-                $pets = $pets[0];
-                if($pets->pet_picture == "images/tools/dog_temp_pic.png" || $pets->pet_picture == "images/tools/cat_temp_pic.png"){
-                    if($this->input->post('pet_specie') == "canine"){
-                        $imagePath = "images/tools/dog_temp_pic.png";
+        $this->form_validation->set_rules('pet_name', "Pet\'s Name", "required");
+        $this->form_validation->set_rules('pet_bday', "Pet\'s Birthday", "required");
+        $this->form_validation->set_rules('pet_breed', "Pet\'s Breed", "required");
+        $this->form_validation->set_rules('pet_description', "Pet\'s Description", "required");
+        if ($this->form_validation->run() == FALSE) {
+            //ERROR IN FORM
+            $selectedPets = $this->admin_model->fetch('pet', array('pet_id' => $this->uri->segment(3))) ;
+            $data = array(
+                'title' => 'Admin | Pet Database',
+                'wholeUrl' => base_url(uri_string()),
+                'pet' => $selectedPets,
+            );
+            $this->load->view("admin/includes/header", $data);
+            $this->load->view("admin/navbar");
+            $this->load->view("admin/sidenav");
+            $this->load->view("admin/petDatabaseUpdate");
+            $this->load->view("admin/includes/footer");
+        } else {
+            $pet_id = $this->uri->segment(3);
+            $pets = $this->admin_model->fetch("pet", array("pet_id" => $pet_id));
+            if($pets){
+                if(!empty($_FILES["pet_picture"]["name"])) {
+                    $file_name=$_FILES["pet_picture"]["name"];
+                    $temp_name=$_FILES["pet_picture"]["tmp_name"];
+                    $imgtype=$_FILES["pet_picture"]["type"];
+                    $ext= $this->GetImageExtension($imgtype);
+                    $imagename=date("d-m-Y")."-".time().$ext;
+                    $target_path = "./images/animals/".$imagename;
+
+                    if(move_uploaded_file($temp_name, $target_path) ) {
+                        $imagePath = $target_path;
                     }else{
-                        $imagePath = "images/tools/cat_temp_pic.png";
+                        echo "Unable to find the folder location";
+                       //redirect to oops
                     }
                 }else{
-                    $imagePath = $pets->pet_picture;
+                    //DO METHOD WITHOUT PICTURE PROVIDED
+                    $pets = $pets[0];
+                    if($pets->pet_picture == "images/tools/dog_temp_pic.png" || $pets->pet_picture == "images/tools/cat_temp_pic.png"){
+                        if($this->input->post('pet_specie') == "canine"){
+                            $imagePath = "images/tools/dog_temp_pic.png";
+                        }else{
+                            $imagePath = "images/tools/cat_temp_pic.png";
+                        }
+                    }else{
+                        $imagePath = $pets->pet_picture;
+                    }
                 }
-            }
-            $data = array(
-                'pet_name' => $this->input->post('pet_name'),
-                'pet_bday' => strtotime($this->input->post('pet_bday')),
-                'pet_specie' => $this->input->post('pet_specie'),
-                'pet_sex' => $this->input->post('pet_sex'),
-                'pet_breed' => $this->input->post('pet_breed'),
-                'pet_status' => $this->input->post('pet_status'),
-                'pet_neutered_spayed' => $this->input->post('pet_neutered_spayed'),
-                'pet_admission' => $this->input->post('pet_admission'),
-                'pet_description' => $this->input->post('pet_description'),
-                'pet_history' => $this->input->post('pet_history'),
-                'pet_picture' => $imagePath,
-                'pet_added_at' => time(),
-                'pet_updated_at' => time()
-            );
-            if($this->admin_model->update("pet", $data, array("pet_id" =>$pet_id))){
-                redirect($this->config->base_url()."admin/petDatabase");
+                $data = array(
+                    'pet_name' => $this->input->post('pet_name'),
+                    'pet_bday' => strtotime($this->input->post('pet_bday')),
+                    'pet_specie' => $this->input->post('pet_specie'),
+                    'pet_sex' => $this->input->post('pet_sex'),
+                    'pet_breed' => $this->input->post('pet_breed'),
+                    'pet_status' => $this->input->post('pet_status'),
+                    'pet_neutered_spayed' => $this->input->post('pet_neutered_spayed'),
+                    'pet_admission' => $this->input->post('pet_admission'),
+                    'pet_description' => $this->input->post('pet_description'),
+                    'pet_history' => $this->input->post('pet_history'),
+                    'pet_picture' => $imagePath,
+                    'pet_added_at' => time(),
+                    'pet_updated_at' => time()
+                );
+                if($this->admin_model->update("pet", $data, array("pet_id" =>$pet_id))){
+                    redirect($this->config->base_url()."admin/petDatabase");
+                }else{
+                    echo "An Error Ocurred<br>";
+                    echo $pet_id;
+                    echo "<pre>";
+                    print_r($data);
+                    echo "</pre>";
+                    //Redirect to oops
+                }
+
             }else{
-                echo "An Error Ocurred<br>";
-                echo $pet_id;
-                echo "<pre>";
-                print_r($data);
-                echo "</pre>";
-                //Redirect to oops
+                //NO PETS Detected
             }
-           
-        }else{
-            //NO PETS Detected
         }
     }
     
