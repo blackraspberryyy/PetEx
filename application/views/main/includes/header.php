@@ -8,8 +8,6 @@
         <meta name="author" content="">
         <link href ="<?= $this->config->base_url() ?>assets/maxim/css/style.css" rel="stylesheet">
         <link href ="<?= $this->config->base_url() ?>assets/maxim/css/bootstrap-responsive.css" rel="stylesheet">
-
-        <link href ="<?= $this->config->base_url() ?>assets/maxim/css/animatePic.css" rel="stylesheet">
         <link href="<?= $this->config->base_url() ?>assets/maxim/color/default.css" rel="stylesheet">
         <link rel="shortcut icon" href="<?= $this->config->base_url() ?>images/img/petexIcon.ico">
         <link  href ="<?= $this->config->base_url() ?>assets/fontawesome/css/font-awesome.min.css" rel ="stylesheet">
@@ -24,8 +22,8 @@
         <script src="<?= $this->config->base_url() ?>assets/maxim/js/inview.js"></script>
         <script src="<?= $this->config->base_url() ?>assets/maxim/js/animate.js"></script>
         <script src="<?= $this->config->base_url() ?>assets/maxim/js/custom.js"></script>
-        <script src="<?= $this->config->base_url() ?>assets/maxim/contactform/contactform.js"></script>
-
+        <script src="<?= $this->config->base_url() ?>assets/sweetalert-master/dist/sweetalert.min.js"></script>
+        <link rel="stylesheet" href="<?= $this->config->base_url() ?>assets/sweetalert-master/dist/sweetalert.css">
     </head>
     <style>
         .navImg{
@@ -54,7 +52,7 @@
         }
         @media only screen and (max-width: 768px) {
             .navImg {
-                margin-top: -10px;
+                margin-top: 10px;
             }
             .home-slide-content{
                 font-size:40px !important;
@@ -64,11 +62,14 @@
             max-height:200px;   
         }
         #aboutBg{
-            background: url(<?= base_url()?>images/img/bg/pawBg.jpg) no-repeat center center fixed;
+            background: url(<?= base_url() ?>images/img/bg/pawBg.jpg) no-repeat center center fixed;
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
             background-size: cover;
+        }
+        .service-box:hover{
+            background-color: #388E3C;
         }
     </style>
     <body>
@@ -83,10 +84,10 @@
                         <!-- navigation -->
                         <nav class="pull-right nav-collapse collapse">
                             <ul id="menu-main" class="nav">
-                                <li><a title="Team" href="#about">About</a></li>
+                                <li><a title="Team" href="#aboutBg">About</a></li>
                                 <li><a title="Services" href="#services">Services</a></li>
                                 <li><a title="Contact" href="#contact">Contact</a></li>
-                                <li><a title="Login" href="page.html">Login</a></li>
+                                <li><a title="Login" href="<?= base_url() ?>main/login">Login</a></li>
                             </ul>
                         </nav>
                     </div>
