@@ -28,6 +28,46 @@
         height:230px;
         background:#eee;
     }
+    
+    /*GREEN THEME FORMS*/
+    .green-theme input[type=text]:focus + label,
+    .green-theme textarea:focus + label{
+        color: #388e3c !important;
+    }
+    .green-theme input[type=text]:focus,
+    .green-theme textarea:focus{
+        border-bottom: 1px solid #388e3c !important;
+        box-shadow: 0 1px 0 0 #388e3c !important;
+    }
+    .green-theme input[type="radio"].with-gap:checked+label:before,
+    .green-theme input[type="radio"].with-gap:checked+label:after {
+        border: 2px solid #388e3c !important;
+    }
+    .green-theme input[type="radio"].with-gap:checked+label:after {
+        background-color: #388e3c !important;
+    }
+
+    /*ERROR FORM THEME*/
+    .error-theme input[type=text]:focus + label,
+    .error-theme input[type=text]+ label,
+    .error-theme textarea:focus + label,
+    .error-theme textarea + label{
+        color: #ef5350  !important;
+    }
+    .error-theme input[type=text]:focus,
+    .error-theme input[type=text],
+    .error-theme textarea:focus,
+    .error-theme textarea{
+        border-bottom: 1px solid #ef5350  !important;
+        box-shadow: 0 1px 0 0 #ef5350  !important;
+    }
+    .error-theme input[type="radio"].with-gap:checked+label:before,
+    .error-theme input[type="radio"].with-gap:checked+label:after {
+        border: 2px solid #ef5350  !important;
+    }
+    .error-theme input[type="radio"].with-gap:checked+label:after {
+        background-color: #ef5350  !important;
+    }
 </style>
 <div class ="navbar-fixed">
     <nav>

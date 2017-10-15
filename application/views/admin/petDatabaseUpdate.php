@@ -1,3 +1,4 @@
+<?php if(validation_errors()){include 'includes/toastErrorsPetRegistry.php';}?>
 <?php $pet = $pet[0]?>
 <div class ="side-nav-offset">
     <div class ="container ">
@@ -13,16 +14,16 @@
                     <div class ="col s12">
                             <div class="card grey lighten-4">
                                 <div class="card-content row">
-                                    <div class="input-field col s6">
-                                        <input id="pet_name" type="text" class="validate" name = "pet_name" required autofocus="" value = "<?= $pet->pet_name?>">
+                                    <div class="input-field col s6 <?php if (!empty(form_error("pet_name"))): ?>error-theme<?php else: ?>green-theme<?php endif;?>">
+                                        <input id="pet_name" type="text" class="" name = "pet_name"  autofocus="" value = "<?= set_value('pet_name', $pet->pet_name);?>">
                                         <label for="pet_name">Pet Name</label>
                                     </div>
-                                    <div class = "input-field col s6">
-                                        <input type="text" class="datepicker" name = "pet_bday" required value = "<?= date("F d, Y", $pet->pet_bday)?>">
+                                    <div class = "input-field col s6 <?php if (!empty(form_error("pet_bday"))): ?>error-theme<?php else: ?>green-theme<?php endif;?>">
+                                        <input type="text" class="datepicker" name = "pet_bday"  value = "<?= set_value('pet_bday', date("F d, Y", $pet->pet_bday));?>">
                                         <label for="pet_bday">Birthdate</label>
                                     </div>
-                                    <div class="input-field col s6">
-                                        <input id="pet_breed" type="text" class="validate" name = "pet_breed" required value = "<?= $pet->pet_breed?>">
+                                    <div class="input-field col s6 <?php if (!empty(form_error("pet_breed"))): ?>error-theme<?php else: ?>green-theme<?php endif;?>">
+                                        <input id="pet_breed" type="text" class="" name = "pet_breed"  value = "<?= set_value('pet_breed', $pet->pet_breed);?>">
                                         <label for="pet_breed">Breed</label>
                                     </div>
                                     <div id = "petStatus" class ="col s6 row">
@@ -44,8 +45,8 @@
                         <div class = "col s6">
                             <div class="card grey lighten-4">
                                 <div class="card-content">
-                                    <div class="input-field">
-                                        <textarea id="textarea" class="materialize-textarea" name = "pet_description" required ><?= $pet->pet_description?></textarea>
+                                    <div class="input-field <?php if (!empty(form_error("pet_description"))): ?>error-theme<?php else: ?>green-theme<?php endif;?>">
+                                        <textarea id="textarea" class="materialize-textarea" name = "pet_description"><?= set_value('pet_description', $pet->pet_description);?></textarea>
                                         <label for="textarea">Pet Description</label>
                                     </div>
                                 </div>
@@ -55,7 +56,7 @@
                             <div class="card grey lighten-4">
                                 <div class="card-content">
                                     <div class="input-field">
-                                        <textarea id="textarea2" class="materialize-textarea" name = "pet_history"><?= $pet->pet_history == ""? "NO FINDINGS": $pet->pet_history;?></textarea>
+                                        <textarea id="textarea2" class="materialize-textarea" name = "pet_history"><?= $pet->pet_history;?></textarea>
                                         <label for="textarea2">Findings</label>
                                     </div>
                                 </div>
@@ -119,7 +120,7 @@
                                             <input type="file" id = "files" name = "pet_picture" >
                                         </div>
                                         <div class="file-path-wrapper">
-                                            <input class="file-path validate" type="text" placeholder = "No File Chosen">
+                                            <input class="file-path" type="text" placeholder = "No File Chosen">
                                         </div>
                                     </div>
                                 </div>
@@ -130,7 +131,7 @@
                         <button id = "btnReset" class="btn-large waves-effect waves-light red" type="reset" name="action" >Reset
                             <i class="material-icons right">replay</i>
                         </button>
-                        <button class="btn-large waves-effect waves-light" type="submit" name="action">Submit
+                        <button class="btn-large waves-effect waves-light green darken-3" type="submit" name="action">Submit
                             <i class="material-icons right">send</i>
                         </button>
                     </div>
