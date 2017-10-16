@@ -1,9 +1,28 @@
-
     </body>
 
     <!--JQUERY-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#prev_image').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#files").change(function () {
+            readURL(this);
+            $("#nofilechosen").text("");
+        });
+    </script>
+    
+    
     <!--Materialize-->
     <script type="text/javascript" src="<?= $this->config->base_url() ?>assets/materialize/js/materialize.min.js"></script>
     <script>
