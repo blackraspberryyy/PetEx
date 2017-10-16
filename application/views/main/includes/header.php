@@ -57,6 +57,10 @@
             .home-slide-content{
                 font-size:40px !important;
             }
+            body{
+                padding-left:0px !important;
+                padding-right:0px !important;
+            }
         }
         .featuresPic{
             max-height:200px;   
