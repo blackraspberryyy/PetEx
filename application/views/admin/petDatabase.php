@@ -13,8 +13,8 @@
             </nav>      
             <?php foreach ($pets as $pet): ?>
                 <div class ="col s4">
-                    <div class="card sticky-action hoverable medium">
-                        <div class="card-image petDatabaseImageSize">
+                    <div class="card sticky-action hoverable">
+                        <div class="card-image ">
                             <img class="materialboxed" data-caption = "<?= $pet->pet_name ?>" src="<?= $this->config->base_url().$pet->pet_picture ?>">
                         </div>
                         <div class="card-content">
