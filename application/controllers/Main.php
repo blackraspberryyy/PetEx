@@ -40,9 +40,9 @@ class Main extends CI_Controller {
             'subject' => $this->input->post('subject'),
             'message' => $this->input->post('message')
         );
-        $this->form_validation->set_rules('name', "Name ", "required|alpha_numeric|min_length[5]");
+        $this->form_validation->set_rules('name', "Name ", "required|min_length[5]");
         $this->form_validation->set_rules('email', "Email ", "required|valid_email");
-        $this->form_validation->set_rules('subject', "Subject ", "required|alpha_numeric|min_length[5]");
+        $this->form_validation->set_rules('subject', "Subject ", "required|min_length[5]");
         $this->form_validation->set_rules('message', "Message ", "required|min_length[5]");
         $data = array(
             'title' => 'Pet Ex | Homepage',
