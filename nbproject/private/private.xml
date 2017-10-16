@@ -5,14 +5,25 @@
             <url>application/controllers/Main.php</url>
             <bookmark id="1">
                 <name/>
-                <line>13</line>
+                <line>21</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+
             <file>file:/C:/xampp/htdocs/petex/application/views/admin/reports.php</file>
+            <file>file:/C:/xampp/htdocs/PetEx/application/controllers/Main.php</file>
+            <file>file:/C:/xampp/htdocs/PetEx/application/views/main/includes/header.php</file>
+            <file>file:/C:/xampp/htdocs/PetEx/application/config/email.php</file>
+            <file>file:/C:/xampp/htdocs/PetEx/assets/maxim/css/style.css</file>
+            <file>file:/C:/xampp/htdocs/PetEx/application/views/main/index.php</file>
+            <file>file:/C:/xampp/htdocs/petex/application/views/admin/includes/footer.php</file>
+            <file>file:/C:/xampp/htdocs/petex/application/views/admin/includes/toastErrorsPetRegistry.php</file>
+            <file>file:/C:/xampp/htdocs/petex/application/models/admin_model.php</file>
+            <file>file:/C:/xampp/htdocs/petex/application/views/main/index.php</file>
+            <file>file:/C:/xampp/htdocs/petex/application/views/admin/petDatabase.php</file>
             <file>file:/C:/xampp/htdocs/petex/application/controllers/Admin.php</file>
             <file>file:/C:/xampp/htdocs/petex/application/views/admin/petDatabase.php</file>
             <file>file:/C:/xampp/htdocs/petex/application/views/admin/petDatabaseLog.php</file>
