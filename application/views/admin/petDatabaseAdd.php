@@ -10,12 +10,12 @@
                         <a href="<?= $wholeUrl ?>" class="breadcrumb">Pet Registration</a>
                     </div>
                 </nav>
-                <div class="card-content ">
+                <div class="card-content">
                     <div class ="col s12">
                         <div class="card grey lighten-4">
                             <div class="card-content row">
                                 <div class="input-field col s6 <?php if (!empty(form_error("pet_name"))): ?>error-theme<?php else: ?>green-theme<?php endif;?>">
-                                    <input id="pet_name" type="text" class="" name = "pet_name" autofocus="" value="<?= set_value('pet_name')?>">
+                                    <input id="pet_name" type="text" class="" name = "pet_name" autofocus="" value="<?= set_value('pet_name')?>" >
                                     <label for="pet_name">Pet Name</label>
                                 </div>
                                 <div class = "input-field col s6 <?php if (!empty(form_error("pet_bday"))): ?>error-theme<?php else: ?>green-theme<?php endif;?>">
