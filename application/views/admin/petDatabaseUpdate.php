@@ -127,13 +127,22 @@
                             </div>
                         </div>
                        
-                    <div class = "card-content right">
-                        <button id = "btnReset" class="btn-large waves-effect waves-light red" type="reset" name="action" >Reset
-                            <i class="material-icons right">replay</i>
-                        </button>
-                        <button class="btn-large waves-effect waves-light green darken-3" type="submit" name="action">Submit
-                            <i class="material-icons right">send</i>
-                        </button>
+                    <div class = "card-content">
+                        <div class ="row">
+                            <div class ="col s6">
+                                <button class="btn-large waves-effect waves-light white black-text" type="button" onclick = "window.history.back();">Back
+                                    <i class="material-icons left">arrow_back</i>
+                                </button>
+                            </div>
+                            <div class ="col s6">
+                                <button class="btn-large waves-effect waves-light green darken-3 right" type="submit" name="action">Submit
+                                    <i class="material-icons right">send</i>
+                                </button>
+                                <button class="btn-large waves-effect waves-light red right" type="reset" name="action">Reset
+                                    <i class="material-icons right">replay</i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
