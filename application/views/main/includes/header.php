@@ -62,6 +62,7 @@
                 padding-right:0px !important;
             }
         }
+        
         .featuresPic{
             max-height:200px;   
         }
@@ -91,7 +92,7 @@
                                 <li><a title="Team" href="#aboutBg">About</a></li>
                                 <li><a title="Services" href="#services">Services</a></li>
                                 <li><a title="Contact" href="#contact">Contact</a></li>
-                                <li><a title="Login" href="<?= base_url() ?>main/login">Login</a></li>
+                                <li><a title="Login" href="<?= base_url() ?>login/">Login</a></li>
                             </ul>
                         </nav>
                     </div>

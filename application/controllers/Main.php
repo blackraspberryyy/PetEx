@@ -58,14 +58,6 @@ class Main extends CI_Controller {
         }
     }
 
-    public function login() {
-        $data = array(
-            'title' => 'Pet Ex | Login',
-            'wholeUrl' => base_url(uri_string()),
-        );
-        $this->load->view("main/includes/header", $data);
-        $this->load->view("main/login.php");
-        $this->load->view("main/includes/footer");
-    }
+  
 
 }
