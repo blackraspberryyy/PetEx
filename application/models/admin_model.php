@@ -8,7 +8,13 @@ class admin_model extends CI_Model{
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
-    
+    public function fetchCount($table, $where=NULL){
+        if(!empty($where)){
+            $this->db->where($where);
+        }
+        $query = $this->db->get($table);
+        return $query->num_rows();
+    }
     public function fetchjoin($table, $join = NULL, $on = NULL, $where=NULL){
         //$join must be array('pet.user_id = user.user_id');
         if(!empty($where)){

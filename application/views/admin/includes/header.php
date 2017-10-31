@@ -6,9 +6,13 @@
         <!--JQuery-->
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         
+        
+        <!--Odometer-->
+        <script src = "<?= $this->config->base_url()?>assets/odometer/js/odometer.js"></script>
+        <link rel ="stylesheet" href ="<?= $this->config->base_url()?>assets/odometer/css/odometer-theme-minimal.css">
+        
         <!--Materialize.css-->
         <link rel="stylesheet" href="<?= $this->config->base_url()?>assets/materialize/css/materialize.css"/>
-        <!--<script src="<?= $this->config->base_url()?>assets/materialize/js/materialize.js"></script>-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!--"Document.ready scripts"-->
         <script>
@@ -33,4 +37,11 @@
         <?php 
             date_default_timezone_set("Asia/Manila");
         ?>
+        <script>
+            document.addEventListener("DOMContentLoaded", function(){
+                $('.preloader-background').delay(1700).fadeOut('slow');
+                $('.preloader-wrapper').delay(1700).fadeOut();
+            });
+        </script>
+        <?php include 'preloader.php'?>
 

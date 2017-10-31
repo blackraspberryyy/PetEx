@@ -16,6 +16,14 @@ class Admin extends CI_Controller{
     function get_months($birth_date) {
       return floor((time() - strtotime($birth_date)) / 2678400);
     }
+    function _alpha_dash_space($str = ''){
+        if(!preg_match("/^([-a-z_ ])+$/i", $str)){
+            $this->form_validation->set_message('_alpha_dash_space', 'The {field} may only contain alphabet characters, spaces, underscores, and dashes.');
+            return FALSE;
+        }else{
+            return TRUE;
+        }
+    }
     function GetImageExtension($imagetype){
         if(empty($imagetype)) return false;
         switch($imagetype){
@@ -43,7 +51,7 @@ class Admin extends CI_Controller{
     public function petDatabase(){
         $allPets = $this->admin_model->fetch("pet", array("pet_status"));
         $data = array(
-            'title' => 'Admin | Pet Database',
+            'title' => 'Pet Database | Admin',
             'wholeUrl' => base_url(uri_string()),
             'pets' => $allPets,
         );
@@ -56,7 +64,7 @@ class Admin extends CI_Controller{
     
     public function petDatabaseAdd(){
         $data = array(
-            'title' => 'Admin | Pet Registration',
+            'title' => 'Pet Registration | Admin',
             'wholeUrl' => base_url(uri_string()),
         );
         $this->load->view("admin/includes/header", $data);
@@ -67,14 +75,14 @@ class Admin extends CI_Controller{
     }
     
     public function petDatabaseAdd_exec(){
-        $this->form_validation->set_rules('pet_name', "Pet\'s Name", "required");
+        $this->form_validation->set_rules('pet_name', "Pet\'s Name", "required|callback__alpha_dash_space|max_length[10]");
         $this->form_validation->set_rules('pet_bday', "Pet\'s Birthday", "required");
-        $this->form_validation->set_rules('pet_breed', "Pet\'s Breed", "required");
+        $this->form_validation->set_rules('pet_breed', "Pet\'s Breed", "required|callback__alpha_dash_space|max_length[40]");
         $this->form_validation->set_rules('pet_description', "Pet\'s Description", "required");
         if ($this->form_validation->run() == FALSE) {
             //ERROR IN FORM
             $data = array(
-                'title' => 'Admin | Pet Registration',
+                'title' => 'Pet Registration | Admin',
                 'wholeUrl' => base_url(uri_string()),
             );
             $this->load->view("admin/includes/header", $data);
@@ -136,7 +144,7 @@ class Admin extends CI_Controller{
     public function petDatabaseLog(){
         $selectedPets = $this->admin_model->fetch('pet', array('pet_id' => $this->uri->segment(3))) ;
         $data = array(
-            'title' => 'Admin | Pet Database',
+            'title' => 'Pet Database | Admin',
             'wholeUrl' => base_url(uri_string()),
             'pet' => $selectedPets,
         );
@@ -150,7 +158,7 @@ class Admin extends CI_Controller{
     public function petDatabaseUpdate(){
         $selectedPets = $this->admin_model->fetch('pet', array('pet_id' => $this->uri->segment(3))) ;
         $data = array(
-            'title' => 'Admin | Pet Database',
+            'title' => 'Pet Database | Admin',
             'wholeUrl' => base_url(uri_string()),
             'pet' => $selectedPets,
         );
@@ -162,15 +170,15 @@ class Admin extends CI_Controller{
     }
     
     public function petDatabaseUpdate_exec(){
-        $this->form_validation->set_rules('pet_name', "Pet\'s Name", "required");
+        $this->form_validation->set_rules('pet_name', "Pet\'s Name", "required|callback__alpha_dash_space|max_length[10]");
         $this->form_validation->set_rules('pet_bday', "Pet\'s Birthday", "required");
-        $this->form_validation->set_rules('pet_breed', "Pet\'s Breed", "required");
+        $this->form_validation->set_rules('pet_breed', "Pet\'s Breed", "required|callback__alpha_dash_space|max_length[40]");
         $this->form_validation->set_rules('pet_description', "Pet\'s Description", "required");
         if ($this->form_validation->run() == FALSE) {
             //ERROR IN FORM
             $selectedPets = $this->admin_model->fetch('pet', array('pet_id' => $this->uri->segment(3))) ;
             $data = array(
-                'title' => 'Admin | Pet Database',
+                'title' => 'Pet Database | Admin',
                 'wholeUrl' => base_url(uri_string()),
                 'pet' => $selectedPets,
             );
@@ -245,7 +253,7 @@ class Admin extends CI_Controller{
     public function petDatabaseAdopters(){
         $allPets = $this->admin_model->fetch("pet");
         $data = array(
-            'title' => 'Admin | Pet Database',
+            'title' => 'Pet Database | Admin',
             'wholeUrl' => base_url(uri_string()),
             'pets' => $allPets,
         );
@@ -258,7 +266,7 @@ class Admin extends CI_Controller{
     public function petDatabaseRemove(){
         $allPets = $this->admin_model->fetch("pet");
         $data = array(
-            'title' => 'Admin | Pet Database',
+            'title' => 'Pet Database | Admin',
             'wholeUrl' => base_url(uri_string()),
             'pets' => $allPets,
         );
@@ -269,9 +277,22 @@ class Admin extends CI_Controller{
         $this->load->view("admin/includes/footer");
     }
     public function reports(){
+        $animalsCount = $this->admin_model->fetchCount("pet");
+        $adoptablesCount = $this->admin_model->fetchCount("pet", array("pet_status" => 'adoptable'));
+        $usersCount = $this->admin_model->fetchCount("user");
+        $adoptionCount = $this->admin_model->fetchCount("adoption");
+        $missingPetCount = $this->admin_model->fetchCount("adoption", array("adoption_isMissing" => 1));
+        $interestedAdoptersCount = $this->admin_model->fetchCount("transaction", array("transaction_isFinished" => 0));
+        
         $data = array(
-            'title' => 'Admin | Reports',
+            'title' => 'Reports | Admin',
             'wholeUrl' => base_url(uri_string()),
+            'animalsCount' => $animalsCount,
+            'adoptablesCount' => $adoptablesCount,
+            'usersCount' => $usersCount,
+            'adoptionCount' => $adoptionCount,
+            'missingPetCount' => $missingPetCount,
+            'interestedAdoptersCount' => $interestedAdoptersCount,
         );
         $this->load->view("admin/includes/header", $data);
         $this->load->view("admin/navbar");
@@ -282,7 +303,7 @@ class Admin extends CI_Controller{
     
     public function auditTrail(){
         $data = array(
-            'title' => 'Admin | Audit Trail',
+            'title' => 'Audit Trail | Admin',
             'wholeUrl' => base_url(uri_string()),
         );
         $this->load->view("admin/includes/header", $data);
@@ -294,7 +315,7 @@ class Admin extends CI_Controller{
     
     public function settings(){
         $data = array(
-            'title' => 'Settings | ',
+            'title' => 'Settings | Admin',
             'wholeUrl' => base_url(uri_string()),
         );
         $this->load->view("admin/includes/header", $data);
