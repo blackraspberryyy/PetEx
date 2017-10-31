@@ -7,6 +7,6 @@ $config['charset'] = "utf-8";
 $config['newline'] = "\r\n";
 $config['mailtype'] = "html";
 
-$config['smtp_user'] = "abzaguirre@gmail.com";
-$config['smtp_pass'] = "!Valkyrie-2017!";
+$config['smtp_user'] = "codebusters.solutions@gmail.com";
+$config['smtp_pass'] = "codebusterssolution";
 
