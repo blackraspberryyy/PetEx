@@ -8,16 +8,16 @@
                     </div>
                 </nav>
                 <div class="card-content">
-                    <div class = "card ">
+                    <div class = "card hoverable">
                         <nav class = "green darken-3">
                             <div class="col s12">
                                 <h4>Login Information</h4>
                             </div>
                         </nav>
-                        <div class="card-content row">
+                        <div class="card-content row ">
                             <div class ="col s12">
                                 <div class="card grey lighten-4">
-                                    <div class="card-content row">
+                                    <div class="card-content row  ">
                                         <div class="input-field col s12">
                                             <form method="POST" action="">
                                                 <div class="input-field">
@@ -45,7 +45,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class = "card ">
+                    <div class = "card hoverable">
                         <nav class = "green darken-3">
                             <div class="col s12">
                                 <h4>Personal Information</h4>
@@ -63,7 +63,7 @@
                                                     <label>Lastname</label>
                                                 </div>
                                                 <div class="input-field col s6">
-                                                    <input type="password" class="validate">
+                                                    <input type="text" class="validate">
                                                     <label>Firstname</label>
                                                 </div>
                                                 <button class="btn-large waves-effect waves-light green lighten-1 right" type="submit" name="action">Submit
@@ -129,7 +129,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class = "card ">
+                    </div>
+                        <div class = "card hoverable">
                             <nav class = "green darken-3">
                                 <div class="col s12">
                                     <h4>Contact Information</h4>
@@ -142,7 +143,7 @@
                                             <div class="input-field col s12">
                                                 <form method="POST" action="">
                                                     <div class="input-field">
-                                                        <input type="text" class="validate">
+                                                        <input type="number" class="validate">
                                                         <label>Phone Number</label>
                                                     </div>
                                                     <div class="input-field">
