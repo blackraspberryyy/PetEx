@@ -1,6 +1,6 @@
 <style>
     .side-nav-offset{
-        padding-left:240px;
+        padding-left:300px;
     }
     @media only screen and (max-width : 992px) {
       .side-nav-offset{
@@ -40,12 +40,41 @@
                         <i class="fa fa-plus fa-2x"></i>Register Pet
                     </a>
                 </li>
+                <li>
+                    <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url()."admin/petDatabaseRemovedPet" ? "side-nav-active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/petDatabaseRemovedPet">
+                        <i class="fa fa-trash-o fa-2x"></i>Removed Pet
+                    </a>
+                </li>
             </ul>
         </div>
     </li>
     <li>
+        <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url()."admin/userDatabase" || strpos($wholeUrl, $this->config->base_url()."admin/userDatabaseAdd") !== FALSE ? "side-nav-active active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/userDatabase">
+            <i class="fa fa-users fa-2x"></i>User Database
+        </a>
+        <div class="collapsible-body">
+            <ul class = "collapsible" data-collapsible="accordion">
+                <li>
+                    <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url()."admin/userDatabaseAdd" ? "side-nav-active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/userDatabaseAdd">
+                        <i class="fa fa-user-plus fa-2x"></i>Register an Admin
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li>
+        <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url()."admin/schedules" ? "side-nav-active active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/schedules">
+            <i class="fa fa-calendar fa-2x"></i>Schedules
+        </a>
+    </li>
+    <li>
         <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url()."admin/reports" ? "side-nav-active active" : "black-text"?>" href= "<?= $this->config->base_url()?>admin/reports">
             <i class="fa fa-bar-chart fa-2x"></i>Reports
+        </a>
+    </li>
+    <li>
+        <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url()."admin/userLogs" ? "side-nav-active active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/userLogs">
+            <i class="fa fa-key fa-2x"></i>User Logs
         </a>
     </li>
     <li>
