@@ -26,6 +26,10 @@
         <link rel="stylesheet" href="<?= $this->config->base_url() ?>assets/sweetalert-master/dist/sweetalert.css">
     </head>
     <style>
+        .max-img{
+            height:200px !important;
+            width:100% !important;
+        }
         .navImg{
             height:40px;
             max-width: 100%;

@@ -7,10 +7,10 @@
                 <div class="col m4">
                     <p class="copyright">
                     <center>
-                        &copy; Codebusters. All rights reserved.
+                        &copy; 2017 Codebusters. All rights reserved.
                         <p>JC VALENCIA | ANGELO MARKUS ZAGUIRRE | ALLEN TORRES | JOSHUA VITUG</p>
 
-                        <p>Made with&nbsp;&nbsp;&nbsp; <a class=" btn btn-floating pulse red "><i class="fa fa-heart" style="color:white;"></i></a></p>
+                        <p>Made with&nbsp;&nbsp;&nbsp; <a class=" btn btn-floating pulse red "><i class="fa fa-heartbeat" style="color:white;"></i></a></p>
                         </p>
                     </center>
                 </div>

@@ -1,10 +1,6 @@
 <style>
-    #admin-nav{
-        top:65px;
-        height: calc(100% - 65px);
-    }
     .side-nav-offset{
-        padding-left:240px;
+        padding-left:250px;
     }
     @media only screen and (max-width : 992px) {
         .side-nav-offset{
@@ -16,12 +12,12 @@
     }
 </style>
 
-<ul id="slide-out" class="side-nav fixed collapsible">
+<ul id="user-nav" class="side-nav fixed collapsible">
     <li><div class="user-view">
             <div class="background">
                 <img src="<?= $this->config->base_url() ?>images/profile/profileBg.jpg">
             </div>
-            <a href="#"><img class="circle z-depth-2" src="<?= $this->config->base_url() ?>images/profile/jc.png"></a>
+            <a href="<?= $this->config->base_url() ?>user"><img class="circle z-depth-2" src="<?= $this->config->base_url() ?>images/profile/jc.png"></a>
             <a href="#!name"><span class="white-text name" id="sad">John Doe</span></a>
             <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
         </div></li>
@@ -31,7 +27,7 @@
         </a>
     </li>
     <li>
-        <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url() . "user/myPets" ? "side-nav-active active" : "black-text" ?>" href="<?= $this->config->base_url() ?>user/myPets">
+        <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url() . "user/myPets" || strpos($wholeUrl, $this->config->base_url() . "user/myPetsEdit") !== FALSE  ? "side-nav-active active" : "black-text" ?>" href="<?= $this->config->base_url() ?>user/myPets">
             <i class="fa fa-paw fa-2x"></i>My Pets
         </a>
     </li>

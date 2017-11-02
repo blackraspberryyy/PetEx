@@ -14,8 +14,8 @@ class User extends CI_Controller {
         $this->load->view("user/includes/header", $data);
         $this->load->view("user/navbar");
         $this->load->view("user/sidenav");
-        $this->load->view("user/userDashboard", $data);
-        $this->load->view("user/includes/footer", $data);
+        $this->load->view("user/userDashboard");
+        $this->load->view("user/includes/footer");
     }
 
     public function myPets() {
@@ -26,8 +26,20 @@ class User extends CI_Controller {
         $this->load->view("user/includes/header", $data);
         $this->load->view("user/navbar");
         $this->load->view("user/sidenav");
-        $this->load->view("user/myPets", $data);
-        $this->load->view("user/includes/footer", $data);
+        $this->load->view("user/myPets");
+        $this->load->view("user/includes/footer");
+    }
+
+    public function myPetsEdit() {
+        $data = array(
+            'title' => 'User | My Pets',
+            'wholeUrl' => base_url(uri_string())
+        );
+        $this->load->view("user/includes/header", $data);
+        $this->load->view("user/navbar");
+        $this->load->view("user/sidenav");
+        $this->load->view("user/myPetsEdit");
+        $this->load->view("user/includes/footer");
     }
 
     public function petAdoption() {
@@ -38,8 +50,8 @@ class User extends CI_Controller {
         $this->load->view("user/includes/header", $data);
         $this->load->view("user/navbar");
         $this->load->view("user/sidenav");
-        $this->load->view("user/petAdoption", $data);
-        $this->load->view("user/includes/footer", $data);
+        $this->load->view("user/petAdoption");
+        $this->load->view("user/includes/footer");
     }
 
     public function myTransaction() {
@@ -49,8 +61,9 @@ class User extends CI_Controller {
         );
         $this->load->view("user/includes/header", $data);
         $this->load->view("user/navbar");
-        $this->load->view("user/myTransaction", $data);
-        $this->load->view("user/includes/footer", $data);
+        $this->load->view("user/sidenav");
+        $this->load->view("user/myTransaction");
+        $this->load->view("user/includes/footer");
     }
 
     public function settings() {
@@ -61,8 +74,8 @@ class User extends CI_Controller {
         $this->load->view("user/includes/header", $data);
         $this->load->view("user/navbar");
         $this->load->view("user/sidenav");
-        $this->load->view("user/settings", $data);
-        $this->load->view("user/includes/footer", $data);
+        $this->load->view("user/settings");
+        $this->load->view("user/includes/footer");
     }
 
 }

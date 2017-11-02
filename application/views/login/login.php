@@ -25,8 +25,8 @@ if (validation_errors()) {
                         <div class="row">
                             <div class="col m12">
                                 <ul class="tabs">
-                                    <li class="tab col m6" ><a href="#login">Login</a></li>
-                                    <li class="tab col m6" ><a class="active" href="#signup">Signup</a></li>
+                                    <li class="tab col m6" ><a href="#login" class="active">Login</a></li>
+                                    <li class="tab col m6" ><a href="#signup">Signup</a></li>
                                 </ul>
                             </div>
                             <!--LOGIN TAB-->

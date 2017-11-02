@@ -371,7 +371,7 @@ if (validation_errors()): {
                     <li><a href="#"><i class="icon-circled icon-bgdark icon-pinterest icon-2x"></i></a></li>
                 </ul>
                 <p class="copyright">
-                    &copy; Codebusters. All rights reserved.
+                    &copy; 2017 Codebusters. All rights reserved.
                 <p>JC VALENCIA | ANGELO MARKUS ZAGUIRRE | ALLEN TORRES | JOSHUA VITUG</p>
                 <p>Made with&nbsp;&nbsp;&nbsp;<i class="icon-circled icon-bgdark icon-heart icon-1x" style="color:red;"></i></p>
                 </p>
