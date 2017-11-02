@@ -23,8 +23,14 @@
                 </div>
             </nav>
             <?php if(empty($pets)):?>
-                <!--Nothing Happens Here-->
+            <div class ="col s12" style = "padding:50px 5px !important;">
+                <center>
+                    <h5 class = "grey-text darken-5">NO PETS ARE REMOVED</h5>
+                    <i class="fa fa-trash fa-5x grey-text"></i>
+                </center>
+            </div>
             <?php else:?>
+            
                 <?php foreach ($pets as $pet): ?>
                     <div class ="col s4">
                         <div class="card sticky-action hoverable medium">
@@ -152,18 +158,6 @@
                     </div>
                 <?php endforeach; ?>
             <?php endif;?>
-            <div class ="col s4">
-                <a href ="<?= $this->config->base_url() ?>admin/petDatabaseAdd">
-                    <div class="card sticky-action hoverable medium grey lighten-2">
-                        <div class="card-image">
-                            <img src = "<?= $this->config->base_url() ?>/images/tools/pet_add.png" />
-                        </div>
-                        <div class="card-content">
-                            <span class="card-title grey-text center-align add_pet">Register Pet</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
         </div>
     </div>
 </div>
