@@ -23,10 +23,6 @@
                                         <input type="text" class="datepicker" name = "pet_bday"  value = "">
                                         <label for="pet_bday">Birthdate</label>
                                     </div>
-                                    <div class="input-field col s6 <?php if (!empty(form_error("pet_breed"))): ?>error-theme<?php else: ?>green-theme<?php endif; ?>">
-                                        <input id="pet_breed" type="text" class="" name = "pet_breed"  value = "">
-                                        <label for="pet_breed">Breed</label>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -47,50 +43,6 @@
                                         <textarea id="textarea2" class="materialize-textarea" name = "pet_history"></textarea>
                                         <label for="textarea2">Findings</label>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class ="col s3">
-                            <div class="card grey lighten-4">
-                                <div class="card-content">
-                                    <span class = "card-title">Sex</span><br>
-                                    <input class = "with-gap" name="pet_sex" type="radio" id="male" value = "male" />
-                                    <label for="male">Male</label><br>
-                                    <input class = "with-gap" name="pet_sex" type="radio" id="female" value = "female" />
-                                    <label for="female">Female</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class ="col s3">
-                            <div class="card grey lighten-4">
-                                <div class="card-content">
-                                    <span class = "card-title">Specie</span><br>
-                                    <input class = "with-gap" name="pet_specie" type="radio" id="canine" value = "canine"/>
-                                    <label for="canine">Canine</label><br>
-                                    <input class = "with-gap" name="pet_specie" type="radio" id="feline" value = "feline"/>
-                                    <label for="feline">Feline</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class ="col s3">
-                            <div class="card grey lighten-4">
-                                <div class="card-content">
-                                    <span class = "card-title">Admission</span><br>
-                                    <input class = "with-gap" name="pet_admission" type="radio" id="foster" value = "foster"/>
-                                    <label for="foster">Foster</label><br>
-                                    <input class = "with-gap" name="pet_admission" type="radio" id="parc" value = "parc"/>
-                                    <label for="parc">PARC</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class ="col s3">
-                            <div class="card grey lighten-4 ">
-                                <div class="card-content ">
-                                    <span class = "card-title">Sterilized</span><br>
-                                    <input class = "with-gap" name="pet_neutered_spayed" type="radio" id="yes" value = "1" />
-                                    <label for="yes">Yes</label><br>
-                                    <input class = "with-gap" name="pet_neutered_spayed" type="radio" id="no" value = "0" />
-                                    <label for="no">No</label>
                                 </div>
                             </div>
                         </div>

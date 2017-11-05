@@ -1,3 +1,7 @@
+<?php
+$userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session->userid))[0];
+?>
+
 <div class ="navbar-fixed">
     <nav>
         <div class="nav-wrapper green darken-1">
@@ -9,9 +13,9 @@
                     <ul id="slide-out" class="side-nav collapsible">
                         <li><div class="user-view">
                                 <div class="background">
-                                    <img src="<?= $this->config->base_url() ?>images/profile/profileBg.jpg">
+                                    <img src="<?= $this->config->base_url() ?>images/background/petLogin.jpg">
                                 </div>
-                                <a href="<?= $this->config->base_url() ?>user"><img class="circle z-depth-2" src="<?= $this->config->base_url() ?>images/profile/jc.png"></a>
+                                <a href="<?= $this->config->base_url() ?>user"><img class="circle z-depth-2" src="<?= base_url() ?>profile/<?= $userInfo->user_picture ?>"></a>
                                 <a href="#!name"><span class="white-text name" id="sad">John Doe</span></a>
                                 <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
                             </div></li>
@@ -31,8 +35,8 @@
                             </a>
                         </li>
                         <li>
-                            <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url() . "user/myTransaction" ? "side-nav-active active" : "black-text" ?>" href="<?= $this->config->base_url() ?>user/myTransaction">
-                                <i class="fa fa-history fa-2x"></i>My Transactions
+                            <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url() . "user/myProgress" ? "side-nav-active active" : "black-text" ?>" href="<?= $this->config->base_url() ?>user/myProgress">
+                                <i class="fa fa-history fa-2x"></i>My Progress
                             </a>
                         </li>
                         <li>

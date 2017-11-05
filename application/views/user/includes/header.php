@@ -1,3 +1,7 @@
+<?php
+    $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session->userid))[0];
+?>
+
 <html>
     <head>
         <meta charset="UTF-8">
@@ -45,8 +49,7 @@
             flex: 1 0 auto !important;
         }
         .name,.email{
-            color:black !important;
-
+            color:white !important;
         }
         .side-nav-active a, .side-nav-active i, .side-nav-active{
             color:#2e7d32 !important;
@@ -98,6 +101,10 @@
             border-color: #f0c514;
             border-width: 0 0 2px 0;
             border-radius: 20px;
+        }
+        .pet_info{
+            font-size:20px !important;
+            color:black;
         }
     </style>
     <body>

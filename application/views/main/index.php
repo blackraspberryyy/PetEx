@@ -241,7 +241,7 @@ if (validation_errors()): {
 </section>
 <!-- end spacer section -->
 
-<section id="blog" class="section">
+<section id="adoptables" class="section">
     <div class="container">
         <h4>Pet Adoptables</h4>
         <!-- Three columns -->

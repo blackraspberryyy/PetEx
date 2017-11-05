@@ -1,12 +1,14 @@
 <main>
     <div class ="side-nav-offset" >
         <div class ="container ">
+            <h2>My Pets</h2>
+            <hr class="style-seven">
             <div class = "card row">
                 <nav class = "green darken-3">
                     <div class="nav-wrapper">
                         <form action = "" method = "POST">
                             <div class="input-field">
-                                <input id="search" type="search" name = "search" placeholder = "Search your pet here.." >
+                                <input id="search" type="search" name = "search" placeholder = "Search for pet here.." >
                                 <i class="material-icons">close</i>
                             </div>
                         </form>
@@ -27,9 +29,7 @@
                             </div>
                             <div class="card-action">
                                 <a href = "<?= $this->config->base_url() ?>user/myPetsEdit" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit Pet Details"><i class = "fa fa-pencil-square-o fa-lg"></i></a>
-                                <a href = "#modal1" class="modal-trigger"  class = "tooltipped"  data-position="bottom" data-delay="50" data-tooltip="Play Video"><i class = "fa fa-video-camera fa-lg"></i></a>
-
-
+                                <a href = "#modal1" class="modal-trigger tooltipped"    data-position="bottom" data-delay="50" data-tooltip="Play Video"><i class = "fa fa-video-camera fa-lg"></i></a>
                             </div>
                         </div>
                     </div>
@@ -48,10 +48,11 @@
     </div>
 </main>
 
-<!-- Modal Structure -->
+<!-- Video Modal -->
 <div id="modal1" class="modal modal-fixed-footer">
     <div class="modal-content">
         <h4>Video</h4>
+        <hr>
         <video class="responsive-video" controls>
             <source src="<?= $this->config->base_url() ?>/videos/sampleVideo.mp4" type="video/mp4">
         </video>

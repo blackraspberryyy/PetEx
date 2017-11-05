@@ -95,6 +95,7 @@
                             <ul id="menu-main" class="nav">
                                 <li><a title="Team" href="#aboutBg">About</a></li>
                                 <li><a title="Services" href="#services">Services</a></li>
+                                <li><a title="Adoptables" href="#adoptables">Adoptables</a></li>
                                 <li><a title="Contact" href="#contact">Contact</a></li>
                                 <li><a title="Login" href="<?= base_url() ?>login/">Login</a></li>
                             </ul>
