@@ -274,6 +274,16 @@ class Admin extends CI_Controller{
             //Error in updating
         }
     }
+    
+    public function petDatabaseRestore(){
+        $pet_id = $this->uri->segment(3);
+        if($this->admin_model->update("pet", array("pet_access" => 1), array("pet_id" => $pet_id)) != 0){
+            redirect($this->config->base_url()."admin/petDatabaseRemovedPet");
+        }else{
+            //Error in updating
+        }
+    }
+    
     public function userDatabase(){
         $allUsers = $this->admin_model->fetch("user");
         $data = array(

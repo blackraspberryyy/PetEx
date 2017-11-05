@@ -80,17 +80,15 @@
                                 </p>
                                 <p class = "grey-text"><?= $pet->pet_description ?></p>
                             </div>
-                            <div class="card-action">
-                                <a href ="<?= base_url() ?>admin/petDatabaseUpdate/<?= $pet->pet_id ?>" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit Animal Details"><i class = "fa fa-pencil-square-o fa-lg"></i></a>
-                                <a href ="<?= base_url() ?>admin/petDatabaseAdopters/<?= $pet->pet_id ?>" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="See Interested Adopters"><i class = "fa fa-users fa-lg"></i></a>
-                                <a href ="#remove<?= $pet->pet_id;?>" class = "tooltipped modal-trigger" data-position="bottom" data-delay="50" data-tooltip="Remove Animal"><i class = "fa fa-remove fa-lg"></i></a>
+                            <div class="card-action ">
+                                <center><a href ="#restore<?= $pet->pet_id;?>" class = "waves-effect waves-light btn green darken-4 tooltipped modal-trigger" data-position="bottom" data-delay="50" data-tooltip="Add this pet back to the database">Restore</a></center>
                             </div>
                         </div>
                     </div>
-                    <div id="remove<?= $pet->pet_id;?>" class="modal modal-fixed-footer">
+                    <div id="restore<?= $pet->pet_id;?>" class="modal modal-fixed-footer">
                         <div class="modal-content">
-                            <h4><i class = "fa fa-warning"></i>Warning</h4>
-                            <p style = "font-weight:bold;">You are about to remove this pet from the database.</p>
+                            <h4><i class = "fa fa-warning"></i> Warning</h4>
+                            <p style = "font-weight:bold;">You are about to restore this pet from the database.</p>
                             <div class ="row">
                                 <div class ="col s4">
                                     <img src = "<?= $this->config->base_url().$pet->pet_picture?>" class = "responsive-img z-depth-4" style = "border-radius:5px; margin-top:20px;">
@@ -153,7 +151,7 @@
                         </div>
                         <div class="modal-footer">
                             <a class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
-                            <a href="<?= base_url() ?>admin/petDatabaseRemove/<?= $pet->pet_id ?>" class="modal-action modal-close waves-effect waves-green btn-flat ">Remove</a>
+                            <a href="<?= base_url() ?>admin/petDatabaseRestore/<?= $pet->pet_id ?>" class="modal-action modal-close waves-effect waves-green btn-flat ">Restore</a>
                         </div>
                     </div>
                 <?php endforeach; ?>

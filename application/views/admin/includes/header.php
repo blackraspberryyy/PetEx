@@ -2,6 +2,7 @@
     <head>
         <meta charset="UTF-8">
         <title><?=$title?></title>
+        <link rel="shortcut icon" href="<?= $this->config->base_url() ?>images/img/petexIcon.ico">
         
         <!-- fullCalendar.io-->
         <link href='<?= $this->config->base_url()?>assets/fullCalendar/css/fullcalendar.min.css' rel='stylesheet' />
@@ -54,8 +55,8 @@
                             title: 'PAWS Scaredy Cats and Dogs',
                             start: '2017-10-30',
                             editable: true,
-                            color:'#fdd835'
-                            
+                            color:'#fdd835',
+                            allDay: true 
                         },
                         {
                             title: 'Vacation',
