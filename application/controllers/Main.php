@@ -4,12 +4,12 @@ class Main extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->model('admin_model');
+        $this->load->model('user_model');
         $this->load->library('email');
     }
 
     public function sendContact($user) {
-        $allPets = $this->admin_model->fetch("pet");
+        $allPets = $this->user_model->fetch("pet");
         $data1 = array(
             'title' => 'Pet Ex | Homepage',
             'wholeUrl' => base_url(uri_string()),
@@ -31,7 +31,7 @@ class Main extends CI_Controller {
     }
 
     public function index() {
-        $allPets = $this->admin_model->fetch("pet");
+        $allPets = $this->user_model->fetchPetAsc("pet");
         $this->load->helper(array('form'));
         $this->load->library('form_validation');
         $dataContact = array(
@@ -57,7 +57,5 @@ class Main extends CI_Controller {
             $this->sendContact($dataContact);
         }
     }
-
-  
 
 }

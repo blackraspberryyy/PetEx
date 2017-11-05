@@ -6,6 +6,18 @@ class Login extends CI_Controller {
         parent::__construct();
         $this->load->model('user_model');
         $this->load->library('email');
+        if ($this->session->has_userdata('isloggedin') == TRUE) {
+            redirect('user/');
+        }
+    }
+
+    function _alpha_dash_space($str = '') {
+        if (!preg_match("/^([-a-z_ ])+$/i", $str)) {
+            $this->form_validation->set_message('_alpha_dash_space', 'The {field} may only contain alphabet characters, spaces, underscores, and dashes.');
+            return FALSE;
+        } else {
+            return TRUE;
+        }
     }
 
     public function index() {
@@ -15,6 +27,37 @@ class Login extends CI_Controller {
         $this->load->view("login/includes/header", $data);
         $this->load->view("login/login.php");
         $this->load->view("login/includes/footer");
+    }
+
+    public function login_submit() {
+
+        $data = array(
+            'user_username' => $this->input->post('username'),
+            'user_password' => $this->input->post('password'),
+        );
+        $accountDetails = $this->user_model->getinfo("user", $data);
+
+        if (!$accountDetails) {
+            echo "<script>alert('No results found');"
+            . "window.location='" . base_url() . "login'</script>";
+        } else {
+
+            $accountDetails = $accountDetails[0];
+
+            if ($accountDetails->user_status == 0) {
+                echo "<script>alert('Account is Blocked!');"
+                . "window.location='" . base_url() . "login'</script>";
+            } else {
+                if ($accountDetails->user_isverified == 0) {
+                    echo "<script>alert('Account is not yet verified in email');"
+                    . "window.location='" . base_url() . "login'</script>";
+                } else {
+                    $this->session->set_userdata('isloggedin', true);
+                    $this->session->set_userdata('userid', $accountDetails->user_id);
+                    redirect('user/');
+                }
+            }
+        }
     }
 
     public function generate() {
@@ -46,8 +89,8 @@ class Login extends CI_Controller {
         $this->form_validation->set_rules('conpass', "Confirm Password ", "required|matches[password]|alpha_numeric|min_length[8]|strip_tags");
         $this->form_validation->set_rules('phonenumber', "Phone Number ", "required|regex_match[^(09|\+639)\d{9}$^]|strip_tags");
         $this->form_validation->set_rules('email', "Email Address ", "required|valid_email|strip_tags");
-        $this->form_validation->set_rules('lastname', "Lastname ", "required|min_length[2]|strip_tags");
-        $this->form_validation->set_rules('firstname', "Firstname ", "required|min_length[2]|strip_tags");
+        $this->form_validation->set_rules('lastname', "Lastname ", "required|min_length[2]|strip_tags|callback__alpha_dash_space");
+        $this->form_validation->set_rules('firstname', "Firstname ", "required|min_length[2]|strip_tags|callback__alpha_dash_space");
         $this->form_validation->set_rules('birthday', "Birthday ", "required|strip_tags");
         $this->form_validation->set_rules('address', "Address ", "required|regex_match[^[#.0-9a-zA-Z\s,-]+$^]|strip_tags");
         if ($this->form_validation->run() == FALSE) {
@@ -59,7 +102,7 @@ class Login extends CI_Controller {
             $this->load->view("login/includes/footer");
         } else {
             $conpass = $this->input->post('conpass');
-            
+
             if ($this->input->post('gender') == "Male") {
                 $imagePath = "images/profile/male.png";
             } else {

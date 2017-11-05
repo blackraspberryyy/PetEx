@@ -1,7 +1,8 @@
 <main>
     <div class ="side-nav-offset">
         <div class="container">
-            <h1>DASHBOARD DITO, WAG KA MAKULIT!!!</h1>
+            <h2>Dashboard</h2>
+            <hr class="style-seven">
         </div>
     </div>
 </main>
