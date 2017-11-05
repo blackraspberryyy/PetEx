@@ -25,14 +25,14 @@ if (validation_errors()) {
                         <div class="row">
                             <div class="col m12">
                                 <ul class="tabs">
-                                    <li class="tab col m6" ><a href="#login">Login</a></li>
-                                    <li class="tab col m6" ><a class="active" href="#signup">Signup</a></li>
+                                    <li class="tab col m6" ><a href="#login" class="active">Login</a></li>
+                                    <li class="tab col m6" ><a href="#signup">Signup</a></li>
                                 </ul>
                             </div>
                             <!--LOGIN TAB-->
                             <div id="login" class="col m12">
                                 <br>
-                                <form method="POST" action="">`
+                                <form method="POST" action="<?= base_url() ?>login/login_submit">`
                                     <div class="row">
                                         <div class="input-field col s12">
                                             <i class="material-icons prefix">account_circle</i>
@@ -44,8 +44,12 @@ if (validation_errors()) {
                                             <input type="password" class="validate" name = "password">
                                             <label>Password</label>
                                         </div><br><br><br><br><br><br><br><br><br>
-                                        <a class="waves-effect waves-light btn pull-left button orange">Reset Password</a>
-                                        <a class="waves-effect waves-light btn pull-right button"><i class="material-icons right">send</i>Login</a>
+                                        <center>
+                                            <a class="waves-effect waves-light btn  button orange" style='height: 55px !important; padding-top: 10px !important;'>Reset Password</a>
+                                            <button class="btn-large waves-effect waves-light green darken-3"  style='width: 182px !important;' type="submit" name="action">Login
+                                                <i class="material-icons right">send</i>
+                                            </button>
+                                        </center>
                                     </div>
                                 </form>
                             </div>

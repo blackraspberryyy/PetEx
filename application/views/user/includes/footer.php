@@ -7,10 +7,10 @@
                 <div class="col m4">
                     <p class="copyright">
                     <center>
-                        &copy; Codebusters. All rights reserved.
+                        &copy; 2017 Codebusters. All rights reserved.
                         <p>JC VALENCIA | ANGELO MARKUS ZAGUIRRE | ALLEN TORRES | JOSHUA VITUG</p>
 
-                        <p>Made with&nbsp;&nbsp;&nbsp; <a class=" btn btn-floating pulse red "><i class="fa fa-heart" style="color:white;"></i></a></p>
+                        <p>Made with&nbsp;&nbsp;&nbsp; <a class=" btn btn-floating pulse red "><i class="fa fa-heartbeat" style="color:white;"></i></a></p>
                         </p>
                     </center>
                 </div>
@@ -21,9 +21,6 @@
 </footer>
 
 </body>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-
-
 <script>
     function readURL(input) {
         if (input.files && input.files[0]) {
@@ -45,6 +42,14 @@
 <script type="text/javascript" src="<?= $this->config->base_url() ?>assets/materialize/js/materialize.min.js"></script>
 <script type="text/javascript">
 
+    $(document).ready(function () {
+        // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+        $('modal').modal();
+    });
+    
+    $(document).ready(function () {
+        $('.materialboxed').materialbox();
+    });
 
     $('.datepicker').pickadate({
         selectMonths: false, // Creates a dropdown to control month
@@ -65,7 +70,7 @@
         inDuration: 300,
         outDuration: 225,
         constrainWidth: false, // Does not change width of dropdown to that of the activator
-        hover: true, // Activate on hover
+        hover: false, // Activate on hover
         gutter: 0, // Spacing from edge
         belowOrigin: false, // Displays dropdown below the button
         alignment: 'left', // Displays dropdown with edge aligned to the left of button

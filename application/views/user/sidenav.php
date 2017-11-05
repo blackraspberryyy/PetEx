@@ -1,10 +1,6 @@
 <style>
-    #admin-nav{
-        top:65px;
-        height: calc(100% - 65px);
-    }
     .side-nav-offset{
-        padding-left:240px;
+        padding-left:250px;
     }
     @media only screen and (max-width : 992px) {
         .side-nav-offset{
@@ -15,15 +11,18 @@
         color:#2e7d32 !important;
     }
 </style>
+<?php
+    $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session->userid))[0];
+?>
 
-<ul id="slide-out" class="side-nav fixed collapsible">
+<ul id="user-nav" class="side-nav fixed collapsible">
     <li><div class="user-view">
             <div class="background">
-                <img src="<?= $this->config->base_url() ?>images/profile/profileBg.jpg">
+                <img src="<?= $this->config->base_url() ?>images/background/office.jpg">
             </div>
-            <a href="#"><img class="circle z-depth-2" src="<?= $this->config->base_url() ?>images/profile/jc.png"></a>
-            <a href="#!name"><span class="white-text name" id="sad">John Doe</span></a>
-            <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+            <a href="<?= $this->config->base_url() ?>user"><img class="circle z-depth-2" src="<?=base_url()?>profile/<?=$userInfo->user_picture?>"></a>
+            <a href="#!name"><span class="white-text name" ><?=$userInfo->user_firstname?> <?=$userInfo->user_lastname?></span></a>
+            <a href="#!email"><span class="white-text email"><?=$userInfo->user_email?></span></a>
         </div></li>
     <li>
         <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url() . "user" ? "side-nav-active active" : "black-text" ?>" href="<?= $this->config->base_url() ?>user">
@@ -31,7 +30,7 @@
         </a>
     </li>
     <li>
-        <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url() . "user/myPets" ? "side-nav-active active" : "black-text" ?>" href="<?= $this->config->base_url() ?>user/myPets">
+        <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url() . "user/myPets" || strpos($wholeUrl, $this->config->base_url() . "user/myPetsEdit") !== FALSE  ? "side-nav-active active" : "black-text" ?>" href="<?= $this->config->base_url() ?>user/myPets">
             <i class="fa fa-paw fa-2x"></i>My Pets
         </a>
     </li>
@@ -41,8 +40,8 @@
         </a>
     </li>
     <li>
-        <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url() . "user/myTransaction" ? "side-nav-active active" : "black-text" ?>" href="<?= $this->config->base_url() ?>user/myTransaction">
-            <i class="fa fa-history fa-2x"></i>My Transactions
+        <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url() . "user/myProgress" ? "side-nav-active active" : "black-text" ?>" href="<?= $this->config->base_url() ?>user/myProgress">
+            <i class="fa fa-history fa-2x"></i>My Progress
         </a>
     </li>
     <li>

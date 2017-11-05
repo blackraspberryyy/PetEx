@@ -26,6 +26,10 @@
         <link rel="stylesheet" href="<?= $this->config->base_url() ?>assets/sweetalert-master/dist/sweetalert.css">
     </head>
     <style>
+        .max-img{
+            height:200px !important;
+            width:100% !important;
+        }
         .navImg{
             height:40px;
             max-width: 100%;
@@ -91,6 +95,7 @@
                             <ul id="menu-main" class="nav">
                                 <li><a title="Team" href="#aboutBg">About</a></li>
                                 <li><a title="Services" href="#services">Services</a></li>
+                                <li><a title="Adoptables" href="#adoptables">Adoptables</a></li>
                                 <li><a title="Contact" href="#contact">Contact</a></li>
                                 <li><a title="Login" href="<?= base_url() ?>login/">Login</a></li>
                             </ul>
