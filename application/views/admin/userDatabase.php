@@ -55,9 +55,10 @@
                 <?php foreach ($users as $user): ?>
                 <script>
                     $(document).ready(function(){
-                        $('#modal<?= $user->user_id?>').modal({
+                        $('#modal<?= $user->user_id?>, #modal<?= $user->user_id?>activate').modal({
                             dismissible: false
                         });
+                        
                     });
                 </script>
                     <li>
@@ -128,11 +129,51 @@
                             <a href="<?= $this->config->base_url()?>admin/deactivateUser/<?= $user->user_id?>" class="modal-action modal-close waves-effect waves-green btn-flat">Deactivate</a>
                         </div>
                     </div>
+                    
                     <!-- Modal Before Activating User -->
                     <div id="modal<?= $user->user_id?>activate" class="modal modal-fixed-footer">
                         <div class="modal-content">
-                            <h4><i class = "fa fa-check-circle"></i> Notice</h4>
-                            <p></p>
+                            <h4><i class = "fa fa-warning"></i> Notice</h4>
+                            <p>You are about to activate this user:</p>
+                            <div class ="row">
+                                <div class ="col s4">
+                                    <img src = "<?= $this->config->base_url().$user->user_picture?>" class = "responsive-img z-depth-4" style = "border-radius:5px; margin-top:20px;">
+                                </div>
+                                <div class ="col s8">
+                                    <table class = "striped responsive-table">
+                                        <tbody>
+                                            <tr>
+                                                <th>Name: </th>
+                                                <td><?= $user->user_lastname.", ".$user->user_firstname;?></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Age:</th>
+                                                <td><?= get_age($user->user_bday);?></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Username: </th>
+                                                <td><?= $user->user_username;?></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Email: </th>
+                                                <td><?= $user->user_email;?></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Access:</th>
+                                                <td><?= $user->user_access == "admin"? "Administrator" : "Pet Adopter"?></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Contact No.:</th>
+                                                <td><?= $user->user_contact_no?></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Added at:</th>
+                                                <td><?= date("F m, Y - h:i A", $user->user_added_at)?></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat cancelActivate<?= $user->user_id?>">Cancel</a>
