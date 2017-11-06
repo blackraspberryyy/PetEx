@@ -10,6 +10,10 @@ function get_age($birth_date) {
     }
 }
 ?>
+<?php
+$userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session->userid))[0];
+?>
+
 <main>
     <div class ="side-nav-offset" >
         <div class ="container ">
@@ -119,8 +123,7 @@ function get_age($birth_date) {
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <a class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
-                                        <a href="<?= base_url() ?>admin/petDatabaseRemove/<?= $pet->pet_id ?>" class="modal-action modal-close waves-effect waves-green btn-flat ">Remove</a>
+                                        <a class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
                                     </div>
                                 </div>
 
@@ -141,55 +144,135 @@ function get_age($birth_date) {
                                         <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
                                     </div>
                                 </div>
-
-                                <!-- Adopt Modal -->
-                                <div id="modal3" class="modal modal-fixed-footer">
-                                    <div class="modal-content">
-                                        <h4>Adoption Application Form</h4>
-                                        <hr>
-
-                                        <p><strong>There are two options for you to decide, its either download the form or fill up the form and send to our email online.</strong></p>
-                                        <ul class="collapsible" data-collapsible="accordion">
-                                            <li>
-                                                <div class="collapsible-header active">
-                                                    <i class="material-icons left">file_download</i> Download the Form
-                                                </div>
-                                                <div class="collapsible-body">
-                                                    <center>
-                                                        <a href="<?= base_url() ?>index.php/download/adoption_application_form.pdf" class="btn-large waves-effect waves-light blue darken-3">Download Adoption Application Form<i class="material-icons left">file_download</i></a>
-                                                    </center>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="collapsible-header">
-                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill up the Form
-                                                </div>
-                                                <div class="collapsible-body row">
-                                                    
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
-                                    </div>
-                                </div>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     <?php endif; ?>
-                </div>
+                    <!-- Adopt Modal -->
+                    <div id="modal3" class="modal modal-fixed-footer">
+                        <div class="modal-content">
+                            <h4>Adoption Application Form</h4>
+                            <hr>
 
+                            <p><strong>There are two options for you to decide, its either download the form or fill up the form and send to our email online.</strong></p>
+                            <ul class="collapsible" data-collapsible="accordion">
+                                <li>
+                                    <div class="collapsible-header ">
+                                        <i class="material-icons left">file_download</i> Download the Form
+                                    </div>
+                                    <div class="collapsible-body">
+                                        <center>
+                                            <a href="<?= base_url() ?>index.php/download/adoption_application_form.pdf" class="btn-large waves-effect waves-light blue darken-3">Download Adoption Application Form<i class="material-icons left">file_download</i></a>
+                                        </center>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="collapsible-header active">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill up the Form
+                                    </div>
+                                    <div class="collapsible-body row">
+                                        <form method="POST" action ="">
+                                            <div class="col s8">
+                                            </div>
+                                            <div class="input-field col s4">
+                                                <input type="text" class="validate" name = "date" value="<?= date("F d, Y") ?>" disabled>
+                                                <label>Date of Application</label>
+                                            </div>
+                                            <div class="input-field col s5">
+                                                <input type="text" class="validate" name = "name" value="<?= $userInfo->user_firstname ?> <?= $userInfo->user_lastname ?>" disabled>
+                                                <label>Name</label>
+                                            </div>
+                                            <div class="input-field col s3">
+                                                <input type="text" class="validate" name = "age" value="<?= get_age($userInfo->user_bday); ?>" disabled>
+                                                <label>Age</label>
+                                            </div>
+                                            <div class="input-field col s4">
+                                                <input type="text" class="validate" name = "email" value="<?= $userInfo->user_email ?>" disabled>
+                                                <label>Email</label>
+                                            </div>
+                                            <div class="input-field col s12">
+                                                <input type="text" class="validate" name = "address" value="<?= $userInfo->user_address ?>,<?= $userInfo->user_brgy ?>,<?= $userInfo->user_city ?>,<?= $userInfo->user_province ?>" disabled>
+                                                <label>Address</label>
+                                            </div>
+                                            <div class="input-field col s4">
+                                                <input type="text" class="validate" name = "numhome" >
+                                                <label>Tel Nos. (Home)</label>
+                                            </div>
+                                            <div class="input-field col s4">
+                                                <input type="text" class="validate" name = "numwork" >
+                                                <label>(Work)</label>
+                                            </div>
+                                            <div class="input-field col s4">
+                                                <input type="text" class="validate" name = "nummobile" value = "<?= $userInfo->user_contact_no ?>" disabled> 
+                                                <label>Mobile No.</label>
+                                            </div>
+                                            <h6>Personal Reference:</h6>
+                                            <div class="input-field col s5">
+                                                <input type="text" class="validate" name = "nameref">
+                                                <label>Name</label>
+                                            </div>
+                                            <div class="input-field col s3">
+                                                <input type="text" class="validate" name = "ageref">
+                                                <label>Relationship</label>
+                                            </div>
+                                            <div class="input-field col s4">
+                                                <input type="text" class="validate" name = "numref">
+                                                <label>Tel No.</label>
+                                            </div>
+                                            <div class="input-field col s3">
+                                                <span>What prompted you to come to PARC?</span>
+                                            </div>
+                                            <div class="col s2">
+                                                <p>
+                                                    <input type="checkbox" name="friends" id="friends" />
+                                                    <label for="friends">Friends</label>
+                                                </p>
+                                            </div>
+                                            <div class="col s3">
+                                                <p>
+                                                    <input type="checkbox" name="ads" id="ads" />
+                                                    <label for="ads">Print Ads</label>
+                                                </p>
+                                            </div>
+                                            <div class="col s3">
+                                                <p>
+                                                    <input type="checkbox" name="tvshow" id="tvshow" />
+                                                    <label for="tvshow">TV Show</label>
+                                                </p>
+                                            </div>
+                                            <div class="col s4">
+                                                <p>
+                                                    <input type="checkbox" name="web" id="web" />
+                                                    <label for="web">Website</label>
+                                                </p>
+                                            </div>
+                                            <div class="col s2">
+                                                <p>
+                                                    <input type="checkbox" id="others" />
+                                                    <label for="others">Others</label>
+                                                </p>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
+                        </div>
+                    </div>
+
+                </div>
+                <ul class="pagination center">
+                    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                    <li class="active"><a href="#!">1</a></li>
+                    <li class="waves-effect"><a href="#!">2</a></li>
+                    <li class="waves-effect"><a href="#!">3</a></li>
+                    <li class="waves-effect"><a href="#!">4</a></li>
+                    <li class="waves-effect"><a href="#!">5</a></li>
+                    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                </ul>
             </div>
         </div>
     </div>
 </main>
 
-<ul class="pagination center">
-    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-    <li class="active"><a href="#!">1</a></li>
-    <li class="waves-effect"><a href="#!">2</a></li>
-    <li class="waves-effect"><a href="#!">3</a></li>
-    <li class="waves-effect"><a href="#!">4</a></li>
-    <li class="waves-effect"><a href="#!">5</a></li>
-    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-</ul>
