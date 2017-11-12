@@ -377,7 +377,7 @@ if (validation_errors()): {
                 </p>
             </div>
             <br>
-            <a href=""><button class="btn btn-success">Sign up for PetEx</button></a>
+            <a href="<?= base_url() ?>login/"><button class="btn btn-success">Sign up for PetEx</button></a>
         </div>
     </div>
 
