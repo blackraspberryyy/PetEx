@@ -13,6 +13,37 @@
         <link href="https://fonts.googleapis.com/css?family=Oswald|Saira+Extra+Condensed" rel="stylesheet">
         <!--Font Awesome Icons-->
         <link rel = "stylesheet" href = "<?= $this->config->base_url() ?>assets/fontawesome/css/font-awesome.min.css">
+    
+        <script type="text/javascript" src="<?= $this->config->base_url() ?>assets/materialize/js/materialize.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('ul.tabs').tabs();
+            });
+            $(document).ready(function () {
+                $('ul.tabs').tabs('select_tab', 'tab_id');
+            });
+            var d = new Date();
+            d.setFullYear(d.getFullYear() - 18);
+            $('.datepicker').pickadate({
+                selectMonths: true, // Creates a dropdown to control month
+                selectYears: 150, // Creates a dropdown of 15 years to control year,
+                format: 'mmmm dd, yyyy',
+                max: d,
+                clear: 'Clear',
+                close: 'Ok',
+                closeOnSelect: false // Close upon selecting a date,
+            });
+
+            $(document).ready(function () {
+                $('.collapsible').collapsible();
+            });
+
+            $(document).ready(function () {
+                $('select').material_select();
+            });
+
+
+        </script>
     </head>
     <style>
 
@@ -20,15 +51,21 @@
         .green-theme input[type=text]:focus + label,
         .green-theme input[type=email]:focus + label,
         .green-theme input[type=number]:focus + label,
+        .green-theme input[type=password]:focus + label,
         .green-theme textarea:focus + label{
             color: #388e3c !important;
         }
         .green-theme input[type=text]:focus,
         .green-theme input[type=number]:focus,
         .green-theme input[type=email]:focus,
+        .green-theme input[type=password]:focus,
+        .green-theme input[type=password]:focus,
         .green-theme textarea:focus{
             border-bottom: 1px solid #388e3c !important;
             box-shadow: 0 1px 0 0 #388e3c !important;
+        }
+        .input-field .prefix.active{
+            color:#388e3c !important;
         }
         .green-theme input[type="radio"].with-gap:checked+label:before,
         .green-theme input[type="radio"].with-gap:checked+label:after {
