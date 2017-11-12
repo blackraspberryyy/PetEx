@@ -31,7 +31,7 @@ class Main extends CI_Controller {
     }
 
     public function index() {
-        $allPets = $this->user_model->fetchPetAsc("pet");
+        $allPets = $this->user_model->fetchPetDesc("pet");
         $this->load->helper(array('form'));
         $this->load->library('form_validation');
         $dataContact = array(
