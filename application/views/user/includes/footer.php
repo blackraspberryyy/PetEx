@@ -53,7 +53,7 @@
 
     $('.datepicker').pickadate({
         selectMonths: false, // Creates a dropdown to control month
-        selectYears: 15, // Creates a dropdown of 15 years to control year,
+        selectYears: 50, // Creates a dropdown of 15 years to control year,
         format: 'mmmm dd, yyyy',
         max: 'Today',
         today: 'Today',

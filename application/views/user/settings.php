@@ -1,171 +1,120 @@
-<main>
-    <div class ="side-nav-offset" >
-        <div class ="container ">
-            <div class = "card row">
-                <nav class = "green darken-3">
-                    <div class="col s12">
-                        <h4>Settings</h4>
-                    </div>
-                </nav>
-                <div class="card-content">
-                    <div class = "card hoverable">
-                        <nav class = "green darken-3">
-                            <div class="col s12">
-                                <h4>Login Information</h4>
-                            </div>
-                        </nav>
-                        <div class="card-content row ">
-                            <div class ="col s12">
-                                <div class="card grey lighten-4">
-                                    <div class="card-content row  ">
-                                        <div class="input-field col s12">
-                                            <form method="POST" action="">
-                                                <div class="input-field">
-                                                    <input type="text" class="validate">
-                                                    <label>Username</label>
-                                                </div>
-                                                <div class="input-field">
-                                                    <input type="password" class="validate">
-                                                    <label>Password</label>
-                                                </div>
-                                                <div class="input-field">
-                                                    <input type="password" class="validate">
-                                                    <label>Confirm Password</label>
-                                                </div>
-                                                <button class="btn-large waves-effect waves-light green lighten-1 right" type="submit" name="action">Submit
-                                                    <i class="material-icons right">send</i>
-                                                </button>
-                                                <button class="btn-large waves-effect waves-light red right" type="reset" name="action">Reset
-                                                    <i class="material-icons right">replay</i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class = "card hoverable">
-                        <nav class = "green darken-3">
-                            <div class="col s12">
-                                <h4>Personal Information</h4>
-                            </div>
-                        </nav>
-                        <div class="card-content row">
-                            <div class ="col s12">
-                                <div class="card grey lighten-4">
-                                    <div class="card-content row">
-                                        <div class="input-field col s12">
-                                            <form method="POST" action="">
-                                                <h6> <i class="material-icons">info</i> Full Name</h6>
-                                                <div class="input-field col s6">
-                                                    <input type="text" class="validate">
-                                                    <label>Lastname</label>
-                                                </div>
-                                                <div class="input-field col s6">
-                                                    <input type="text" class="validate">
-                                                    <label>Firstname</label>
-                                                </div>
-                                                <button class="btn-large waves-effect waves-light green lighten-1 right" type="submit" name="action">Submit
-                                                    <i class="material-icons right">send</i>
-                                                </button>
-                                                <button class="btn-large waves-effect waves-light red right" type="reset" name="action">Reset
-                                                    <i class="material-icons right">replay</i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card grey lighten-4">
-                                    <div class="card-content row">
-                                        <div class="input-field col s12">
-                                            <div class="col s12">
-                                                <form method="POST" action="">
-                                                    <h6> <i class="fa fa-birthday-cake" aria-hidden="true"></i>  Birthday</h6>
-                                                    <input type="text" class="datepicker" placeholder="Birthday">
-                                                    <button class="btn-large waves-effect waves-light green lighten-1 right" type="submit" name="action">Submit
-                                                        <i class="material-icons right">send</i>
-                                                    </button>
-                                                    <button class="btn-large waves-effect waves-light red right" type="reset" name="action">Reset
-                                                        <i class="material-icons right">replay</i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card grey lighten-4">
-                                    <div class="card-content row">
-                                        <div class="input-field col s12">
-                                            <div class="col s12">
-                                                <form method="POST" action="">
-                                                    <h6><i class="fa fa-address-card" aria-hidden="true"></i> Complete Address </h6>
-                                                    <div class="input-field col s3">
-                                                        <input type="text" class="validate">
-                                                        <label>Street Number(e.g.123)</label>
-                                                    </div>
-                                                    <div class="input-field col s4">
-                                                        <input type="text" class="validate">
-                                                        <label>Street Name(e.g.Main Road)</label>
-                                                    </div>
-                                                    <div class="input-field col s5">
-                                                        <input type="text" class="validate">
-                                                        <label>Barangay Name(e.g.Brgy. Calayo)</label>
-                                                    </div>
-                                                    <div class="input-field col s6">
-                                                        <input type="text" class="validate">
-                                                        <label>Name of Province/City (e.g.Batangas)</label>
-                                                    </div>
-                                                    <button class="btn-large waves-effect waves-light green lighten-1 right" type="submit" name="action">Submit
-                                                        <i class="material-icons right">send</i>
-                                                    </button>
-                                                    <button class="btn-large waves-effect waves-light red right" type="reset" name="action">Reset
-                                                        <i class="material-icons right">replay</i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                        <div class = "card hoverable">
-                            <nav class = "green darken-3">
-                                <div class="col s12">
-                                    <h4>Contact Information</h4>
-                                </div>
-                            </nav>
-                            <div class="card-content row">
-                                <div class ="col s12">
-                                    <div class="card grey lighten-4">
-                                        <div class="card-content row">
-                                            <div class="input-field col s12">
-                                                <form method="POST" action="">
-                                                    <div class="input-field">
-                                                        <input type="number" class="validate">
-                                                        <label>Phone Number</label>
-                                                    </div>
-                                                    <div class="input-field">
-                                                        <input type="email" class="validate">
-                                                        <label>Email Address</label>
-                                                    </div>
-                                                    <button class="btn-large waves-effect waves-light green lighten-1 right" type="submit" name="action">Submit
-                                                        <i class="material-icons right">send</i>
-                                                    </button>
-                                                    <button class="btn-large waves-effect waves-light red right" type="reset" name="action">Reset
-                                                        <i class="material-icons right">replay</i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<style>
+    .row{
+        margin-bottom: 0px !important;
+    }
+    #settingTbl:first-child th{
+        width:100px;
+    }
+    .profileImgStyle{
+        height:200px;
+        border:2px solid white;
+    }
+</style>
+<div class ="side-nav-offset">
+    <div class ="container">
+        <div class = "card row" style = "margin-bottom:20px !important;">
+            <nav class = "green darken-3">
+                <div class="col s12">
+                    <a href="<?= $wholeUrl?>" class="breadcrumb">Settings</a>
+                </div>
+            </nav>
+            <div class="card-content ">
+                <div class ="row" style = "margin-bottom:20px !important;">
+                    <div class = "col s12 center">
+                        <img src="<?= $this->config->base_url()?>images/profile/jc.png" class = "profileImgStyle z-depth-2 circle">
+                        <br>
+                        <a href = "#editPicture" class = "btn waves-effect waves-light green darken-4">Change</a>
                     </div>
                 </div>
+                <table class = "bordered" id = "settingTbl">
+                    <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <td>
+                                <div class = "row">
+                                    <div class="input-field col s5">
+                                        <input id="user_firstname" type="text" class="" name = "user_firstname" value="Juan Carlo" >
+                                        <label for="user_firstname">First Name</label>
+                                    </div>
+                                    <div class="input-field col s5">
+                                        <input id="user_lastname" type="text" class="" name = "user_lastname" value="Valencia" >
+                                        <label for="user_lastname">Last Name</label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style = "text-align:right;"><a href = "#editName" class = "btn waves-effect waves-light green darken-4">Change</a></td>
+                        </tr>
+                        <tr>
+                            <th>Username</th>
+                            <td>
+                                <div class = "row">
+                                    <div class="input-field col s10">
+                                        <input id="user_username" type="text" class="" name = "user_username" value="username_jc" >
+                                    </div>
+                                </div>
+                            </td>
+                            <td style = "text-align:right;"><a href = "#editUsername" class = "btn waves-effect waves-light green darken-4">Change</a></td>
+                        </tr>
+                        <tr>
+                            <th>Password</th>
+                            <td>
+                                <div class = "row">
+                                    <div class="input-field col s10">
+                                        <input id="user_password" type="password" class="" name = "user_password"  value="password_jc" >
+                                    </div>
+                                </div>
+                            </td>
+                            <td style = "text-align:right;"><a href = "#editPassword" class = "btn waves-effect waves-light green darken-4">Change</a></td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>
+                                <div class = "row">
+                                    <div class="input-field col s10">
+                                        <input id="user_email" type="email" class="" name = "user_email" value="carlo.valencia066@gmail.com" >
+                                    </div>
+                                </div>
+                            </td>
+                            <td style = "text-align:right;"><a href = "#editEmail" class = "btn waves-effect waves-light green darken-4">Change</a></td>
+                        </tr>
+                        <tr>
+                            <th>Contact No.</th>
+                            <td>
+                                <div class = "row">
+                                    <div class="input-field col s10">
+                                        <input id="user_contact_no" type="text" class="" name = "user_contact_no" value="09066991021" >
+                                    </div>
+                                </div>
+                            </td>
+                            <td style = "text-align:right;"><a href = "#editContactNo" class = "btn waves-effect waves-light green darken-4">Change</a></td>
+                        </tr>
+                        <tr>
+                            <th>Address</th>
+                            <td>
+                                <div class = "row">
+                                    <div class="input-field col s10">
+                                        <input id="user_address" type="text" class="" name = "user_address" value="#61 San Francisco St." >
+                                        <label for = "user_address">Complete Address</label>
+                                    </div>
+                                    <div class="input-field col s3">
+                                        <input id="user_brgy" type="text" class="" name = "user_brgy" value="Karuhatan" >
+                                        <label for = "user_brgy">Brgy</label>
+                                    </div>
+                                    <div class="input-field col s3">
+                                        <input id="user_city" type="text" class="" name = "user_city" value="Valenzuela" >
+                                        <label for = "user_city">City</label>
+                                    </div>
+                                    <div class="input-field col s3">
+                                        <input id="user_province" type="text" class="" name = "user_province" value="Metro Manila" >
+                                        <label for = "user_province">Province</label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style = "text-align:right;"><a href = "#editAddress" class = "btn waves-effect waves-light green darken-4">Change</a></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-
-</main>
+    </div>
+</div>

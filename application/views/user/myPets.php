@@ -58,7 +58,7 @@
         </video>
     </div>
     <div class="modal-footer">
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red white-text">Close</a>
     </div>
 </div>
 

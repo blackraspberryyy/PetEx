@@ -1,5 +1,5 @@
 <?php
-    $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session->userid))[0];
+$userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session->userid))[0];
 ?>
 
 <html>
@@ -75,6 +75,7 @@
         }
         h6{
             font-size:30px;
+            font-family: 'Open Sans Condensed', sans-serif;
         }
         .pagination .active{
             background-color:#2e7d32 !important;
@@ -108,3 +109,6 @@
         }
     </style>
     <body>
+        <?php
+        date_default_timezone_set("Asia/Manila");
+        ?>
