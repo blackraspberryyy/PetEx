@@ -9,7 +9,7 @@ class user_model extends CI_Model {
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
-
+    
     function getinfo($table, $where = NULL) {
         if ($where !== NULL) {
             $this->db->where($where);

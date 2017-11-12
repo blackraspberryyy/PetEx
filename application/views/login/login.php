@@ -1,8 +1,9 @@
 <?php
-if (validation_errors()) {
-    include 'includes/toastErrorUserRegister.php';
-}
+    if (validation_errors()) {
+        include 'includes/toastErrorUserRegister.php';
+    }
 ?>
+
 <div class="row">
     <div class="col m7 leftSide hoverable">
         <h1>What is PetEx?</h1>
@@ -25,8 +26,8 @@ if (validation_errors()) {
                         <div class="row">
                             <div class="col m12">
                                 <ul class="tabs">
-                                    <li class="tab col m6" ><a href="#login" class="active">Login</a></li>
-                                    <li class="tab col m6" ><a href="#signup">Signup</a></li>
+                                    <li class="tab col m6" ><a href="#login" class="">Login</a></li>
+                                    <li class="tab col m6" ><a href="#signup" class="active">Signup</a></li>
                                 </ul>
                             </div>
                             <!--LOGIN TAB-->
@@ -34,12 +35,12 @@ if (validation_errors()) {
                                 <br>
                                 <form method="POST" action="<?= base_url() ?>login/login_submit">`
                                     <div class="row">
-                                        <div class="input-field col s12">
-                                            <i class="material-icons prefix">account_circle</i>
+                                        <div class="input-field col s12 green-theme">
+                                            <i class="material-icons prefix ">account_circle</i>
                                             <input type="text" class="validate" name = "username">
                                             <label>Username</label>
                                         </div>
-                                        <div class="input-field col s12">
+                                        <div class="input-field col s12 green-theme">
                                             <i class="material-icons prefix">lock</i>
                                             <input type="password" class="validate" name = "password">
                                             <label>Password</label>
@@ -61,11 +62,11 @@ if (validation_errors()) {
                                             <input id="username" type="text" class="" name = "username" autofocus="" value="<?= set_value('username') ?>">
                                             <label for="username">Username</label>
                                         </div>
-                                        <div class="input-field col s12">
+                                        <div class="input-field col s12 green-theme">
                                             <input type="password" class="validate" name = "password">
                                             <label>Password</label>
                                         </div>
-                                        <div class="input-field col s12">
+                                        <div class="input-field col s12 green-theme">
                                             <input type="password" class="validate" name = "conpass">
                                             <label>Confirm Password</label>
                                         </div>
@@ -84,16 +85,15 @@ if (validation_errors()) {
                                             <input type="text" class="validate" name = "firstname" value="<?= set_value('firstname') ?>">
                                             <label>Firstname</label>
                                         </div>
-                                        <h6><i class="fa fa-venus-mars" aria-hidden="true"></i> Gender </h6>
-                                        <div class="col s6">
+                                        <div class="col s6 green-theme">
                                             <p>
-                                                <input name="gender" type="radio" id="test1" value="Male" checked/>
+                                                <input name="gender" type="radio" id="test1" value="Male" class = "with-gap" checked/>
                                                 <label style="font-size:20px;" for="test1">Male</label>
                                             </p>
                                         </div>
-                                        <div class="col s6">
+                                        <div class="col s6 green-theme">
                                             <p>
-                                                <input name="gender" type="radio" id="test2" value="Female"/>
+                                                <input name="gender" type="radio" id="test2" value="Female" class = "with-gap" />
                                                 <label style="font-size:20px;" for="test2">Female</label>
                                             </p>
                                         </div>
@@ -101,11 +101,20 @@ if (validation_errors()) {
                                             <label>Birthday</label>
                                             <input type="text" class="datepicker" name = "birthday" value="<?= set_value('birthday') ?>">
                                         </div>
+                                        
+                                        <div class="input-field col s12">
+                                            <select id = "province" name = "province"></select>
+                                            <label>Province</label>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <select id = "city" name = "city"></select>
+                                            <label>City</label>
+                                        </div>
                                         <div class="input-field col s12 <?php if (!empty(form_error("address"))): ?>error-theme<?php else: ?>green-theme<?php endif; ?>">
-                                            <textarea id="textarea1" class="materialize-textarea" data-length="120" name="address" value="<?= set_value('address') ?>"></textarea>
+                                            <textarea id="textarea1" class="materialize-textarea" placeholder = "Street No., Street Name, Brgy." data-length="120" name="address" value="<?= set_value('address') ?>"></textarea>
                                             <label for="textarea1">Complete Address</label>
                                         </div>
-                                        <button class="btn-large waves-effect waves-light green darken-3 right" type="submit" name="action">Submit
+                                        <button style = "margin-top:50px !important;" class="btn-large waves-effect waves-light green darken-3" type="submit" name="action">Submit
                                             <i class="material-icons right">send</i>
                                         </button>
                                     </div>
@@ -118,3 +127,40 @@ if (validation_errors()) {
         </div>
     </div>
 </div>
+
+<script>
+    //IT TAKES AN EFFIN' 7 HRS STRAIGHT TO MAKE THIS SCRIPT!
+    <?php 
+        $provResult = $this->user_model->fetchJoin("refcitymun", "refprovince", "refcitymun.provCode = refprovince.provCode");
+        $cityResult = $this->user_model->fetch("refcitymun");
+        $dataString = array();
+        
+        foreach($provResult as $prov){
+            $cityResult = $this->user_model->fetch("refcitymun", array("provCode" => $prov->provCode));
+            $cityHolder = array();
+            foreach ($cityResult as $city){
+                array_push($cityHolder, $city->citymunDesc);
+            }
+            $dataString[$prov->provDesc] = $cityHolder;
+        }
+        
+        $dataString = json_encode($dataString);
+    ?>
+    var data = <?= $dataString?>;
+
+     $.each(data, function(key, value){            
+        $('#province').append($('<option />').text(key));
+     });
+
+     $('#province').change(function() {
+        var key = $(this).val();
+        $('#city').empty();
+        $('#city').append('<option disabled selected = "" value = "0">Choose a City</option>');
+        for (var i in data[key]) {
+            $('#city').append('<option>' + data[key][i] + '</option>');
+            i++;
+        }
+        $('select').material_select();
+
+     }).trigger('change');
+</script>
