@@ -8,7 +8,7 @@ class Admin extends CI_Controller {
         $this->load->helper('file');
         $this->load->model('admin_model');
         if ($this->session->has_userdata('isloggedin') == FALSE) {
-            redirect('login/');
+            redirect(base_url().'login/');
         }
     }
 
@@ -409,7 +409,7 @@ class Admin extends CI_Controller {
 
     public function logout() {
         $this->session->sess_destroy();
-        redirect(base_url() . 'login/');
+        redirect(base_url().'login/');
     }
 
 }
