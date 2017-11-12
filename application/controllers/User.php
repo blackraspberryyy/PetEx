@@ -12,13 +12,13 @@ class User extends CI_Controller {
     }
 
     public function index() {
-
         $allPets = $this->user_model->fetchPetDesc("pet");
-      
+        $allAdopted = $this->user_model->fetchJoinThreeAdoptedDesc("adoption", "pet", "adoption.pet_id = pet.pet_id", "user", "adoption.user_id = user.user_id");
         $data = array(
             'title' => 'User | ',
             'wholeUrl' => base_url(uri_string()),
-            'pets' => $allPets
+            'pets' => $allPets,
+            'adoptedPets' => $allAdopted
         );
         $this->load->view("user/includes/header", $data);
         $this->load->view("user/navbar");

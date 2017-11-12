@@ -34,7 +34,7 @@ $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session
                     <?php if (!$pets): ?>
                     <?php else: ?>
                         <?php foreach ($pets as $pet): ?> 
-                            <?php if ($pet->pet_status == 'adoptable'): ?>
+                            <?php if ($pet->pet_status == 'adoptable' && $pet->pet_access == 1): ?>
                                 <div class="col s4">
                                     <div class="card sticky-action hoverable medium">
                                         <div class="card-image">

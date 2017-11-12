@@ -34,7 +34,7 @@ $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session
                     <?php else: ?>
                         <?php $counter = 0; ?>
                         <?php foreach ($pets as $pet): ?> 
-                            <?php if ($pet->pet_status == 'adoptable'): ?>
+                            <?php if ($pet->pet_status == 'adoptable' && $pet->pet_access == 1): ?>
                                 <div class="col s4">
                                     <div class="card sticky-action hoverable medium">
                                         <div class="card-image">
@@ -82,6 +82,10 @@ $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session
                                                         <tr>
                                                             <th>Status: </th>
                                                             <td><?= $pet->pet_status; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Size: </th>
+                                                            <td><?= $pet->pet_size; ?></td>
                                                         </tr>
                                                         <tr>
                                                             <th>Birthday: </th>
@@ -534,6 +538,142 @@ $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session
                     <?php endif; ?>
                 </div>
                 <a href="<?= base_url() ?>user/petAdoption" class="waves-effect waves-green btn-flat blue-text pull-right">See more</a>
+            </div>
+            <div class = "card row">
+                <nav class = "green darken-3">
+                    <div class="nav-wrapper">
+                        <nav class = "green darken-3">
+                            <div class="col s12">
+                                <h4>Newly Adopted Pet</h4>
+                            </div>
+                        </nav>
+                    </div>
+                </nav>
+                <div class="card-content row">
+                    <?php $counter1 = 0; ?>
+                    <?php foreach ($adoptedPets as $adopted): ?>
+                        <?php if ($adopted->pet_access == 1): ?>
+
+                            <div class="col s4">
+                                <div class="card sticky-action hoverable medium">
+                                    <div class="card-image">
+                                        <img class="materialboxed" data-caption = ""  width="100%" height="100%" src="<?= $this->config->base_url() . $adopted->pet_picture ?>">
+                                    </div>
+                                    <div class="card-content">
+                                        <span class="card-title activator grey-text text-darken-4"><?= $adopted->pet_name ?><i class="material-icons right">more_vert</i></span>
+                                        <i class="fa fa-user"></i> <?= $adopted->user_firstname; ?> <?= $adopted->user_lastname; ?><br>
+                                        <i class="fa fa-calendar"></i> <?= date('M. j, Y', $adopted->pet_bday) ?><br>
+                                        <?php if ($pet->pet_sex == "Male" || $adopted->pet_sex == "male"): ?>
+                                            <i class="fa fa-mars"></i> <?= $adopted->pet_sex ?><br>
+                                        <?php else: ?>
+                                            <i class="fa fa-venus"></i> <?= $adopted->pet_sex ?><br>
+                                        <?php endif; ?>
+                                        <i class="fa fa-paw"></i> <?= $adopted->pet_breed ?><br>
+                                    </div>
+                                    <div class="card-reveal">
+                                        <span class="card-title grey-text text-darken-4">Description<i class="material-icons right">close</i></span>
+                                        <hr>
+                                        <p><?= $adopted->pet_description ?></p>
+                                    </div>
+                                    <div class="card-action">
+                                        <a href ="#detail<?= $adopted->pet_id; ?>" class = "modal-trigger tooltipped pull-left" data-position="bottom" data-delay="50" data-tooltip="View Full Details"><i class = "fa fa-eye fa-lg"></i></a>
+                                        <a href ="#video<?= $adopted->pet_id; ?>"  class="modal-trigger tooltipped pull-left"   data-position="bottom" data-delay="50" data-tooltip="Play Video"><i class = "fa fa-video-camera fa-lg"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Pet Info Modal -->
+                            <div id="detail<?= $adopted->pet_id; ?>" class="modal modal-fixed-footer">
+                                <div class="modal-content">
+                                    <h4><i class = "fa fa-info"></i> Pet Info</h4>
+                                    <div class ="row">
+                                        <div class ="col s4">
+                                            <img src = "<?= $this->config->base_url() . $adopted->pet_picture ?>" class = "responsive-img z-depth-4" style = "border-radius:5px; margin-top:20px;">
+                                        </div>
+                                        <div class ="col s8">
+                                            <table class = "striped responsive-table">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>Name: </th>
+                                                        <td><?= $adopted->pet_name; ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Status: </th>
+                                                        <td><?= $adopted->pet_status; ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Owner: </th>
+                                                        <td><?= $adopted->user_firstname; ?> <?= $adopted->user_lastname; ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Size: </th>
+                                                        <td><?= $adopted->pet_size; ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Birthday: </th>
+                                                        <td><?= date("F d, Y", $adopted->pet_bday); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Age:</th>
+                                                        <td><?= get_age($adopted->pet_bday); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Specie: </th>
+                                                        <td><?= $adopted->pet_specie; ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Sex: </th>
+                                                        <td><?= $adopted->pet_sex; ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Breed: </th>
+                                                        <td><?= $adopted->pet_breed; ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Sterilized: </th>
+                                                        <td><?= $adopted->pet_neutered_spayed == 1 ? "Yes" : "No"; ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Admission: </th>
+                                                        <td><?= $adopted->pet_admission; ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Description: </th>
+                                                        <td><?= $adopted->pet_description; ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Findings: </th>
+                                                        <td><?= $adopted->pet_history; ?></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="modal-action modal-close waves-effect waves-green btn-flat red white-text ">Close</a>
+                                </div>
+                            </div>
+
+                            <!-- Video Modal -->
+                            <div id="video<?= $adopted->pet_id; ?>" class="modal modal-fixed-footer">
+                                <div class="modal-content">
+                                    <h4>Video</h4>
+                                    <hr>
+                                    <?php if ($adopted->pet_video == NULL): ?>
+                                        <h2>This pet has no Video</h2>
+                                    <?php else: ?>
+                                        <video class="responsive-video" controls>
+                                            <source src="<?= $this->config->base_url() . $adopted->pet_picture ?>"  type="video/mp4">
+                                        </video>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red white-text">Close</a>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
             </div>
         </div>
     </div>
