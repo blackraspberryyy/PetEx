@@ -563,7 +563,7 @@ $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session
                                         <span class="card-title activator grey-text text-darken-4"><?= $adopted->pet_name ?><i class="material-icons right">more_vert</i></span>
                                         <i class="fa fa-user"></i> <?= $adopted->user_firstname; ?> <?= $adopted->user_lastname; ?><br>
                                         <i class="fa fa-calendar"></i> <?= date('M. j, Y', $adopted->pet_bday) ?><br>
-                                        <?php if ($pet->pet_sex == "Male" || $adopted->pet_sex == "male"): ?>
+                                        <?php if ($adopted->pet_sex == "Male" || $adopted->pet_sex == "male"): ?>
                                             <i class="fa fa-mars"></i> <?= $adopted->pet_sex ?><br>
                                         <?php else: ?>
                                             <i class="fa fa-venus"></i> <?= $adopted->pet_sex ?><br>

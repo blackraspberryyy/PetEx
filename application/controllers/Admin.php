@@ -409,7 +409,7 @@ class Admin extends CI_Controller {
 
     public function logout() {
         $this->session->sess_destroy();
-        redirect('login/');
+        redirect(base_url() . 'login/');
     }
 
 }
