@@ -1,43 +1,50 @@
 <?php
 
-class Admin extends CI_Controller{
-    
+class Admin extends CI_Controller {
+
     function __construct() {
         parent::__construct();
         $this->load->helper('date');
         $this->load->helper('file');
         $this->load->model('admin_model');
+        if ($this->session->has_userdata('isloggedin') == FALSE) {
+            redirect('login/');
+        }
     }
-    
+
     //----------OTHER FUNCTIONS------------
     function get_age($birth_date) {
-      return floor((time() - strtotime($birth_date)) / 31556926);
+        return floor((time() - strtotime($birth_date)) / 31556926);
     }
+
     function get_months($birth_date) {
-      return floor((time() - strtotime($birth_date)) / 2678400);
+        return floor((time() - strtotime($birth_date)) / 2678400);
     }
-    function _alpha_dash_space($str = ''){
-        if(!preg_match("/^([-a-z_ ])+$/i", $str)){
+
+    function _alpha_dash_space($str = '') {
+        if (!preg_match("/^([-a-z_ ])+$/i", $str)) {
             $this->form_validation->set_message('_alpha_dash_space', 'The {field} may only contain alphabet characters, spaces, underscores, and dashes.');
             return FALSE;
-        }else{
+        } else {
             return TRUE;
         }
     }
-    
-    function GetImageExtension($imagetype){
-        if(empty($imagetype)) return false;
-        switch($imagetype){
+
+    function GetImageExtension($imagetype) {
+        if (empty($imagetype))
+            return false;
+        switch ($imagetype) {
             case 'image/bmp': return '.bmp';
             case 'image/gif': return '.gif';
             case 'image/jpeg': return '.jpg';
             case 'image/png': return '.png';
             default: return false;
         }
-     }
+    }
+
     //-------------------------------------
-    
-    public function index(){
+
+    public function index() {
         $data = array(
             'title' => 'Admin | ',
             'wholeUrl' => base_url(uri_string()),
@@ -48,8 +55,8 @@ class Admin extends CI_Controller{
         $this->load->view("admin/adminDashboard");
         $this->load->view("admin/includes/footer");
     }
-    
-    public function petDatabase(){
+
+    public function petDatabase() {
         $allPets = $this->admin_model->fetch("pet", array("pet_access" => 1));
         $data = array(
             'title' => 'Pet Database | Admin',
@@ -62,8 +69,8 @@ class Admin extends CI_Controller{
         $this->load->view("admin/petDatabase");
         $this->load->view("admin/includes/footer");
     }
-    
-    public function petDatabaseAdd(){
+
+    public function petDatabaseAdd() {
         $data = array(
             'title' => 'Pet Registration | Admin',
             'wholeUrl' => base_url(uri_string()),
@@ -74,8 +81,8 @@ class Admin extends CI_Controller{
         $this->load->view("admin/petDatabaseAdd");
         $this->load->view("admin/includes/footer");
     }
-    
-    public function petDatabaseAdd_exec(){
+
+    public function petDatabaseAdd_exec() {
         $this->form_validation->set_rules('pet_name', "Pet\'s Name", "required|callback__alpha_dash_space|max_length[10]");
         $this->form_validation->set_rules('pet_bday', "Pet\'s Birthday", "required");
         $this->form_validation->set_rules('pet_breed', "Pet\'s Breed", "required|callback__alpha_dash_space|max_length[40]");
@@ -92,25 +99,25 @@ class Admin extends CI_Controller{
             $this->load->view("admin/petDatabaseAdd");
             $this->load->view("admin/includes/footer");
         } else {
-            if(!empty($_FILES["pet_picture"]["name"])) {
-                    $file_name=$_FILES["pet_picture"]["name"];
-                    $temp_name=$_FILES["pet_picture"]["tmp_name"];
-                    $imgtype=$_FILES["pet_picture"]["type"];
-                    $ext= $this->GetImageExtension($imgtype);
-                    $imagename=date("d-m-Y")."-".time().$ext;
-                    $target_path = "./images/animals/".$imagename;
+            if (!empty($_FILES["pet_picture"]["name"])) {
+                $file_name = $_FILES["pet_picture"]["name"];
+                $temp_name = $_FILES["pet_picture"]["tmp_name"];
+                $imgtype = $_FILES["pet_picture"]["type"];
+                $ext = $this->GetImageExtension($imgtype);
+                $imagename = date("d-m-Y") . "-" . time() . $ext;
+                $target_path = "./images/animals/" . $imagename;
 
-                    if(move_uploaded_file($temp_name, $target_path) ) {
-                        $imagePath = $target_path;
-                    }else{
-                        echo "Unable to find the folder location";
-                       //redirect to oops
-                    }
-            }else{
+                if (move_uploaded_file($temp_name, $target_path)) {
+                    $imagePath = $target_path;
+                } else {
+                    echo "Unable to find the folder location";
+                    //redirect to oops
+                }
+            } else {
                 //DO METHOD WITHOUT PICTURE PROVIDED
-                if($this->input->post('pet_specie') == "canine"){
+                if ($this->input->post('pet_specie') == "canine") {
                     $imagePath = "images/tools/dog_temp_pic.png";
-                }else{
+                } else {
                     $imagePath = "images/tools/cat_temp_pic.png";
                 }
             }
@@ -130,9 +137,9 @@ class Admin extends CI_Controller{
                 'pet_updated_at' => time()
             );
 
-            if($this->admin_model->singleinsert("pet", $data)){
-                redirect($this->config->base_url()."admin/petDatabase");
-            }else{
+            if ($this->admin_model->singleinsert("pet", $data)) {
+                redirect($this->config->base_url() . "admin/petDatabase");
+            } else {
                 echo "An Error Ocurred";
                 echo "<pre>";
                 print_r($data);
@@ -141,8 +148,8 @@ class Admin extends CI_Controller{
             }
         }
     }
-    
-    public function petDatabaseRemovedPet(){
+
+    public function petDatabaseRemovedPet() {
         $allPets = $this->admin_model->fetch("pet", array('pet_access' => 0));
         $data = array(
             'title' => 'Removed Pet | Admin',
@@ -155,9 +162,9 @@ class Admin extends CI_Controller{
         $this->load->view("admin/petDatabaseRemovedPet");
         $this->load->view("admin/includes/footer");
     }
-    
-    public function petDatabaseUpdate(){
-        $selectedPets = $this->admin_model->fetch('pet', array('pet_id' => $this->uri->segment(3), "pet_access" => 1)) ;
+
+    public function petDatabaseUpdate() {
+        $selectedPets = $this->admin_model->fetch('pet', array('pet_id' => $this->uri->segment(3), "pet_access" => 1));
         $data = array(
             'title' => 'Pet Database | Admin',
             'wholeUrl' => base_url(uri_string()),
@@ -169,15 +176,15 @@ class Admin extends CI_Controller{
         $this->load->view("admin/petDatabaseUpdate");
         $this->load->view("admin/includes/footer");
     }
-    
-    public function petDatabaseUpdate_exec(){
+
+    public function petDatabaseUpdate_exec() {
         $this->form_validation->set_rules('pet_name', "Pet\'s Name", "required|callback__alpha_dash_space|max_length[10]");
         $this->form_validation->set_rules('pet_bday', "Pet\'s Birthday", "required");
         $this->form_validation->set_rules('pet_breed', "Pet\'s Breed", "required|callback__alpha_dash_space|max_length[40]");
         $this->form_validation->set_rules('pet_description', "Pet\'s Description", "required");
         if ($this->form_validation->run() == FALSE) {
             //ERROR IN FORM
-            $selectedPets = $this->admin_model->fetch('pet', array('pet_id' => $this->uri->segment(3), "pet_access" => 1)) ;
+            $selectedPets = $this->admin_model->fetch('pet', array('pet_id' => $this->uri->segment(3), "pet_access" => 1));
             $data = array(
                 'title' => 'Pet Database | Admin',
                 'wholeUrl' => base_url(uri_string()),
@@ -191,31 +198,31 @@ class Admin extends CI_Controller{
         } else {
             $pet_id = $this->uri->segment(3);
             $pets = $this->admin_model->fetch("pet", array("pet_id" => $pet_id, "pet_access" => 1));
-            if($pets){
-                if(!empty($_FILES["pet_picture"]["name"])) {
-                    $file_name=$_FILES["pet_picture"]["name"];
-                    $temp_name=$_FILES["pet_picture"]["tmp_name"];
-                    $imgtype=$_FILES["pet_picture"]["type"];
-                    $ext= $this->GetImageExtension($imgtype);
-                    $imagename=date("d-m-Y")."-".time().$ext;
-                    $target_path = "./images/animals/".$imagename;
+            if ($pets) {
+                if (!empty($_FILES["pet_picture"]["name"])) {
+                    $file_name = $_FILES["pet_picture"]["name"];
+                    $temp_name = $_FILES["pet_picture"]["tmp_name"];
+                    $imgtype = $_FILES["pet_picture"]["type"];
+                    $ext = $this->GetImageExtension($imgtype);
+                    $imagename = date("d-m-Y") . "-" . time() . $ext;
+                    $target_path = "./images/animals/" . $imagename;
 
-                    if(move_uploaded_file($temp_name, $target_path) ) {
+                    if (move_uploaded_file($temp_name, $target_path)) {
                         $imagePath = $target_path;
-                    }else{
+                    } else {
                         echo "Unable to find the folder location";
-                       //redirect to oops
+                        //redirect to oops
                     }
-                }else{
+                } else {
                     //DO METHOD WITHOUT PICTURE PROVIDED
                     $pets = $pets[0];
-                    if($pets->pet_picture == "images/tools/dog_temp_pic.png" || $pets->pet_picture == "images/tools/cat_temp_pic.png"){
-                        if($this->input->post('pet_specie') == "canine"){
+                    if ($pets->pet_picture == "images/tools/dog_temp_pic.png" || $pets->pet_picture == "images/tools/cat_temp_pic.png") {
+                        if ($this->input->post('pet_specie') == "canine") {
                             $imagePath = "images/tools/dog_temp_pic.png";
-                        }else{
+                        } else {
                             $imagePath = "images/tools/cat_temp_pic.png";
                         }
-                    }else{
+                    } else {
                         $imagePath = $pets->pet_picture;
                     }
                 }
@@ -234,9 +241,9 @@ class Admin extends CI_Controller{
                     'pet_added_at' => time(),
                     'pet_updated_at' => time()
                 );
-                if($this->admin_model->update("pet", $data, array("pet_id" =>$pet_id))){
-                    redirect($this->config->base_url()."admin/petDatabase");
-                }else{
+                if ($this->admin_model->update("pet", $data, array("pet_id" => $pet_id))) {
+                    redirect($this->config->base_url() . "admin/petDatabase");
+                } else {
                     echo "An Error Ocurred<br>";
                     echo $pet_id;
                     echo "<pre>";
@@ -244,14 +251,13 @@ class Admin extends CI_Controller{
                     echo "</pre>";
                     //Redirect to oops
                 }
-
-            }else{
+            } else {
                 //NO PETS Detected
             }
         }
     }
-    
-    public function petDatabaseAdopters(){
+
+    public function petDatabaseAdopters() {
         $allPets = $this->admin_model->fetch("pet", array("pet_access" => 1));
         $data = array(
             'title' => 'Pet Database | Admin',
@@ -264,27 +270,27 @@ class Admin extends CI_Controller{
         //$this->load->view("admin/petDatabase");
         $this->load->view("admin/includes/footer");
     }
-    
-    public function petDatabaseRemove(){
+
+    public function petDatabaseRemove() {
         $pet_id = $this->uri->segment(3);
-        
-        if($this->admin_model->update("pet", array("pet_access" => 0), array("pet_id" => $pet_id)) != 0){
-            redirect($this->config->base_url()."admin/petDatabase");
-        }else{
+
+        if ($this->admin_model->update("pet", array("pet_access" => 0), array("pet_id" => $pet_id)) != 0) {
+            redirect($this->config->base_url() . "admin/petDatabase");
+        } else {
             //Error in updating
         }
     }
-    
-    public function petDatabaseRestore(){
+
+    public function petDatabaseRestore() {
         $pet_id = $this->uri->segment(3);
-        if($this->admin_model->update("pet", array("pet_access" => 1), array("pet_id" => $pet_id)) != 0){
-            redirect($this->config->base_url()."admin/petDatabaseRemovedPet");
-        }else{
+        if ($this->admin_model->update("pet", array("pet_access" => 1), array("pet_id" => $pet_id)) != 0) {
+            redirect($this->config->base_url() . "admin/petDatabaseRemovedPet");
+        } else {
             //Error in updating
         }
     }
-    
-    public function userDatabase(){
+
+    public function userDatabase() {
         $allUsers = $this->admin_model->fetch("user");
         $data = array(
             'title' => 'User Database | Admin',
@@ -297,23 +303,26 @@ class Admin extends CI_Controller{
         $this->load->view("admin/userDatabase");
         $this->load->view("admin/includes/footer");
     }
+
     public function activateUser() {
         $user_id = $this->uri->segment(3);
-        if($this->admin_model->update("user", array("user_status" => 1), array("user_id" => $user_id)) != 0){
-            redirect($this->config->base_url()."admin/userDatabase");
-        }else{
+        if ($this->admin_model->update("user", array("user_status" => 1), array("user_id" => $user_id)) != 0) {
+            redirect($this->config->base_url() . "admin/userDatabase");
+        } else {
             //Error in updating
         }
     }
+
     public function deactivateUser() {
         $user_id = $this->uri->segment(3);
-        if($this->admin_model->update("user", array("user_status" => 0), array("user_id" => $user_id)) != 0){
-            redirect($this->config->base_url()."admin/userDatabase");
-        }else{
+        if ($this->admin_model->update("user", array("user_status" => 0), array("user_id" => $user_id)) != 0) {
+            redirect($this->config->base_url() . "admin/userDatabase");
+        } else {
             //Error in updating
         }
     }
-    public function userDatabaseAdd(){
+
+    public function userDatabaseAdd() {
         $data = array(
             'title' => 'User Database | Admin',
             'wholeUrl' => base_url(uri_string()),
@@ -324,8 +333,8 @@ class Admin extends CI_Controller{
         //$this->load->view("admin/auditTrail");
         $this->load->view("admin/includes/footer");
     }
-    
-    public function schedules(){
+
+    public function schedules() {
         $data = array(
             'title' => 'Schedules | Admin',
             'wholeUrl' => base_url(uri_string()),
@@ -336,15 +345,15 @@ class Admin extends CI_Controller{
         $this->load->view("admin/schedules");
         $this->load->view("admin/includes/footer");
     }
-    
-    public function reports(){
+
+    public function reports() {
         $animalsCount = $this->admin_model->fetchCount("pet");
         $adoptablesCount = $this->admin_model->fetchCount("pet", array("pet_status" => 'adoptable'));
         $usersCount = $this->admin_model->fetchCount("user");
         $adoptionCount = $this->admin_model->fetchCount("adoption");
         $missingPetCount = $this->admin_model->fetchCount("adoption", array("adoption_isMissing" => 1));
         $interestedAdoptersCount = $this->admin_model->fetchCount("transaction", array("transaction_isFinished" => 0));
-        
+
         $data = array(
             'title' => 'Reports | Admin',
             'wholeUrl' => base_url(uri_string()),
@@ -361,8 +370,8 @@ class Admin extends CI_Controller{
         $this->load->view("admin/reports");
         $this->load->view("admin/includes/footer");
     }
-    
-    public function userLogs(){
+
+    public function userLogs() {
         $data = array(
             'title' => 'User Logs | Admin',
             'wholeUrl' => base_url(uri_string()),
@@ -373,8 +382,8 @@ class Admin extends CI_Controller{
         $this->load->view("admin/userLogs");
         $this->load->view("admin/includes/footer");
     }
-    
-    public function auditTrail(){
+
+    public function auditTrail() {
         $data = array(
             'title' => 'Audit Trail | Admin',
             'wholeUrl' => base_url(uri_string()),
@@ -385,8 +394,8 @@ class Admin extends CI_Controller{
         $this->load->view("admin/auditTrail");
         $this->load->view("admin/includes/footer");
     }
-    
-    public function settings(){
+
+    public function settings() {
         $data = array(
             'title' => 'Settings | Admin',
             'wholeUrl' => base_url(uri_string()),
@@ -397,4 +406,10 @@ class Admin extends CI_Controller{
         $this->load->view("admin/settings");
         $this->load->view("admin/includes/footer");
     }
+
+    public function logout() {
+        $this->session->sess_destroy();
+        redirect('login/');
+    }
+
 }

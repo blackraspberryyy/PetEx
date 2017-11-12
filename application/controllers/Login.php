@@ -5,6 +5,7 @@ class Login extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('user_model');
+        $this->load->model('admin_model');
         $this->load->library('email');
         if ($this->session->has_userdata('isloggedin') == TRUE) {
             redirect('user/');
@@ -35,26 +36,51 @@ class Login extends CI_Controller {
             'user_username' => $this->input->post('username'),
             'user_password' => $this->input->post('password'),
         );
-        $accountDetails = $this->user_model->getinfo("user", $data);
-
-        if (!$accountDetails) {
-            echo "<script>alert('No results found');"
-            . "window.location='" . base_url() . "login'</script>";
-        } else {
-
-            $accountDetails = $accountDetails[0];
-
-            if ($accountDetails->user_status == 0) {
-                echo "<script>alert('Account is Blocked!');"
+        $accountDetailsUser = $this->user_model->getinfo("user", $data);
+        $accountDetailsAdmin = $this->admin_model->getinfo("user", $data);
+        
+        if ($accountDetailsAdmin->user_access == "admin") {
+            if (!$accountDetailsAdmin) {
+                echo "<script>alert('No results found');"
                 . "window.location='" . base_url() . "login'</script>";
             } else {
-                if ($accountDetails->user_isverified == 0) {
-                    echo "<script>alert('Account is not yet verified in email');"
+
+                $accountDetailsAdmin = $accountDetailsAdmin[0];
+
+                if ($accountDetailsAdmin->user_status == 0) {
+                    echo "<script>alert('Account is Blocked!');"
                     . "window.location='" . base_url() . "login'</script>";
                 } else {
-                    $this->session->set_userdata('isloggedin', true);
-                    $this->session->set_userdata('userid', $accountDetails->user_id);
-                    redirect('user/');
+                    if ($accountDetailsAdmin->user_isverified == 0) {
+                        echo "<script>alert('Account is not yet verified in email');"
+                        . "window.location='" . base_url() . "login'</script>";
+                    } else {
+                        $this->session->set_userdata('isloggedin', true);
+                        $this->session->set_userdata('userid', $accountDetailsAdmin->user_id);
+                        redirect('admin/');
+                    }
+                }
+            }
+        } else {
+            if (!$accountDetailsUser) {
+                echo "<script>alert('No results found');"
+                . "window.location='" . base_url() . "login'</script>";
+            } else {
+
+                $accountDetailsUser = $accountDetailsUser[0];
+
+                if ($accountDetailsUser->user_status == 0) {
+                    echo "<script>alert('Account is Blocked!');"
+                    . "window.location='" . base_url() . "login'</script>";
+                } else {
+                    if ($accountDetailsUser->user_isverified == 0) {
+                        echo "<script>alert('Account is not yet verified in email');"
+                        . "window.location='" . base_url() . "login'</script>";
+                    } else {
+                        $this->session->set_userdata('isloggedin', true);
+                        $this->session->set_userdata('userid', $accountDetailsUser->user_id);
+                        redirect('user/');
+                    }
                 }
             }
         }
