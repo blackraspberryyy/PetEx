@@ -10,6 +10,55 @@ class user_model extends CI_Model {
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
     
+    public function fetchFieldDistinct($table, $field = NULL, $where = NULL) {
+        if (!empty($where)) {
+            $this->db->where($where);
+        }
+        if (!empty($field)) {
+            $this->db->select($field);
+        }
+        $this->db->distinct();
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
+    
+    public function fetchField($table, $field, $where = NULL) {
+        if (!empty($where)) {
+            $this->db->where($where);
+        }
+        $this->db->select($field);
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
+    
+    public function fetchjoin($table, $join = NULL, $on = NULL, $where=NULL){
+        //$on must be array('pet.user_id = user.user_id');
+        if(!empty($where)){
+            $this->db->where($where);
+        }
+        if(!(empty($join) || empty($on))){
+            $this->db->join($join, $on, "left outer");
+        }
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
+    
+    public function fetchjointhree($table, $join = NULL, $on = NULL, $join2 = NULL, $on2 = NULL, $where=NULL){
+        //$on must be array('pet.user_id = user.user_id');
+        if(!empty($where)){
+            $this->db->where($where);
+        }
+        if(!(empty($join) || empty($on))){
+            $this->db->join($join, $on, "left outer");
+        }
+        if(!(empty($join2)  || empty($on2))){
+            $this->db->join($join2, $on2, "left outer");
+        }
+        
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
+    
     function getinfo($table, $where = NULL) {
         if ($where !== NULL) {
             $this->db->where($where);
