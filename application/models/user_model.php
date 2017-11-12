@@ -30,7 +30,7 @@ class user_model extends CI_Model {
         return $query->num_rows();
     }
 
-    public function fetchPetAsc($table, $where = NULL) {
+    public function fetchPetDesc($table, $where = NULL) {
 
         if (!empty($where)) {
             $this->db->where($where);
@@ -40,6 +40,16 @@ class user_model extends CI_Model {
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
 
+    public function fetchPetAdoptedDesc($table, $where = NULL) {
+
+        if (!empty($where)) {
+            $this->db->where($where);
+        }
+
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
+    
     public function insert($table, $data) {
         $this->db->insert($table, $data);
         return $this->db->affected_rows();

@@ -12,9 +12,13 @@ class User extends CI_Controller {
     }
 
     public function index() {
+
+        $allPets = $this->user_model->fetchPetDesc("pet");
+      
         $data = array(
             'title' => 'User | ',
-            'wholeUrl' => base_url(uri_string())
+            'wholeUrl' => base_url(uri_string()),
+            'pets' => $allPets
         );
         $this->load->view("user/includes/header", $data);
         $this->load->view("user/navbar");
@@ -48,7 +52,7 @@ class User extends CI_Controller {
     }
 
     public function petAdoption() {
-        $allPets = $this->user_model->fetchPetAsc("pet");
+        $allPets = $this->user_model->fetchPetDesc("pet");
         $data = array(
             'title' => 'User | Pet Adoption',
             'wholeUrl' => base_url(uri_string()),
