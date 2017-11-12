@@ -8,7 +8,7 @@ class Login extends CI_Controller {
         $this->load->model('admin_model');
         $this->load->library('email');
         if ($this->session->has_userdata('isloggedin') == TRUE) {
-            redirect('user/');
+            redirect(base_url().'user/');
         }
     }
 
@@ -36,54 +36,49 @@ class Login extends CI_Controller {
             'user_username' => $this->input->post('username'),
             'user_password' => $this->input->post('password'),
         );
-        $accountDetailsUser = $this->user_model->getinfo("user", $data);
-        $accountDetailsAdmin = $this->admin_model->getinfo("user", $data);
+        $accountDetails = $this->admin_model->getinfo("user", $data);
         
-        if ($accountDetailsAdmin->user_access == "admin") {
-            if (!$accountDetailsAdmin) {
-                echo "<script>alert('No results found');"
-                . "window.location='" . base_url() . "login'</script>";
-            } else {
-
-                $accountDetailsAdmin = $accountDetailsAdmin[0];
-
-                if ($accountDetailsAdmin->user_status == 0) {
-                    echo "<script>alert('Account is Blocked!');"
-                    . "window.location='" . base_url() . "login'</script>";
+        if (!$accountDetails) {
+            //OOPS no accounts like that!
+            echo "<script>alert('No results found');";
+            redirect(base_url().'login/');
+        } else {
+            $accountDetails = $accountDetails[0];
+            if ($accountDetails->user_access == "admin") {
+                if($accountDetails->user_status == 0){
+                    //OOPS user is blocked by the admin. Please contact the admin.
+                    echo "<script>alert('Account is Blocked!');";
+                    redirect(base_url().'login/');
                 } else {
-                    if ($accountDetailsAdmin->user_isverified == 0) {
-                        echo "<script>alert('Account is not yet verified in email');"
-                        . "window.location='" . base_url() . "login'</script>";
+                    if ($accountDetails->user_isverified == 0) {
+                        //OOPS user is not verified yet.
+                        echo "<script>alert('Account is not yet verified');";
+                        redirect(base_url().'login/');
                     } else {
                         $this->session->set_userdata('isloggedin', true);
-                        $this->session->set_userdata('userid', $accountDetailsAdmin->user_id);
-                        redirect('admin/');
+                        $this->session->set_userdata('userid', $accountDetails->user_id);
+                        redirect(base_url().'admin/');
                     }
                 }
-            }
-        } else {
-            if (!$accountDetailsUser) {
-                echo "<script>alert('No results found');"
-                . "window.location='" . base_url() . "login'</script>";
-            } else {
-
-                $accountDetailsUser = $accountDetailsUser[0];
-
-                if ($accountDetailsUser->user_status == 0) {
-                    echo "<script>alert('Account is Blocked!');"
-                    . "window.location='" . base_url() . "login'</script>";
+            }else{
+                if($accountDetails->user_status == 0){
+                    //OOPS user is blocked by the admin. Please contact the admin.
+                    echo "<script>alert('Account is Blocked!');";
+                    redirect(base_url().'login/');
                 } else {
-                    if ($accountDetailsUser->user_isverified == 0) {
-                        echo "<script>alert('Account is not yet verified in email');"
-                        . "window.location='" . base_url() . "login'</script>";
+                    if ($accountDetails->user_isverified == 0) {
+                        //OOPS user is not verified yet.
+                        echo "<script>alert('Account is not yet verified');";
+                        redirect(base_url().'login/');
                     } else {
                         $this->session->set_userdata('isloggedin', true);
-                        $this->session->set_userdata('userid', $accountDetailsUser->user_id);
-                        redirect('user/');
+                        $this->session->set_userdata('userid', $accountDetails->user_id);
+                        redirect(base_url().'user/');
                     }
                 }
             }
         }
+        
     }
 
     public function generate() {
