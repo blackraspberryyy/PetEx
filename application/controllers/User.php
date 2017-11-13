@@ -40,9 +40,11 @@ class User extends CI_Controller {
     }
 
     public function myPetsEdit() {
+        $selectedPets = $this->user_model->fetch('pet', array('pet_id' => $this->uri->segment(3), "pet_access" => 1));
         $data = array(
-            'title' => 'User | My Pets',
-            'wholeUrl' => base_url(uri_string())
+            'title' => 'User | Pet Edit',
+            'wholeUrl' => base_url(uri_string()),
+            'pet' => $selectedPets
         );
         $this->load->view("user/includes/header", $data);
         $this->load->view("user/navbar");
@@ -54,7 +56,7 @@ class User extends CI_Controller {
     public function petAdoption() {
         $allPets = $this->user_model->fetchPetDesc("pet");
         $data = array(
-            'title' => 'User | Pet Adoption',
+            'title' => 'User | Online Adoption Application Form',
             'wholeUrl' => base_url(uri_string()),
             'pets' => $allPets
         );
@@ -64,7 +66,21 @@ class User extends CI_Controller {
         $this->load->view("user/petAdoption");
         $this->load->view("user/includes/footer");
     }
-
+    
+    public function petAdoptionOnlineForm() {
+        $allPets = $this->user_model->fetchPetDesc("pet");
+        $data = array(
+            'title' => 'User | Pet Adoption',
+            'wholeUrl' => base_url(uri_string()),
+            'pets' => $allPets
+        );
+        $this->load->view("user/includes/header", $data);
+        $this->load->view("user/navbar");
+        $this->load->view("user/sidenav");
+        $this->load->view("user/petAdoptionOnlineForm");
+        $this->load->view("user/includes/footer");
+    }
+    
     public function myProgress() {
         $data = array(
             'title' => 'User | My Progress',
