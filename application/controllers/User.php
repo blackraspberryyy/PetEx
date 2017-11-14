@@ -151,7 +151,7 @@ class User extends CI_Controller {
     public function petAdoption() {
         $allPets = $this->user_model->fetchPetDesc("pet");
         $data = array(
-            'title' => 'User | Pet Adoption',
+            'title' => 'User | Online Adoption Application Form',
             'wholeUrl' => base_url(uri_string()),
             'pets' => $allPets
         );
@@ -161,7 +161,21 @@ class User extends CI_Controller {
         $this->load->view("user/petAdoption");
         $this->load->view("user/includes/footer");
     }
-
+    
+    public function petAdoptionOnlineForm() {
+        $allPets = $this->user_model->fetchPetDesc("pet");
+        $data = array(
+            'title' => 'User | Pet Adoption',
+            'wholeUrl' => base_url(uri_string()),
+            'pets' => $allPets
+        );
+        $this->load->view("user/includes/header", $data);
+        $this->load->view("user/navbar");
+        $this->load->view("user/sidenav");
+        $this->load->view("user/petAdoptionOnlineForm");
+        $this->load->view("user/includes/footer");
+    }
+    
     public function myProgress() {
         $data = array(
             'title' => 'User | My Progress',

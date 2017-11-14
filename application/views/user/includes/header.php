@@ -30,6 +30,9 @@ $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session
         <!--Font Awesome Icons-->
         <link rel = "stylesheet" href = "<?= $this->config->base_url() ?>assets/fontawesome/css/font-awesome.min.css">
 
+        <!--Animate CSS-->
+        <link rel = "stylesheet" href = "<?= $this->config->base_url() ?>assets/animatecss/css/animate.css">
+
     </head>
     <style>
         /*GREEN THEME FORMS*/
@@ -160,6 +163,79 @@ $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session
         .pet_info{
             font-size:20px !important;
             color:black;
+        }
+        
+        /*--------------------------------*/
+        /*GREEN THEME FORMS*/
+        .green-theme input[type=text]:focus + label,
+        .green-theme input[type=email]:focus + label,
+        .green-theme input[type=number]:focus + label,
+        .green-theme input[type=password]:focus + label,
+        .green-theme textarea:focus + label{
+            color: #388e3c !important;
+        }
+        .green-theme input[type=text]:focus,
+        .green-theme input[type=number]:focus,
+        .green-theme input[type=email]:focus,
+        .green-theme input[type=password]:focus,
+        .green-theme input[type=password]:focus,
+        .green-theme textarea:focus{
+            border-bottom: 1px solid #388e3c !important;
+            box-shadow: 0 1px 0 0 #388e3c !important;
+        }
+        .input-field .prefix.active{
+            color:#388e3c !important;
+        }
+        .green-theme input[type="radio"].with-gap:checked+label:before,
+        .green-theme input[type="radio"].with-gap:checked+label:after {
+            border: 2px solid #388e3c !important;
+        }
+        .green-theme input[type="radio"].with-gap:checked+label:after {
+            background-color: #388e3c !important;
+        }
+
+        /*ERROR FORM THEME*/
+        .error-theme input[type=text]:focus + label,
+        .error-theme input[type=text]+ label,
+        .error-theme input[type=number]+ label,
+        .error-theme input[type=email]+ label,
+        .error-theme textarea:focus + label,
+        .error-theme textarea + label{
+            color: #ef5350  !important;
+        }
+        .error-theme input[type=text]:focus,
+        .error-theme input[type=text],
+        .error-theme input[type=number],
+        .error-theme input[type=email],
+        .error-theme textarea:focus,
+        .error-theme textarea{
+            border-bottom: 1px solid #ef5350  !important;
+            box-shadow: 0 1px 0 0 #ef5350  !important;
+        }
+        .error-theme input[type="radio"].with-gap:checked+label:before,
+        .error-theme input[type="radio"].with-gap:checked+label:after {
+            border: 2px solid #ef5350  !important;
+        }
+        .error-theme input[type="radio"].with-gap:checked+label:after {
+            background-color: #ef5350  !important;
+        }
+        .image-circle-cropper {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            -ms-border-radius: 50%;
+            -o-border-radius: 50%;
+            border-radius: 50%;
+            border:2px solid white;
+        }
+        .profileImgStyle{
+            display: inline;
+            margin: 0 auto;
+            height: 100%;
+            width: auto;
         }
     </style>
     <body>
