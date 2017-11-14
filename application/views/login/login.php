@@ -33,7 +33,7 @@ if (validation_errors()) {
                             <!--LOGIN TAB-->
                             <div id="login" class="col m12">
                                 <br>
-                                <form method="POST" action="login_submit">
+                                <form method="POST" action="<?= $this->config->base_url() ?>login/login_submit">
                                     <div class="row">
                                         <div class="input-field col s12 green-theme">
                                             <i class="material-icons prefix ">account_circle</i>
