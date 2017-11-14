@@ -10,10 +10,11 @@
         <link rel="stylesheet" href="<?= $this->config->base_url() ?>assets/materialize/css/materialize.css"/>
         <link rel="shortcut icon" href="<?= $this->config->base_url() ?>images/img/petexIcon.ico">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Oswald|Saira+Extra+Condensed" rel="stylesheet">
         <!--Font Awesome Icons-->
         <link rel = "stylesheet" href = "<?= $this->config->base_url() ?>assets/fontawesome/css/font-awesome.min.css">
-    
+
         <script type="text/javascript" src="<?= $this->config->base_url() ?>assets/materialize/js/materialize.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
@@ -104,7 +105,7 @@
         .page-footer, .footer-copyright{
             background-color:#43a047  !important;
         }
-        
+
         body{
             background-color:#f0c514;
         }
@@ -121,6 +122,9 @@
         h1{
             font-family: 'Oswald', sans-serif;
             color: white;
+        }
+        h4{
+            font-family: 'Open Sans Condensed', sans-serif;
         }
         p{
             font-family: 'Saira Extra Condensed', sans-serif;

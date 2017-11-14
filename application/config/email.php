@@ -8,5 +8,5 @@ $config['newline'] = "\r\n";
 $config['mailtype'] = "html";
 
 $config['smtp_user'] = "codebusters.solutions@gmail.com";
-$config['smtp_pass'] = "codebusterssolution";
+$config['smtp_pass'] = "codebusterssolution1";
 

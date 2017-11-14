@@ -58,8 +58,13 @@
                     toastInstance.remove();
                     break;
                 }
+                case 'captchaErr' :{
+                    var toastElement = $('.captchaErr').first()[0];
+                    var toastInstance = toastElement.M_Toast;
+                    toastInstance.remove();
+                    break;
+                }
             }
-            
         }
         
         $(document).ready(function(){
@@ -107,6 +112,12 @@
                 var $addressErr = $('<span><?= form_error('address');?></span>').add($('<button class="btn-flat toast-action" onclick = "removeToast(\'addressErr\')"><i class = "material-icons">close</i></button>'));
                 Materialize.toast($addressErr, 15000, 'rounded addressErr red darken-4');
             <?php endif;?>
+                
+            <?php if(!empty(form_error('g-recaptcha-response'))): ?>
+                var $captchaErr = $('<span><?= form_error('g-recaptcha-response');?></span>').add($('<button class="btn-flat toast-action" onclick = "removeToast(\'captchaErr\')"><i class = "material-icons">close</i></button>'));
+                Materialize.toast($captchaErr, 15000, 'rounded captchaErr red darken-4');
+            <?php endif;?>
+                
         });
     </script>
 
