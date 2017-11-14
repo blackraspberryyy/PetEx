@@ -35,6 +35,60 @@ $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session
 
     </head>
     <style>
+        /*GREEN THEME FORMS*/
+        .green-theme input[type=text]:focus + label,
+        .green-theme input[type=email]:focus + label,
+        .green-theme input[type=number]:focus + label,
+        .green-theme input[type=password]:focus + label,
+        .green-theme textarea:focus + label{
+            color: #388e3c !important;
+        }
+        .green-theme input[type=text]:focus,
+        .green-theme input[type=number]:focus,
+        .green-theme input[type=email]:focus,
+        .green-theme input[type=password]:focus,
+        .green-theme input[type=password]:focus,
+        .green-theme textarea:focus{
+            border-bottom: 1px solid #388e3c !important;
+            box-shadow: 0 1px 0 0 #388e3c !important;
+        }
+        .input-field .prefix.active{
+            color:#388e3c !important;
+        }
+        .green-theme input[type="radio"].with-gap:checked+label:before,
+        .green-theme input[type="radio"].with-gap:checked+label:after {
+            border: 2px solid #388e3c !important;
+        }
+        .green-theme input[type="radio"].with-gap:checked+label:after {
+            background-color: #388e3c !important;
+        }
+
+        /*ERROR FORM THEME*/
+        .error-theme input[type=text]:focus + label,
+        .error-theme input[type=text]+ label,
+        .error-theme input[type=number]+ label,
+        .error-theme input[type=email]+ label,
+        .error-theme textarea:focus + label,
+        .error-theme textarea + label{
+            color: #ef5350  !important;
+        }
+        .error-theme input[type=text]:focus,
+        .error-theme input[type=text],
+        .error-theme input[type=number],
+        .error-theme input[type=email],
+        .error-theme textarea:focus,
+        .error-theme textarea{
+            border-bottom: 1px solid #ef5350  !important;
+            box-shadow: 0 1px 0 0 #ef5350  !important;
+        }
+        .error-theme input[type="radio"].with-gap:checked+label:before,
+        .error-theme input[type="radio"].with-gap:checked+label:after {
+            border: 2px solid #ef5350  !important;
+        }
+        .error-theme input[type="radio"].with-gap:checked+label:after {
+            background-color: #ef5350  !important;
+        }
+
         #user-nav{
             top:65px;
             height: calc(100% - 65px);
@@ -187,4 +241,11 @@ $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session
     <body>
         <?php
         date_default_timezone_set("Asia/Manila");
-        ?>
+        ?> 
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                $('.preloader-background').delay(1000).fadeOut('slow');
+                $('.preloader-wrapper').delay(1000).fadeOut();
+            });
+        </script>
+        <?php include 'preloader.php' ?>
