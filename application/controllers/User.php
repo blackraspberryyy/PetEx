@@ -8,7 +8,16 @@ class User extends CI_Controller {
         $this->load->helper('file');
         $this->load->helper('download');
         if ($this->session->has_userdata('isloggedin') == FALSE) {
-            redirect('login/');
+            redirect(base_url().'login/');
+        }else{
+            $currentUserId = $this->session->userdata('userid');
+            $currentUser = $this->user_model->fetch("user", array("user_id" => $currentUserId))[0];
+            
+            if($currentUser->user_access == "admin"){
+                redirect(base_url().'admin/');
+            }else{
+                //nothing
+            }
         }
     }
 
