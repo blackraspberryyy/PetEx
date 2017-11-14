@@ -1,9 +1,8 @@
 <?php
-    if (validation_errors()) {
-        include 'includes/toastErrorUserRegister.php';
-    }
-
-    ?>
+if (validation_errors()) {
+    include 'includes/toastErrorUserRegister.php';
+}
+?>
 
 <div class="row">
     <div class="col m7 leftSide hoverable">
@@ -15,8 +14,8 @@
 
                 His ridens delenit detraxit cu, ea nam simul delenit conclusionemque. Docendi fuisset vis et. Soluta mediocritatem mei in, no paulo doming qualisque duo. Ne civibus expetendis sed, iriure iracundia voluptatum ei est. Eum no persius diceret accusata, quo cu liber deserunt voluptatibus.
 
-                ndamus constituam, officiis convenire sit ne.</p>
-
+                ndamus constituam, officiis convenire sit ne.
+            </p>
         </div>
     </div>
     <div class="col m5 rightSide">
@@ -27,14 +26,14 @@
                         <div class="row">
                             <div class="col m12">
                                 <ul class="tabs">
-                                    <li class="tab col m6" ><a href="#login" class="active">Login</a></li>
+                                    <li class="tab col m6" ><a href="#login" class=" active">Login</a></li>
                                     <li class="tab col m6" ><a href="#signup" class="">Signup</a></li>
                                 </ul>
                             </div>
                             <!--LOGIN TAB-->
                             <div id="login" class="col m12">
                                 <br>
-                                <form method="POST" action="<?= base_url() ?>login/login_submit">`
+                                <form method="POST" action="login_submit">
                                     <div class="row">
                                         <div class="input-field col s12 green-theme">
                                             <i class="material-icons prefix ">account_circle</i>
@@ -47,7 +46,7 @@
                                             <label>Password</label>
                                         </div><br><br><br><br><br><br><br><br><br>
                                         <center>
-                                            <a class="waves-effect waves-light btn  button orange" style='height: 55px !important; padding-top: 10px !important;'>Reset Password</a>
+                                            <a href="<?php $this->config->base_url() ?>resetPass " class="waves-effect waves-light btn  button orange" style='height: 55px !important; padding-top: 10px !important;'>Reset Password</a>
                                             <button class="btn-large waves-effect waves-light green darken-3"  style='width: 182px !important;' type="submit" name="action">Login
                                                 <i class="material-icons right">send</i>
                                             </button>
@@ -57,10 +56,10 @@
                             </div>
                             <!--SIGNUP TAB-->
                             <div id="signup" class="col m12">
-                                <form method="POST" action="signup_exec">
+                                <form method="POST" action="login/signup_exec">
                                     <div class ="col s12"><br>
                                         <div class="input-field col s12 <?php if (!empty(form_error("username"))): ?>error-theme<?php else: ?>green-theme<?php endif; ?>">
-                                            <input id="username" type="text" class="" name = "username" autofocus="" value="<?= set_value('username') ?>">
+                                            <input id="username" type="text" class="" name = "username" value="<?= set_value('username') ?>">
                                             <label for="username">Username</label>
                                         </div>
                                         <div class="input-field col s12 green-theme">
@@ -102,7 +101,7 @@
                                             <label>Birthday</label>
                                             <input type="text" class="datepicker" name = "birthday" value="<?= set_value('birthday') ?>">
                                         </div>
-                                        
+
                                         <div class="input-field col s12">
                                             <select id = "province" name = "province"></select>
                                             <label>Province</label>
@@ -114,6 +113,10 @@
                                         <div class="input-field col s12 <?php if (!empty(form_error("address"))): ?>error-theme<?php else: ?>green-theme<?php endif; ?>">
                                             <textarea id="textarea1" class="materialize-textarea" placeholder = "Street No., Street Name, Brgy." data-length="120" name="address" value="<?= set_value('address') ?>"></textarea>
                                             <label for="textarea1">Complete Address</label>
+                                        </div>
+                                        <div class="col s12">
+                                            <?= $widget ?>
+                                            <?= $script ?>
                                         </div>
                                         <button style = "margin-top:50px !important;" class="btn-large waves-effect waves-light green darken-3" type="submit" name="action">Submit
                                             <i class="material-icons right">send</i>
@@ -131,29 +134,29 @@
 
 <script>
     //IT TAKES AN EFFIN' 7 HRS STRAIGHT TO MAKE THIS SCRIPT!
-    <?php 
-        $provResult = $this->user_model->fetchJoin("refcitymun", "refprovince", "refcitymun.provCode = refprovince.provCode");
-        $cityResult = $this->user_model->fetch("refcitymun");
-        $dataString = array();
-        
-        foreach($provResult as $prov){
-            $cityResult = $this->user_model->fetch("refcitymun", array("provCode" => $prov->provCode));
-            $cityHolder = array();
-            foreach ($cityResult as $city){
-                array_push($cityHolder, $city->citymunDesc);
-            }
-            $dataString[$prov->provDesc] = $cityHolder;
-        }
-        
-        $dataString = json_encode($dataString);
-    ?>
-    var data = <?= $dataString?>;
+<?php
+$provResult = $this->user_model->fetchJoin("refcitymun", "refprovince", "refcitymun.provCode = refprovince.provCode");
+$cityResult = $this->user_model->fetch("refcitymun");
+$dataString = array();
 
-     $.each(data, function(key, value){            
+foreach ($provResult as $prov) {
+    $cityResult = $this->user_model->fetch("refcitymun", array("provCode" => $prov->provCode));
+    $cityHolder = array();
+    foreach ($cityResult as $city) {
+        array_push($cityHolder, $city->citymunDesc);
+    }
+    $dataString[$prov->provDesc] = $cityHolder;
+}
+
+$dataString = json_encode($dataString);
+?>
+    var data = <?= $dataString ?>;
+
+    $.each(data, function (key, value) {
         $('#province').append($('<option />').text(key));
-     });
+    });
 
-     $('#province').change(function() {
+    $('#province').change(function () {
         var key = $(this).val();
         $('#city').empty();
         $('#city').append('<option disabled selected = "" value = "0">Choose a City</option>');
@@ -163,5 +166,6 @@
         }
         $('select').material_select();
 
-     }).trigger('change');
+    }).trigger('change');
+
 </script>

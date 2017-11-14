@@ -54,7 +54,7 @@ function get_age($birth_date) {
                                     <p><?= $myPets->pet_description ?></p>
                                 </div>
                                 <div class="card-action">
-                                    <a href ="<?php $this->config->base_url() ?>myPetsEdit" class = "modal-trigger tooltipped pull-left" data-position="bottom" data-delay="50" data-tooltip="Edit Pet Details"><i class = "fa fa-pencil-square-o fa-lg"></i></a>
+                                    <a href ="<?= base_url() ?>user/myPetsEdit/<?= $myPets->pet_id ?>" class = "modal-trigger tooltipped pull-left" data-position="bottom" data-delay="50" data-tooltip="Edit Pet Details"><i class = "fa fa-pencil-square-o fa-lg"></i></a>
                                     <a href ="#detail<?= $myPets->pet_id; ?>" class = "modal-trigger tooltipped pull-left" data-position="bottom" data-delay="50" data-tooltip="View Full Details"><i class = "fa fa-eye fa-lg"></i></a>
                                     <a href ="#video<?= $myPets->pet_id; ?>"  class="modal-trigger tooltipped pull-left"   data-position="bottom" data-delay="50" data-tooltip="Play Video"><i class = "fa fa-video-camera fa-lg"></i></a>
                                 </div>
