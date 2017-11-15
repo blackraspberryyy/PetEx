@@ -35,7 +35,7 @@
         </a>
     </li>
     <li>
-        <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url() . "user/petAdoption" ? "side-nav-active active" : "black-text" ?>" href="<?= $this->config->base_url() ?>user/petAdoption">
+        <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url() . "user/petAdoption"|| strpos($wholeUrl, $this->config->base_url() . "user/petAdoptionOnlineForm") !== FALSE  ? "side-nav-active active" : "black-text" ?>" href="<?= $this->config->base_url() ?>user/petAdoption">
             <i class="fa fa-home fa-2x"></i>Pet Adoption
         </a>
     </li>
