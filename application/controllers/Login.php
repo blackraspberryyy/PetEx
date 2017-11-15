@@ -9,7 +9,13 @@ class Login extends CI_Controller {
         $this->load->library('email');
         $this->load->library('recaptcha');
         if ($this->session->has_userdata('isloggedin') == TRUE) {
-            redirect(base_url() . 'user/');
+            $currentUserId = $this->session->userdata('userid');
+            $currentUser = $this->user_model->fetch("user", array("user_id" => $currentUserId))[0];   
+            if($currentUser->user_access == "admin"){
+                redirect(base_url().'admin/');
+            }else{
+                redirect(base_url() . 'user/');
+            }   
         }
     }
 
@@ -73,12 +79,12 @@ class Login extends CI_Controller {
                 if ($accountDetails->user_status == 0) {
                     //OOPS user is blocked by the admin. Please contact the admin.
                     echo "<script>alert('Account is Blocked!');"
-                    . "window.location='" . base_url() . "login'</script>";
+                    . "window.location='" . base_url() . "login/'</script>";
                 } else {
                     if ($accountDetails->user_isverified == 0) {
                         //OOPS user is not verified yet.
                         echo "<script>alert('Account is not yet verified');"
-                        . "window.location='" . base_url() . "login'</script>";
+                        . "window.location='" . base_url() . "login/'</script>";
                     } else {
                         $this->session->set_userdata('isloggedin', true);
                         $this->session->set_userdata('userid', $accountDetails->user_id);
@@ -89,12 +95,12 @@ class Login extends CI_Controller {
                 if ($accountDetails->user_status == 0) {
                     //OOPS user is blocked by the admin. Please contact the admin.
                     echo "<script>alert('Account is Blocked!');"
-                    . "window.location='" . base_url() . "login'</script>";
+                    . "window.location='" . base_url() . "login/'</script>";
                 } else {
                     if ($accountDetails->user_isverified == 0) {
                         //OOPS user is not verified yet.
                         echo "<script>alert('Account is not yet verified');"
-                        . "window.location='" . base_url() . "login'</script>";
+                        . "window.location='" . base_url() . "login/'</script>";
                     } else {
                         $this->session->set_userdata('isloggedin', true);
                         $this->session->set_userdata('userid', $accountDetails->user_id);
