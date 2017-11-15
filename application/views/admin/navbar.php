@@ -96,7 +96,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url()."admin/petDatabase" || $wholeUrl == $this->config->base_url()."admin/petDatabaseAdd" || strpos($wholeUrl, $this->config->base_url()."admin/petDatabaseUpdate") !== FALSE || strpos($wholeUrl, $this->config->base_url()."admin/petDatabaseRemove") !== FALSE || strpos($wholeUrl, $this->config->base_url()."admin/petDatabaseLog") !== FALSE || strpos($wholeUrl, $this->config->base_url()."admin/petDatabaseAdopter") !== FALSE? "side-nav-active active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/petDatabase">
+                    <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url()."admin/petDatabase" || $wholeUrl == $this->config->base_url()."admin/petDatabaseAdd" || strpos($wholeUrl, $this->config->base_url()."admin/petDatabaseUpdate") !== FALSE || strpos($wholeUrl, $this->config->base_url()."admin/petDatabaseRemove") !== FALSE || strpos($wholeUrl, $this->config->base_url()."admin/petDatabaseLog") !== FALSE || strpos($wholeUrl, $this->config->base_url()."admin/petDatabaseAdopter") !== FALSE || strpos($wholeUrl, $this->config->base_url()."admin/petDatabaseMedicalRecords") !== FALSE || strpos($wholeUrl, $this->config->base_url()."admin/petDatabaseAddMedical") !== FALSE || strpos($wholeUrl, $this->config->base_url()."admin/petDatabaseEditMedical") !== FALSE? "side-nav-active active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/petDatabase">
                         <i class="fa fa-database fa-2x"></i>Pet Database
                     </a>
                     <div class="collapsible-body">

@@ -1,13 +1,14 @@
 <?php
-    function get_age($birth_date) {
-        if(date("Y", $birth_date) == "2017"){
-            //Month
-            return floor((time() - $birth_date) / 2678400)." months old";
-        }else{
-            //Year
-            return floor((time() - $birth_date) / 31556926)." years old";
-        }    
+
+function get_age($birth_date) {
+    if (date("Y", $birth_date) == "2017") {
+        //Month
+        return floor((time() - $birth_date) / 2678400) . " months old";
+    } else {
+        //Year
+        return floor((time() - $birth_date) / 31556926) . " years old";
     }
+}
 ?>
 <div class ="side-nav-offset">
     <div class ="container ">
@@ -22,14 +23,14 @@
                     </form>
                 </div>
             </nav>
-            <?php if(empty($pets)):?>
+            <?php if (empty($pets)): ?>
                 <!--Nothing Happens Here-->
-            <?php else:?>
+            <?php else: ?>
                 <?php foreach ($pets as $pet): ?>
                     <div class ="col s4">
                         <div class="card sticky-action hoverable medium">
                             <div class="card-image ">
-                                <img class="materialboxed " data-caption = "<?= $pet->pet_name ?>" src="<?= $this->config->base_url().$pet->pet_picture ?>">
+                                <img class="materialboxed " data-caption = "<?= $pet->pet_name ?>" src="<?= $this->config->base_url() . $pet->pet_picture ?>">
                             </div>
                             <div class="card-content">
                                 <span class="card-title activator grey-text text-darken-4 " ><?= $pet->pet_name ?><i class="material-icons right">more_vert</i></span>
@@ -77,68 +78,69 @@
                             <div class="card-action">
                                 <a href ="<?= base_url() ?>admin/petDatabaseUpdate/<?= $pet->pet_id ?>" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit Animal Details"><i class = "fa fa-pencil-square-o fa-lg"></i></a>
                                 <a href ="<?= base_url() ?>admin/petDatabaseAdopters/<?= $pet->pet_id ?>" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="See Interested Adopters"><i class = "fa fa-users fa-lg"></i></a>
-                                <a href ="#remove<?= $pet->pet_id;?>" class = "tooltipped modal-trigger" data-position="bottom" data-delay="50" data-tooltip="Remove Animal"><i class = "fa fa-remove fa-lg"></i></a>
+                                <a href ="<?= base_url() ?>admin/petDatabaseMedicalRecords/<?= $pet->pet_id ?>" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="See Medical Records"><i class="fa fa-file-text fa-lg"></i></a>
+                                <a href ="#remove<?= $pet->pet_id; ?>" class = "tooltipped modal-trigger" data-position="bottom" data-delay="50" data-tooltip="Remove Animal"><i class = "fa fa-remove fa-lg"></i></a>
                             </div>
                         </div>
                     </div>
-                    <div id="remove<?= $pet->pet_id;?>" class="modal modal-fixed-footer">
+                    <div id="remove<?= $pet->pet_id; ?>" class="modal modal-fixed-footer">
                         <div class="modal-content">
                             <h4><i class = "fa fa-warning"></i>Warning</h4>
                             <p style = "font-weight:bold;">You are about to remove this pet from the database.</p>
                             <div class ="row">
                                 <div class ="col s4">
-                                    <img src = "<?= $this->config->base_url().$pet->pet_picture?>" class = "responsive-img z-depth-4" style = "border-radius:5px; margin-top:20px;">
+                                    <img src = "<?= $this->config->base_url() . $pet->pet_picture ?>" class = "responsive-img z-depth-4" style = "border-radius:5px; margin-top:20px;">
                                 </div>
                                 <div class ="col s8">
                                     <table class = "striped responsive-table">
                                         <tbody>
                                             <tr>
                                                 <th>Pet ID : </th>
-                                                <td><?= $pet->pet_id;?></td>
+                                                <td><?= $pet->pet_id; ?></td>
                                             </tr>
                                             <tr>
                                                 <th>Name: </th>
-                                                <td><?= $pet->pet_name;?></td>
+                                                <td><?= $pet->pet_name; ?></td>
                                             </tr>
                                             <tr>
                                                 <th>Status: </th>
-                                                <td><?= $pet->pet_status;?></td>
+                                                <td><?= $pet->pet_status; ?></td>
                                             </tr>
                                             <tr>
                                                 <th>Birthday: </th>
-                                                <td><?= date("F d, Y", $pet->pet_bday);?></td>
+                                                <td><?= date("F d, Y", $pet->pet_bday); ?></td>
                                             </tr>
                                             <tr>
                                                 <th>Age:</th>
-                                                <td><?= get_age($pet->pet_bday);?></td>
+                                                <td><?= get_age($pet->pet_bday); ?></td>
                                             </tr>
                                             <tr>
                                                 <th>Specie: </th>
-                                                <td><?= $pet->pet_specie;?></td>
+                                                <td><?= $pet->pet_specie; ?></td>
                                             </tr>
                                             <tr>
                                                 <th>Sex: </th>
-                                                <td><?= $pet->pet_sex;?></td>
+                                                <td><?= $pet->pet_sex; ?></td>
                                             </tr>
                                             <tr>
                                                 <th>Breed: </th>
-                                                <td><?= $pet->pet_breed;?></td>
+                                                <td><?= $pet->pet_breed; ?></td>
                                             </tr>
                                             <tr>
                                                 <th>Sterilized: </th>
-                                                <td><?= $pet->pet_neutered_spayed == 1 ? "Yes" : "No";?></td>
+                                                <td><?= $pet->pet_neutered_spayed == 1 ? "Yes" : "No"; ?></td>
                                             </tr>
                                             <tr>
                                                 <th>Admission: </th>
-                                                <td><?= $pet->pet_admission;?></td>
+                                                <td><?= $pet->pet_admission; ?></td>
                                             </tr>
                                             <tr>
                                                 <th>Description: </th>
-                                                <td><?= $pet->pet_description;?></td>
+                                                <td><?= $pet->pet_description; ?></td>
                                             </tr>
                                             <tr>
                                                 <th>Findings: </th>
-                                                <td><?= $pet->pet_history;?></td>
+                                                <td><?= $pet->pet_history; ?></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -151,7 +153,7 @@
                         </div>
                     </div>
                 <?php endforeach; ?>
-            <?php endif;?>
+            <?php endif; ?>
             <div class ="col s4">
                 <a href ="<?= $this->config->base_url() ?>admin/petDatabaseAdd">
                     <div class="card sticky-action hoverable medium grey lighten-2">

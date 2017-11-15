@@ -8,7 +8,16 @@ class Admin extends CI_Controller {
         $this->load->helper('file');
         $this->load->model('admin_model');
         if ($this->session->has_userdata('isloggedin') == FALSE) {
-            redirect(base_url().'login/');
+            redirect(base_url() . 'login/');
+        } else {
+            $currentUserId = $this->session->userdata('userid');
+            $currentUser = $this->admin_model->fetch("user", array("user_id" => $currentUserId))[0];
+
+            if ($currentUser->user_access == "user") {
+                redirect(base_url() . 'user/');
+            } else {
+                //nothing
+            }
         }
     }
 
@@ -290,6 +299,137 @@ class Admin extends CI_Controller {
         }
     }
 
+    public function petDatabaseMedicalRecords() {
+        $selectedPet = $this->admin_model->fetchjoin("medical_record", "pet", "medical_record.pet_id = pet.pet_id", array('pet.pet_id' => $this->uri->segment(3)));
+        $data = array(
+            'title' => 'Medical Records | Admin',
+            'wholeUrl' => base_url(uri_string()),
+            'records' => $selectedPet
+        );
+        $this->load->view("admin/includes/header", $data);
+        $this->load->view("admin/navbar");
+        $this->load->view("admin/sidenav");
+        $this->load->view("admin/petDatabaseMedicalRecords");
+        $this->load->view("admin/includes/footer");
+    }
+
+    public function petDatabaseAddMedical() {
+        $selectedPet = $this->admin_model->fetchjoin("medical_record", "pet", "medical_record.pet_id = pet.pet_id", array('pet.pet_id' => $this->uri->segment(3)));
+        $data = array(
+            'title' => 'Add Medical Record | Admin',
+            'wholeUrl' => base_url(uri_string()),
+            'records' => $selectedPet
+        );
+        $this->load->view("admin/includes/header", $data);
+        $this->load->view("admin/navbar");
+        $this->load->view("admin/sidenav");
+        $this->load->view("admin/petDatabaseAddMedical");
+        $this->load->view("admin/includes/footer");
+    }
+
+    public function petDatabaseAddMedical_exec() {
+        $selectedPet = $this->admin_model->fetchjoin("medical_record", "pet", "medical_record.pet_id = pet.pet_id", array('pet.pet_id' => $this->uri->segment(3)));
+        $pet_id = $this->uri->segment(3);
+        $this->form_validation->set_rules('weight', "Weight", "required|is_numeric");
+        $this->form_validation->set_rules('diagnosis', "Diagnosis", "required");
+        $this->form_validation->set_rules('treatment', "Treatment", "required");
+        if ($this->form_validation->run() == FALSE) {
+            $data = array(
+                'title' => 'Add Medical Record | Admin',
+                'wholeUrl' => base_url(uri_string()),
+                'records' => $selectedPet
+            );
+            $this->load->view("admin/includes/header", $data);
+            $this->load->view("admin/navbar");
+            $this->load->view("admin/sidenav");
+            $this->load->view("admin/petDatabaseAddMedical");
+            $this->load->view("admin/includes/footer");
+        } else {
+            $data = array(
+                'pet_id' => $pet_id,
+                'medicalRecord_date' => time(),
+                'medicalRecord_weight' => $this->input->post('weight'),
+                'medicalRecord_diagnosis' => $this->input->post('diagnosis'),
+                'medicalRecord_treatment' => $this->input->post('treatment')
+            );
+
+            if ($this->admin_model->singleinsert("medical_record", $data)) {
+                redirect($this->config->base_url() . "admin/petDatabaseMedicalRecords/" . $pet_id);
+            } else {
+                echo "An Error Ocurred";
+                echo "<pre>";
+                print_r($data);
+                echo "</pre>";
+                //Redirect to oops
+            }
+        }
+    }
+
+    public function petDatabaseEditMedical() {
+        $selectedPet = $this->admin_model->fetchjoin("medical_record", "pet", "medical_record.pet_id = pet.pet_id", array('medical_record.medicalRecord_id' => $this->uri->segment(3)));
+        $data = array(
+            'title' => 'Add Medical Record | Admin',
+            'wholeUrl' => base_url(uri_string()),
+            'records' => $selectedPet
+        );
+        $this->load->view("admin/includes/header", $data);
+        $this->load->view("admin/navbar");
+        $this->load->view("admin/sidenav");
+        $this->load->view("admin/petDatabaseEditMedical");
+        $this->load->view("admin/includes/footer");
+    }
+
+    public function petDatabaseEditMedical_exec() {
+        $selectedPet = $this->admin_model->fetchjoin("medical_record", "pet", "medical_record.pet_id = pet.pet_id", array('medical_record.medicalRecord_id' => $this->uri->segment(3)));
+        $pet_id = $this->uri->segment(4);
+        $medicalRecord_id = $this->uri->segment(3);
+        $this->form_validation->set_rules('weight', "Weight", "required|is_numeric");
+        $this->form_validation->set_rules('diagnosis', "Diagnosis", "required");
+        $this->form_validation->set_rules('treatment', "Treatment", "required");
+        if ($this->form_validation->run() == FALSE) {
+            $data = array(
+                'title' => 'Add Medical Record | Admin',
+                'wholeUrl' => base_url(uri_string()),
+                'records' => $selectedPet
+            );
+            $this->load->view("admin/includes/header", $data);
+            $this->load->view("admin/navbar");
+            $this->load->view("admin/sidenav");
+            $this->load->view("admin/petDatabaseEditMedical");
+            $this->load->view("admin/includes/footer");
+        } else {
+            $data = array(
+                'pet_id' => $pet_id,
+                'medicalRecord_date' => time(),
+                'medicalRecord_weight' => $this->input->post('weight'),
+                'medicalRecord_diagnosis' => $this->input->post('diagnosis'),
+                'medicalRecord_treatment' => $this->input->post('treatment')
+            );
+
+            if ($this->admin_model->update("medical_record", $data, array("medicalRecord_id" => $medicalRecord_id))) {
+                redirect($this->config->base_url() . "admin/petDatabaseMedicalRecords/" . $pet_id);
+            } else {
+                echo "An Error Ocurred<br>";
+                echo $pet_id;
+                echo "<pre>";
+                print_r($data);
+                echo "</pre>";
+                //Redirect to oops
+            }
+        }
+    }
+
+    public function petDatabaseDeleteMedical() {
+        $medicalRecord_id = $this->uri->segment(3);
+        $pet_id = $this->uri->segment(4);
+
+        if ($this->admin_model->delete("medical_record", array("medicalRecord_id" => $medicalRecord_id))) {
+            redirect($this->config->base_url() . "admin/petDatabaseMedicalRecords/" . $pet_id);
+        } else {
+            //Error in updating
+        }
+    }
+
     public function userDatabase() {
         $allUsers = $this->admin_model->fetch("user");
         $data = array(
@@ -330,7 +470,7 @@ class Admin extends CI_Controller {
         $this->load->view("admin/includes/header", $data);
         $this->load->view("admin/navbar");
         $this->load->view("admin/sidenav");
-        //$this->load->view("admin/auditTrail");
+//$this->load->view("admin/auditTrail");
         $this->load->view("admin/includes/footer");
     }
 
@@ -409,7 +549,7 @@ class Admin extends CI_Controller {
 
     public function logout() {
         $this->session->sess_destroy();
-        redirect(base_url().'login/');
+        redirect(base_url() . 'login/');
     }
 
 }
