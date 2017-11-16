@@ -6,7 +6,7 @@ $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session
     <head>
         <meta charset="UTF-8">
         <title><?= $title ?></title>
-
+        <link rel="stylesheet" href="<?= $this->config->base_url() ?>assets/progresscss/style.css"/>
         <!--Icon-->
         <link rel="shortcut icon" href="<?= $this->config->base_url() ?>images/img/petexIcon.ico">
         <!--JQuery-->
@@ -164,7 +164,7 @@ $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session
             font-size:20px !important;
             color:black;
         }
-        
+
         /*--------------------------------*/
         /*GREEN THEME FORMS*/
         .green-theme input[type=text]:focus + label,

@@ -2,7 +2,7 @@
 $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session->userid))[0];
 ?>
 
-<div class ="navbar-fixed">
+<div class ="navbar-fixed" >
     <nav>
         <div class="nav-wrapper green darken-1">
             <div class="row">
