@@ -5,10 +5,14 @@
         <group>
             <file>file:/C:/xampp/htdocs/PetEx/application/controllers/Admin.php</file>
             <file>file:/C:/xampp/htdocs/PetEx/application/models/admin_model.php</file>
+            <file>file:/C:/xampp/htdocs/PetEx/application/views/admin/navbar.php</file>
             <file>file:/C:/xampp/htdocs/PetEx/application/views/admin/petDatabaseMedicalRecords.php</file>
             <file>file:/C:/xampp/htdocs/PetEx/application/views/admin/petDatabaseEditMedical.php</file>
+            <file>file:/C:/xampp/htdocs/PetEx/application/views/user/sidenav.php</file>
             <file>file:/C:/xampp/htdocs/PetEx/application/views/admin/petDatabaseAddMedical.php</file>
             <file>file:/C:/xampp/htdocs/PetEx/application/views/admin/petDatabase.php</file>
+            <file>file:/C:/xampp/htdocs/PetEx/application/views/admin/sidenav.php</file>
+            <file>file:/C:/xampp/htdocs/PetEx/application/views/user/navbar.php</file>
         </group>
     </open-files>
 </project-private>
