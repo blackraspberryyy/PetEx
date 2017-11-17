@@ -8,14 +8,14 @@ class User extends CI_Controller {
         $this->load->helper('file');
         $this->load->helper('download');
         if ($this->session->has_userdata('isloggedin') == FALSE) {
-            redirect(base_url().'login/');
-        }else{
+            redirect(base_url() . 'login/');
+        } else {
             $currentUserId = $this->session->userdata('userid');
             $currentUser = $this->user_model->fetch("user", array("user_id" => $currentUserId))[0];
-            
-            if($currentUser->user_access == "admin"){
-                redirect(base_url().'admin/');
-            }else{
+
+            if ($currentUser->user_access == "admin") {
+                redirect(base_url() . 'admin/');
+            } else {
                 //nothing
             }
         }
@@ -170,7 +170,7 @@ class User extends CI_Controller {
         $this->load->view("user/petAdoption");
         $this->load->view("user/includes/footer");
     }
-    
+
     public function petAdoptionOnlineForm() {
         $allPets = $this->user_model->fetchPetDesc("pet");
         $data = array(
@@ -184,7 +184,7 @@ class User extends CI_Controller {
         $this->load->view("user/petAdoptionOnlineForm");
         $this->load->view("user/includes/footer");
     }
-    
+
     public function myProgress() {
         $data = array(
             'title' => 'User | My Progress',
