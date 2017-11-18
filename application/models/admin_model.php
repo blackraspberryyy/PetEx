@@ -37,6 +37,21 @@ class admin_model extends CI_Model {
         $query = $this->db->get($table);
         return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
     }
+    
+    public function fetchjointhree($table, $join = NULL, $on = NULL, $join2 = NULL, $on2 = NULL, $where = NULL) {
+        //$join must be array('pet.user_id = user.user_id');
+        if (!empty($where)) {
+            $this->db->where($where);
+        }
+        if (!(empty($join) || empty($on))) {
+            $this->db->join($join, $on, "left outer");
+        }
+        if (!(empty($join2) || empty($on2))) {
+            $this->db->join($join2, $on2, "left outer");
+        }
+        $query = $this->db->get($table);
+        return ($query->num_rows() > 0 ) ? $query->result() : FALSE;
+    }
 
     public function insert($table, $data) {
         $this->db->insert_batch($table, $data);

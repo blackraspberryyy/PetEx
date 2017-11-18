@@ -1,5 +1,4 @@
 <?php
-
 function get_age($birth_date) {
     if (date("Y", $birth_date) == "2017") {
         //Month
@@ -10,6 +9,13 @@ function get_age($birth_date) {
     }
 }
 ?>
+<style>
+    .disabledCardAction {
+        pointer-events: none;
+        cursor: default;
+        color:gray !important;
+     }
+</style>
 <div class ="side-nav-offset">
     <div class ="container ">
         <div class = "card row">
@@ -77,7 +83,7 @@ function get_age($birth_date) {
                             </div>
                             <div class="card-action">
                                 <a href ="<?= base_url() ?>admin/petDatabaseUpdate/<?= $pet->pet_id ?>" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit Animal Details"><i class = "fa fa-pencil-square-o fa-lg"></i></a>
-                                <a href ="<?= base_url() ?>admin/petDatabaseAdopters/<?= $pet->pet_id ?>" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="See Interested Adopters"><i class = "fa fa-users fa-lg"></i></a>
+                                <a href ="<?= base_url() ?>admin/petDatabaseAdopters_exec/<?= $pet->pet_id ?>" class = "tooltipped <?= $pet->pet_status == "adopted" ? "disabledCardAction" : ""?>" data-position="bottom" data-delay="50" data-tooltip="See Interested Adopters"><i class = "fa fa-users fa-lg"></i></a>
                                 <a href ="<?= base_url() ?>admin/petDatabaseMedicalRecords/<?= $pet->pet_id ?>" class = "tooltipped" data-position="bottom" data-delay="50" data-tooltip="See Medical Records"><i class="fa fa-file-text fa-lg"></i></a>
                                 <a href ="#remove<?= $pet->pet_id; ?>" class = "tooltipped modal-trigger" data-position="bottom" data-delay="50" data-tooltip="Remove Animal"><i class = "fa fa-remove fa-lg"></i></a>
                             </div>

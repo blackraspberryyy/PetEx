@@ -27,7 +27,7 @@ class Android extends CI_Controller {
     }
     public function getJson_adoption(){
         //$user_id = $this->input->post("user_id");
-        $user_id = 201700002;
+        $user_id = 201700003;
         $query = $this->android_model->fetchTwo("adoption", "adoption_id, adoption.pet_id, adoption.user_id, adoption_isMissing, adoption_adopted_at, user_firstname, user_lastname, user_username, user_password,user_bday,
                         user_sex, user_status, user_access, user_email, user_verification_code,
                         user_isverified, user_contact_no, user_picture, user_address, user_city,

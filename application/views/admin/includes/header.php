@@ -26,6 +26,10 @@
         <script type="text/javascript" src="<?= $this->config->base_url() ?>assets/materialize/js/materialize.min.js"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+        <!--Materialize Steppers-->
+         <link rel="stylesheet" href="<?= $this->config->base_url() ?>assets/steppers/materialize-stepper.min.css">
+         <script src="<?= $this->config->base_url() ?>assets/steppers/materialize-stepper.min.js"></script>
+        
         <!--"Document.ready scripts"-->
         <script>
             $(document).ready(function () {
@@ -38,7 +42,7 @@
                 $('.collapsible').collapsible({
                     accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
                 });
-
+                
                 $('#calendar').fullCalendar({
                     header: {
                         left: 'prev,next today',

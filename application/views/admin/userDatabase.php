@@ -58,7 +58,6 @@
                         $('#modal<?= $user->user_id?>, #modal<?= $user->user_id?>activate').modal({
                             dismissible: false
                         });
-                        
                     });
                 </script>
                     <li>
