@@ -54,8 +54,10 @@ class Admin extends CI_Controller {
     //-------------------------------------
 
     public function index() {
+        $currentUserId = $this->session->userdata('userid');
+        $currentUser = $this->admin_model->fetch("user", array("user_id"=>$currentUserId, "user_status" => 1))[0];
         $data = array(
-            'title' => 'Admin | ',
+            'title' => 'Admin | '.$currentUser->user_firstname." ".$currentUser->user_lastname,
             'wholeUrl' => base_url(uri_string()),
         );
         $this->load->view("admin/includes/header", $data);
@@ -266,18 +268,69 @@ class Admin extends CI_Controller {
         }
     }
 
-    public function petDatabaseAdopters() {
-        $allPets = $this->admin_model->fetch("pet", array("pet_access" => 1));
+    public function petDatabaseAdopters_exec() {
+        $this->session->set_userdata("petadopterid", $this->uri->segment(3));
+        redirect(base_url()."admin/petDatabaseAdopters");
+    }
+    
+    public function petDatabaseAdopters(){
+        $selectedPetId = $this->session->userdata("petadopterid");
+        $selectedPet = $this->admin_model->fetch("pet", array("pet_access" => 1, "pet_id" => $selectedPetId))[0];
+        $transactions = $this->admin_model->fetchjointhree("transaction", "pet", "transaction.pet_id = pet.pet_id", "user", "transaction.user_id = user.user_id", array("transaction.pet_id" => $selectedPetId, "transaction_isFinished" => 0, "user_access" => "user"));
         $data = array(
-            'title' => 'Pet Database | Admin',
+            'title' => 'Pet Database | '.$selectedPet->pet_name,
             'wholeUrl' => base_url(uri_string()),
-            'pets' => $allPets,
+            'transactions' => $transactions,
+            'selectedPet' => $selectedPet
         );
+        
         $this->load->view("admin/includes/header", $data);
         $this->load->view("admin/navbar");
         $this->load->view("admin/sidenav");
-        //$this->load->view("admin/petDatabase");
+        $this->load->view("admin/petDatabaseAdopters");
         $this->load->view("admin/includes/footer");
+    }
+    
+    public function manageProgress_exec() {
+        $selectedTransactionId = $this->uri->segment(3);
+        $this->session->set_userdata("transactionid", $selectedTransactionId);
+        redirect(base_url()."admin/manageProgress");
+    }
+    
+    public function manageProgress() {
+        $selectedTransactionId = $this->session->userdata("transactionid");
+        $transaction = $this->admin_model->fetchjointhree("transaction", "pet", "transaction.pet_id = pet.pet_id", "user", "transaction.user_id = user.user_id", array("transaction_id" => $selectedTransactionId, "transaction_isFinished" => 0))[0];
+        $data = array(
+            'title' => 'Manage Progress | '.$transaction->user_firstname." ".$transaction->user_lastname,
+            'wholeUrl' => base_url(uri_string()),
+            'selectedtransaction' => $transaction
+        );
+        
+        $this->load->view("admin/includes/header", $data);
+        $this->load->view("admin/navbar");
+        $this->load->view("admin/sidenav");
+        $this->load->view("admin/manageProgress");
+        $this->load->view("admin/includes/footer");
+    }
+    
+    public function updateProgress_exec(){
+        $nextStep = $this->uri->segment(3);
+        if($nextStep == 100){
+            if ($this->admin_model->update("transaction", array("transaction_progress" => $nextStep), array("transaction_id" => $this->session->userdata("transactionid"))) != 0) {
+                redirect($this->config->base_url() . "admin/manageProgress");
+            } else {
+                //Error in updating
+            }
+            redirect(base_url()."admin/petAdopters_exec/");
+        }
+        else{
+            if ($this->admin_model->update("transaction", array("transaction_progress" => $nextStep), array("transaction_id" => $this->session->userdata("transactionid"))) != 0) {
+                redirect($this->config->base_url() . "admin/manageProgress");
+            } else {
+                //Error in updating
+            }
+            redirect(base_url()."admin/manageProgress");
+        }
     }
 
     public function petDatabaseRemove() {
@@ -470,7 +523,7 @@ class Admin extends CI_Controller {
         $this->load->view("admin/includes/header", $data);
         $this->load->view("admin/navbar");
         $this->load->view("admin/sidenav");
-//$this->load->view("admin/auditTrail");
+        //$this->load->view("admin/auditTrail");
         $this->load->view("admin/includes/footer");
     }
 
@@ -485,7 +538,19 @@ class Admin extends CI_Controller {
         $this->load->view("admin/schedules");
         $this->load->view("admin/includes/footer");
     }
-
+    
+    public function schedules_add() {
+        $data = array(
+            'title' => 'User Database | Admin',
+            'wholeUrl' => base_url(uri_string()),
+        );
+        $this->load->view("admin/includes/header", $data);
+        $this->load->view("admin/navbar");
+        $this->load->view("admin/sidenav");
+        //$this->load->view("admin/auditTrail");
+        $this->load->view("admin/includes/footer");
+    }
+    
     public function reports() {
         $animalsCount = $this->admin_model->fetchCount("pet");
         $adoptablesCount = $this->admin_model->fetchCount("pet", array("pet_status" => 'adoptable'));

@@ -3,24 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-
-            <file>file:/C:/xampp/htdocs/petex/application/views/android/getJson_user.php</file>
-            <file>file:/C:/xampp/htdocs/petex/application/views/android/getJson_adoption.php</file>
-            <file>file:/C:/xampp/htdocs/petex/application/models/user_model.php</file>
-            <file>file:/C:/xampp/htdocs/petex/application/controllers/Android.php</file>
-            <file>file:/C:/xampp/htdocs/petex/application/models/android_model.php</file>
-
-            <file>file:/C:/xampp/htdocs/PetEx/application/controllers/Admin.php</file>
-            <file>file:/C:/xampp/htdocs/PetEx/application/models/admin_model.php</file>
-            <file>file:/C:/xampp/htdocs/PetEx/application/views/admin/navbar.php</file>
-            <file>file:/C:/xampp/htdocs/PetEx/application/views/admin/petDatabaseMedicalRecords.php</file>
-            <file>file:/C:/xampp/htdocs/PetEx/application/views/admin/petDatabaseEditMedical.php</file>
-            <file>file:/C:/xampp/htdocs/PetEx/application/views/user/sidenav.php</file>
-            <file>file:/C:/xampp/htdocs/PetEx/application/views/admin/petDatabaseAddMedical.php</file>
-            <file>file:/C:/xampp/htdocs/PetEx/application/views/admin/petDatabase.php</file>
-            <file>file:/C:/xampp/htdocs/PetEx/application/views/admin/sidenav.php</file>
-            <file>file:/C:/xampp/htdocs/PetEx/application/views/user/navbar.php</file>
-
+            <file>file:/C:/xampp/htdocs/petex/application/views/admin/manageProgress.php</file>
+            <file>file:/C:/xampp/htdocs/petex/application/views/admin/sidenav.php</file>
+            <file>file:/C:/xampp/htdocs/petex/application/models/admin_model.php</file>
+            <file>file:/C:/xampp/htdocs/petex/application/controllers/Admin.php</file>
+            <file>file:/C:/xampp/htdocs/petex/application/views/admin/petDatabase.php</file>
+            <file>file:/C:/xampp/htdocs/petex/application/views/admin/navbar.php</file>
+            <file>file:/C:/xampp/htdocs/petex/application/views/admin/petDatabaseAdopters.php</file>
+            <file>file:/C:/xampp/htdocs/petex/application/views/admin/schedules.php</file>
+            <file>file:/C:/xampp/htdocs/petex/application/views/admin/includes/header.php</file>
         </group>
     </open-files>
 </project-private>
