@@ -56,7 +56,7 @@ if (validation_errors()) {
                             </div>
                             <!--SIGNUP TAB-->
                             <div id="signup" class="col m12">
-                                <form method="POST" action="login/signup_exec">
+                                <form method="POST" action="<?= base_url()?>login/signup_exec">
                                     <div class ="col s12"><br>
                                         <div class="input-field col s12 <?php if (!empty(form_error("username"))): ?>error-theme<?php else: ?>green-theme<?php endif; ?>">
                                             <input id="username" type="text" class="" name = "username" value="<?= set_value('username') ?>">
@@ -79,7 +79,8 @@ if (validation_errors()) {
                                             <label>Email Address</label>
                                         </div>
                                         <div class="input-field col s6  <?php if (!empty(form_error("lastname"))): ?>error-theme<?php else: ?>green-theme<?php endif; ?>">
-                                            <input type="text" class="validate" name = "lastname" value="<?= set_value('lastname') ?>">                                            <label>Lastname</label>
+                                            <input type="text" class="validate" name = "lastname" value="<?= set_value('lastname') ?>">                                            
+                                            <label>Lastname</label>
                                         </div>
                                         <div class="input-field col s6  <?php if (!empty(form_error("firstname"))): ?>error-theme<?php else: ?>green-theme<?php endif; ?>">
                                             <input type="text" class="validate" name = "firstname" value="<?= set_value('firstname') ?>">

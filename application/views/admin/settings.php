@@ -5,9 +5,23 @@
     #settingTbl:first-child th{
         width:100px;
     }
-    .profileImgStyle{
-        height:200px;
+    .image-circle-cropper {
+        width: 200px;
+        height: 200px;
+        position: relative;
+        overflow: hidden;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+        border-radius: 50%;
         border:2px solid white;
+    }
+    .profileImgStyle{
+        display: inline;
+        margin: 0 auto;
+        height: 100%;
+        width: auto;
     }
 </style>
 <div class ="side-nav-offset">
@@ -21,7 +35,11 @@
             <div class="card-content ">
                 <div class ="row" style = "margin-bottom:20px !important;">
                     <div class = "col s12 center">
-                        <img src="<?= $this->config->base_url()?>images/profile/jc.png" class = "profileImgStyle z-depth-2 circle">
+                        <center>
+                            <div class ="image-circle-cropper z-depth-2">
+                                <img src="<?= $this->config->base_url()?>images/profile/jc.png" class = "profileImgStyle">
+                            </div>
+                        </center>
                         <br>
                         <a href = "#editPicture" class = "btn waves-effect waves-light green darken-4">Change</a>
                     </div>
