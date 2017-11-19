@@ -21,12 +21,15 @@ function get_age($birth_date) {
         <div class = "card row">
             <nav class = "green darken-3">
                 <div class="nav-wrapper">
-                    <form action = "" method = "POST">
+                    <!--<form action = "" method = "POST">
                         <div class="input-field">
                             <input id="search" type="search" name = "search" placeholder = "Search for pet here.." >
                             <i class="material-icons">close</i>
                         </div>
-                    </form>
+                    </form>-->
+                    <div class="col s12">
+                        <a href="<?= $wholeUrl?>" class="breadcrumb">Pet Database</a>
+                    </div>
                 </div>
             </nav>
             <?php if (empty($pets)): ?>

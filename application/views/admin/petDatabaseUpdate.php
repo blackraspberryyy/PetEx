@@ -34,7 +34,7 @@
                                             <input class = "with-gap" name="pet_status" type="radio" id="adoptable" value = "Adoptable" <?= $pet->pet_status == 'adoptable'? "checked":"" ;?>/>
                                             <label for="adoptable">Adoptable</label>
                                         </div>
-                                        <div class="col s6">
+                                        <div class="col s6">    
                                             <input class = "with-gap" name="pet_status" type="radio" id="nonAdoptable" value = "nonAdoptable" <?= $pet->pet_status == 'nonAdoptable'? "checked":"" ;?>/>
                                             <label for="nonAdoptable" >Non-Adoptable</label>
                                         </div>
@@ -152,6 +152,24 @@
 <script>
     $('#btnReset').click(function(){
         $('#prev_image').attr('src', '<?= $this->config->base_url().$pet->pet_picture?>');
+    });
+</script>
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#prev_image').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#files").change(function () {
+        readURL(this);
+        $("#nofilechosen").text("");
     });
 </script>
 <script>

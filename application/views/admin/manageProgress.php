@@ -103,7 +103,7 @@
         <div id="step1_modal" class="modal modal-fixed-footer">
             <div class="modal-content">
                 <h4><i class="fa fa-warning"></i> Notice</h4>
-                <p>You are about to move the transaction of <?= $selectedtransaction->user_username?> to the next level (<b>Step 2 : </b>Meet and Greet).</p>
+                <p>You are about to move the transaction of <b><?= $selectedtransaction->user_username?></b>  to the next level (<b>Step 2 : </b>Meet and Greet).</p>
                 <ul class = "collection" style = "padding-right:20px;">
                     <li class = "collection-item">Make sure that the user followed the necessary requirements.<a href="#" style = "cursor:none; pointer-events: none;" class="secondary-content"><i class="material-icons green-text">check</i></a></li>
                     <li class = "collection-item">Some Text<a href="#" style = "cursor:none; pointer-events: none;" class="secondary-content"><i class="material-icons green-text">check</i></a></li>
@@ -120,7 +120,7 @@
         <div id="step2_modal" class="modal modal-fixed-footer">
             <div class="modal-content">
                 <h4><i class="fa fa-warning"></i> Notice</h4>
-                <p>You are about to move the transaction of <?= $selectedtransaction->user_username?> to the next level (<b>Step 3 : </b>Interview).</p>
+                <p>You are about to move the transaction of <b><?= $selectedtransaction->user_username?></b>  to the next level (<b>Step 3 : </b>Interview).</p>
                 <ul class = "collection" style = "padding-right:20px;">
                     <li class = "collection-item">Make sure that the user followed the necessary requirements.<a href="#" style = "cursor:none; pointer-events: none;" class="secondary-content"><i class="material-icons green-text">check</i></a></li>
                     <li class = "collection-item">Some Text<a href="#" style = "cursor:none; pointer-events: none;" class="secondary-content"><i class="material-icons green-text">check</i></a></li>
@@ -137,7 +137,7 @@
         <div id="step3_modal" class="modal modal-fixed-footer">
             <div class="modal-content">
                 <h4><i class="fa fa-warning"></i> Notice</h4>
-                <p>You are about to move the transaction of <?= $selectedtransaction->user_username?> to the next level (<b>Step 4 : </b>Ocular Visit).</p>
+                <p>You are about to move the transaction of <b><?= $selectedtransaction->user_username?></b>  to the next level (<b>Step 4 : </b>Ocular Visit).</p>
                 <ul class = "collection" style = "padding-right:20px;">
                     <li class = "collection-item">Make sure that the user followed the necessary requirements.<a href="#" style = "cursor:none; pointer-events: none;" class="secondary-content"><i class="material-icons green-text">check</i></a></li>
                     <li class = "collection-item">Some Text<a href="#" style = "cursor:none; pointer-events: none;" class="secondary-content"><i class="material-icons green-text">check</i></a></li>
@@ -154,7 +154,7 @@
         <div id="step4_modal" class="modal modal-fixed-footer">
             <div class="modal-content">
                 <h4><i class="fa fa-warning"></i> Notice</h4>
-                <p>You are about to move the transaction of <?= $selectedtransaction->user_username?> to the next level (<b>Step 5 : </b>Final Visit).</p>
+                <p>You are about to move the transaction of <b><?= $selectedtransaction->user_username?></b>  to the next level (<b>Step 5 : </b>Final Visit).</p>
                 <ul class = "collection" style = "padding-right:20px;">
                     <li class = "collection-item">Make sure that the user followed the necessary requirements.<a href="#" style = "cursor:none; pointer-events: none;" class="secondary-content"><i class="material-icons green-text">check</i></a></li>
                     <li class = "collection-item">Some Text<a href="#" style = "cursor:none; pointer-events: none;" class="secondary-content"><i class="material-icons green-text">check</i></a></li>
@@ -171,7 +171,7 @@
         <div id="step5_modal" class="modal modal-fixed-footer">
             <div class="modal-content">
                 <h4><i class="fa fa-warning"></i> Notice</h4>
-                <p>You are about to move the transaction of <?= $selectedtransaction->user_username?> to the next level (<b>Step 5 : </b>Final Visit).</p>
+                <p>You are about to move the transaction of <b><?= $selectedtransaction->user_username?></b> to the next level (<b>Step 5 : </b>Final Visit).</p>
                 <ul class = "collection" style = "padding-right:20px;">
                     <li class = "collection-item">Make sure that the user followed the necessary requirements.<a href="#" style = "cursor:none; pointer-events: none;" class="secondary-content"><i class="material-icons green-text">check</i></a></li>
                     <li class = "collection-item">Some Text<a href="#" style = "cursor:none; pointer-events: none;" class="secondary-content"><i class="material-icons green-text">check</i></a></li>
