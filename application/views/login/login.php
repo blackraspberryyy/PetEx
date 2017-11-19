@@ -56,7 +56,7 @@ if (validation_errors()) {
                             </div>
                             <!--SIGNUP TAB-->
                             <div id="signup" class="col m12">
-                                <form method="POST" action="<?= base_url()?>login/signup_exec">
+                                <form method="POST" action="<?= base_url() ?>login/signup_exec">
                                     <div class ="col s12"><br>
                                         <div class="input-field col s12 <?php if (!empty(form_error("username"))): ?>error-theme<?php else: ?>green-theme<?php endif; ?>">
                                             <input id="username" type="text" class="" name = "username" value="<?= set_value('username') ?>">
@@ -104,7 +104,9 @@ if (validation_errors()) {
                                         </div>
 
                                         <div class="input-field col s12">
-                                            <select id = "province" name = "province"></select>
+                                            <select id = "province" name = "province">
+                                                <option value="<?= set_value('province') ?>"><?= set_value('province') ?></option>
+                                            </select>
                                             <label>Province</label>
                                         </div>
                                         <div class="input-field col s12">
@@ -112,7 +114,7 @@ if (validation_errors()) {
                                             <label>City</label>
                                         </div>
                                         <div class="input-field col s12 <?php if (!empty(form_error("address"))): ?>error-theme<?php else: ?>green-theme<?php endif; ?>">
-                                            <textarea id="textarea1" class="materialize-textarea" placeholder = "Street No., Street Name, Brgy." data-length="120" name="address" value="<?= set_value('address') ?>"></textarea>
+                                            <textarea id="textarea1" class="materialize-textarea" placeholder = "Street No., Street Name, Brgy." data-length="120" name="address"><?= set_value('address') ?></textarea>
                                             <label for="textarea1">Complete Address</label>
                                         </div>
                                         <div class="col s12">

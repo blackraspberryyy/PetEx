@@ -135,7 +135,7 @@ $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session
                                         <h4>Video</h4>
                                         <hr>
                                         <?php if ($pet->pet_video == NULL): ?>
-                                            <h2>This pet has no Video</h2>
+                                        <h2><i class="fa fa-warning"></i> This pet has no Video</h2>
                                         <?php else: ?>
                                             <video class="responsive-video" controls>
                                                 <source src="<?= $this->config->base_url() . $pet->pet_picture ?>"  type="video/mp4">
