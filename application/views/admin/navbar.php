@@ -31,10 +31,12 @@
     
     /*GREEN THEME FORMS*/
     .green-theme input[type=text]:focus + label,
+    .green-theme input[type=password]:focus + label,
     .green-theme textarea:focus + label{
         color: #388e3c !important;
     }
     .green-theme input[type=text]:focus,
+    .green-theme input[type=password]:focus,
     .green-theme textarea:focus{
         border-bottom: 1px solid #388e3c !important;
         box-shadow: 0 1px 0 0 #388e3c !important;
@@ -74,6 +76,9 @@
         background-color: #ef5350  !important;
     }
 </style>
+<?php
+    $current_user = $this->admin_model->fetch("user", array("user_id" => $this->session->userdata("userid")))[0];
+?>
 <div class ="navbar-fixed">
     <nav>
         <div class="nav-wrapper green darken-1 ">
@@ -85,7 +90,7 @@
                         <div class="background">
                           <img src="<?= $this->config->base_url()?>images/background/office.jpg">
                         </div>
-                        <a href="#"><img class="circle z-depth-2" src="<?= $this->config->base_url()?>images/profile/jc.png"></a>
+                        <a href="#"><img class="circle z-depth-2" src="<?= $this->config->base_url().$current_user->user_picture?>"></a>
                         <a href="#!name"><span class="white-text name">Juan Carlo Valencia</span></a>
                         <a href="#"><span class="white-text email">Administrator</span></a>
                     </div>
