@@ -40,12 +40,15 @@
         <div class="card row" style="margin-top:20px;">
             <nav class = "green darken-3">
                 <div class="nav-wrapper">
-                    <form action = "" method = "POST">
+                    <!--<form action = "" method = "POST">
                         <div class="input-field">
                             <input id="search" type="search" name = "search" placeholder = "Search user here.." >
                             <i class="material-icons">close</i>
                         </div>
-                    </form>
+                    </form>-->
+                    <div class="col s12">
+                        <a href="<?= $wholeUrl?>" class="breadcrumb">User Database</a>
+                    </div>
                 </div>
             </nav>
             <ul class="collapsible" data-collapsible="accordion">

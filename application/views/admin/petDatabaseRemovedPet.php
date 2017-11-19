@@ -14,12 +14,15 @@
         <div class = "card row">
             <nav class = "green darken-3">
                 <div class="nav-wrapper">
-                    <form action = "" method = "POST">
+                    <!--<form action = "" method = "POST">
                         <div class="input-field">
                             <input id="search" type="search" name = "search" placeholder = "Search for pet here.." >
                             <i class="material-icons">close</i>
-                        </div>
+                        </div>-->
                     </form>
+                    <div class="col s12">
+                        <a href="<?= $wholeUrl?>" class="breadcrumb">Pet Database</a>
+                    </div>
                 </div>
             </nav>
             <?php if(empty($pets)):?>
@@ -33,8 +36,8 @@
             
                 <?php foreach ($pets as $pet): ?>
                     <div class ="col s4">
-                        <div class="card sticky-action hoverable medium">
-                            <div class="card-image ">
+                        <div class="card sticky-action hoverable medium" >
+                            <div class="card-image">
                                 <img class="materialboxed " data-caption = "<?= $pet->pet_name ?>" src="<?= $this->config->base_url().$pet->pet_picture ?>">
                             </div>
                             <div class="card-content">

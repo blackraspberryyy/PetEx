@@ -11,14 +11,16 @@
         color:#2e7d32 !important;
     }
 </style>
-
+<?php
+    $current_user = $this->admin_model->fetch("user", array("user_id" => $this->session->userdata("userid")))[0];
+?>
 <ul id="admin-nav" class="side-nav fixed z-depth-1 collapsible"  data-collapsible="accordion">
     <li>
         <div class="user-view">
             <div class="background">
               <img src="<?= $this->config->base_url()?>images/background/office.jpg">
             </div>
-            <a href="<?= $this->config->base_url()?>admin"><img class="circle z-depth-2" src="<?= $this->config->base_url()?>images/profile/jc.png"></a>
+            <a href="<?= $this->config->base_url()?>admin"><img class="circle z-depth-2" src="<?= $this->config->base_url().$current_user->user_picture?>"></a>
             <a href="<?= $this->config->base_url()?>admin"><span class="white-text name">Juan Carlo Valencia</span></a>
             <a href="<?= $this->config->base_url()?>admin"><span class="white-text email">Administrator</span></a>
         </div>

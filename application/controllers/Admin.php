@@ -315,17 +315,29 @@ class Admin extends CI_Controller {
     
     public function updateProgress_exec(){
         $nextStep = $this->uri->segment(3);
+        $selectedTransactionId = $this->session->userdata("transactionid");
+        $selectedTransaction = $this->admin_model->fetch("transaction", array("transaction_id" => $selectedTransactionId))[0];
         if($nextStep == 100){
-            if ($this->admin_model->update("transaction", array("transaction_progress" => $nextStep), array("transaction_id" => $this->session->userdata("transactionid"))) != 0) {
-                redirect($this->config->base_url() . "admin/manageProgress");
+            $newAdoptionRecord = array(
+                "pet_id" => $selectedTransaction->pet_id,
+                "user_id" => $selectedTransaction->user_id,
+                "adoption_isMissing" => 0,
+                "adoption_adopted_at" => time()
+            );
+            if ($this->admin_model->update("transaction", array("transaction_progress" => $nextStep, "transaction_isFinished" => 1), array("transaction_id" => $selectedTransactionId)) != 0
+                    && $this->admin_model->update("pet", array("pet_status" => "adopted"), array("pet_id" => $selectedTransaction->pet_id)) != 0
+                    && $this->admin_model->singleinsert("adoption", $newAdoptionRecord) != 0) {
+                //SUCCESS
             } else {
-                //Error in updating
+                //Error in updating transaction
+                //Error in updating pet
+                //Error in inserting adoption
             }
-            redirect(base_url()."admin/petAdopters_exec/");
+            redirect(base_url()."admin/petDatabase/");
         }
         else{
             if ($this->admin_model->update("transaction", array("transaction_progress" => $nextStep), array("transaction_id" => $this->session->userdata("transactionid"))) != 0) {
-                redirect($this->config->base_url() . "admin/manageProgress");
+                //SUCCESS
             } else {
                 //Error in updating
             }
@@ -601,15 +613,76 @@ class Admin extends CI_Controller {
     }
 
     public function settings() {
+        $currentUser = $this->session->userdata("userid");
+        $user = $this->admin_model->fetch("user", array("user_id" => $currentUser))[0];
         $data = array(
             'title' => 'Settings | Admin',
             'wholeUrl' => base_url(uri_string()),
+            'currentUser' => $user
         );
         $this->load->view("admin/includes/header", $data);
         $this->load->view("admin/navbar");
         $this->load->view("admin/sidenav");
         $this->load->view("admin/settings");
         $this->load->view("admin/includes/footer");
+    }
+    
+    public function settingsUpdate(){
+        $currentUser = $this->admin_model->fetch("user", array("user_id" => $this->session->userdata("userid")))[0];
+        $column_name = $this->uri->segment(3);
+        if($column_name == "user_picture"){
+            $config['upload_path'] = "./images/profile/";
+            $config['allowed_types'] = 'gif|jpg|jpeg|png';
+            $config['file_ext_tolower'] = true;
+            $config['max_size'] = 2000;
+            $config['max_width'] = 1024;
+            $config['max_height'] = 768;
+            $new_name = $currentUser->user_id."-".$currentUser->user_username.$_FILES["user_picture"]['name'];
+            $config['file_name'] = $new_name;
+            $this->load->library('upload', $config);
+            
+            if (!$this->upload->do_upload('user_picture')){
+                //OOPS! ERROR IN UPLOADING
+                //print_r($this->upload->display_errors());
+                //die();
+            }else{
+                //$image = !empty($this->input->post("user_picture")) ? $this->upload->data($currentUser->user_id."-".$currentUser->user_username) : $image = $currentUser->user_picture;
+                $image = "./images/profile/".$this->upload->data("file_name"); 
+                if($this->admin_model->update("user", array("user_picture" => $image), array("user_id" => $this->session->userdata("userid")))){
+                    //Success updating
+                }else{
+                    //OOPS. ERROR in updating
+                }
+                redirect(base_url()."admin/settings");
+            }
+        }else if($column_name == "change_name"){
+            $firstname = $this->input->post("user_firstname");
+            $lastname = $this->input->post("user_lastname");
+            if($this->admin_model->update("user", array("user_firstname"=>$firstname, "user_lastname" => $lastname), array("user_id" => $this->session->userdata("userid")))){
+                //SUCCESS
+            }else{
+                //Oops error in updating
+            }
+        }else if($column_name == "change_username"){
+            $username = $this->input->post("user_username");
+            //ICHE-CHANGE ANG USERNAME
+        }else if($column_name == "change_password"){
+            $password = $this->input->post("user_password");
+            //ICHE-CHANGE ANG PASSWORD
+        }else if($column_name == "change_email"){
+            $email = $this->input->post("user_email");
+            //ICHE-CHANGE ANG EMAIL
+        }else if($column_name == "change_contactno"){
+            $contact_no = $this->input->post("user_contact_no");
+            //ICHE-CHANGE ANG CONTACT_NO
+        }else if($column_name == "change_address"){
+            $complete_address = $this->input->post("user_address");
+            $city = $this->input->post("user_city");
+            $address = $this->input->post("user_province");
+            //ICHE-CHANGE ANG ADDRESS
+        }
+        //echo $this->db->last_query();        
+        redirect(base_url()."admin/settings");
     }
 
     public function logout() {
