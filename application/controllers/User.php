@@ -44,9 +44,11 @@ class User extends CI_Controller {
 
     public function index() {
         $allPets = $this->user_model->fetchPetDesc("pet");
+        $currentUserId = $this->session->userdata('userid');
         $allAdopted = $this->user_model->fetchJoinThreeAdoptedDesc("adoption", "pet", "adoption.pet_id = pet.pet_id", "user", "adoption.user_id = user.user_id");
+        $currentUser = $this->user_model->fetch("user", array("user_id" => $currentUserId, "user_status" => 1))[0];
         $data = array(
-            'title' => 'User | ',
+            'title' => 'User | ' . $currentUser->user_firstname . " " . $currentUser->user_lastname,
             'wholeUrl' => base_url(uri_string()),
             'pets' => $allPets,
             'adoptedPets' => $allAdopted
@@ -160,7 +162,7 @@ class User extends CI_Controller {
     public function petAdoption() {
         $allPets = $this->user_model->fetchPetDesc("pet");
         $data = array(
-            'title' => 'User | Online Adoption Application Form',
+            'title' => 'User | Pet Adoption',
             'wholeUrl' => base_url(uri_string()),
             'pets' => $allPets
         );
@@ -174,7 +176,7 @@ class User extends CI_Controller {
     public function petAdoptionOnlineForm() {
         $allPets = $this->user_model->fetchPetDesc("pet");
         $data = array(
-            'title' => 'User | Pet Adoption',
+            'title' => 'User | Online Adoption Application Form',
             'wholeUrl' => base_url(uri_string()),
             'pets' => $allPets
         );

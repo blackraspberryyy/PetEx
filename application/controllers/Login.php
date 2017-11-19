@@ -10,12 +10,12 @@ class Login extends CI_Controller {
         $this->load->library('recaptcha');
         if ($this->session->has_userdata('isloggedin') == TRUE) {
             $currentUserId = $this->session->userdata('userid');
-            $currentUser = $this->user_model->fetch("user", array("user_id" => $currentUserId))[0];   
-            if($currentUser->user_access == "admin"){
-                redirect(base_url().'admin/');
-            }else{
+            $currentUser = $this->user_model->fetch("user", array("user_id" => $currentUserId))[0];
+            if ($currentUser->user_access == "admin") {
+                redirect(base_url() . 'admin/');
+            } else {
                 redirect(base_url() . 'user/');
-            }   
+            }
         }
     }
 
@@ -65,13 +65,14 @@ class Login extends CI_Controller {
 
         $data = array(
             'user_username' => $this->input->post('username'),
-            'user_password' => $this->input->post('password'),
+            'user_password' => sha1($this->input->post('password')),
         );
+
         $accountDetails = $this->admin_model->getinfo("user", $data);
 
         if (!$accountDetails) {
             //OOPS no accounts like that!
-            echo "<script>alert('No results found');"
+            echo "<script>alert('Account Failed');"
             . "window.location='" . base_url() . "login'</script>";
         } else {
             $accountDetails = $accountDetails[0];
@@ -95,7 +96,7 @@ class Login extends CI_Controller {
                 if ($accountDetails->user_status == 0) {
                     //OOPS user is blocked by the admin. Please contact the admin.
                     echo "<script>alert('Account is Blocked!');"
-                    . "window.location='" . base_url() . "login/'</script>";
+                    . "window.location='" . base_url() . "login'</script>";
                 } else {
                     if ($accountDetails->user_isverified == 0) {
                         //OOPS user is not verified yet.
@@ -162,7 +163,9 @@ class Login extends CI_Controller {
         $this->form_validation->set_rules('g-recaptcha-response', "CAPTCHA", "required|callback_check_recaptcha");
         if ($this->form_validation->run() == FALSE) {
             $data = array(
-                'title' => 'Pet Ex | Login'
+                'title' => 'Pet Ex | Login',
+                'script' => $this->recaptcha->getScriptTag(),
+                'widget' => $this->recaptcha->getWidget(),
             );
             $this->load->view("login/includes/header", $data);
             $this->load->view("login/login");
@@ -189,15 +192,19 @@ class Login extends CI_Controller {
                 'user_sex' => $this->input->post('gender'),
                 'user_picture' => $imagePath,
                 'user_address' => $this->input->post('address'),
+                'user_city' => $this->input->post('city'),
+                'user_province' => $this->input->post('province'),
                 'user_verification_code' => $this->generate(),
                 'user_added_at' => time(),
                 'user_updated_at' => time()
             );
             if ($this->user_model->insert("user", $data)) {
-                echo 'Verify Your Account';
+                echo "<script>alert('Verify Your Account');"
+                . "window.location='" . base_url() . "login/'</script>";
                 $this->sendemail($data);
             } else {
-                echo "Register Error";
+                echo "<script>alert('Register Error');"
+                . "window.location='" . base_url() . "login/'</script>";
             }
         }
     }
@@ -243,13 +250,13 @@ class Login extends CI_Controller {
     public function verifyCode() {
         $code = $this->uri->segment(3);
         $this->user_model->update('user', array('user_isverified' => '1'), array('user_verification_code' => $code));
-        echo "Your Account is now verified. <br>";
-        echo "<a href = '" . $this->config->base_url() . "login/'>Login To Your Account</a>";
+        echo "<script>alert('Your account is now verified.');"
+        . "window.location='" . base_url() . "login/'</script>";
     }
 
     public function check_recaptcha($response) {
         if (!empty($response)) {
-//this function gets the response from the google's api
+            //this function gets the response from the google's api
             $response = $this->recaptcha->verifyResponse($response);
             if ($response['success'] === TRUE) {
                 return true;
@@ -262,7 +269,7 @@ class Login extends CI_Controller {
     public function enterNewPass() {
         $segment = $this->uri->segment(3);
         $data = array(
-            'title' => "Reset Password",
+            'title' => "Enter New Password",
             'wholeUrl' => base_url(uri_string()),
             'segment' => $segment
         );
@@ -286,7 +293,7 @@ class Login extends CI_Controller {
             $this->load->view("login/includes/footer");
         } else {
             $data = array(
-                'user_password' => $this->input->post('password')
+                'user_password' => sha1($this->input->post('password'))
             );
             $this->user_model->update('user', $data, array('user_username' => $user));
             echo "<script>alert('Password has been reset');"

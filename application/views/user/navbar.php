@@ -11,14 +11,16 @@ $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session
                     <a href="<?= $this->config->base_url() ?>user" class = "col s6"><img class="brand-logo center" src = "<?= $this->config->base_url() ?>images/logo/logo.png" height = "58" ></a>
 
                     <ul id="slide-out" class="side-nav collapsible">
-                        <li><div class="user-view">
+                        <li>
+                            <div class="user-view">
                                 <div class="background">
-                                    <img src="<?= $this->config->base_url() ?>images/background/petLogin.jpg">
+                                    <img src="<?= $this->config->base_url() ?>images/background/office.jpg">
                                 </div>
-                                <a href="<?= $this->config->base_url() ?>user"><img class="circle z-depth-2" src="<?= base_url() ?>profile/<?= $userInfo->user_picture ?>"></a>
+                                <a href="<?= $this->config->base_url() ?>user"><img class="circle z-depth-2" src="<?= $this->config->base_url() . $userInfo->user_picture ?>"></a>
                                 <a href="#!name"><span class="white-text name" ><?= $userInfo->user_firstname ?> <?= $userInfo->user_lastname ?></span></a>
                                 <a href="#!email"><span class="white-text email"><?= $userInfo->user_email ?></span></a>
-                            </div></li>
+                            </div>
+                        </li>
                         <li>
                             <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url() . "user" ? "side-nav-active active" : "black-text" ?>" href="<?= $this->config->base_url() ?>user">
                                 <i class="fa fa-dashboard fa-2x"></i>Dashboard
