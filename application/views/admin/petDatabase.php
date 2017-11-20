@@ -175,6 +175,9 @@ function get_age($birth_date) {
                     </div>
                 </a>
             </div>
+            <div class = "col s12">
+                <?= $links?>
+            </div>
         </div>
     </div>
 </div>

@@ -1,7 +1,21 @@
 <style>
-    .profileImgStyle{
-        height:200px;
+    .image-circle-cropper {
+        width: 200px;
+        height: 200px;
+        position: relative;
+        overflow: hidden;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+        border-radius: 50%;
         border:2px solid white;
+    }
+    .profileImgStyle{
+        display: inline;
+        margin: 0 auto;
+        height: 100%;
+        width: auto;
     }
 </style>
 <div class ="side-nav-offset">
@@ -22,12 +36,16 @@
             </div>
         </div>
         <?php else: ?>
-            <div class = "col s12 center">
+            <div class = "col s12">
                 <br>
                 <?php foreach ($records as $record): ?>
-                    <img src="<?= $this->config->base_url() . $record->pet_picture ?>" class = "profileImgStyle z-depth-2 circle">
-                    <br>
-                    <h4><?= $record->pet_name?></h4>
+                    <center>
+                        <div class = "image-circle-cropper z-depth-2">
+                            <img src="<?= $this->config->base_url() . $record->pet_picture ?>" class = "profileImgStyle">
+                        </div>
+                        <br>
+                        <h4><?= $record->pet_name?></h4>
+                    </center>
                     <?php break; ?>
                 <?php endforeach; ?>
             </div>
@@ -137,6 +155,8 @@
 
                     </table>
                 </div>
+                
+                <?= $links?>
             </div>
         <?php endif; ?>
         <a href="<?= $this->config->base_url() ?>admin/petDatabaseAddMedical/<?= $this->session->userdata("petid_medical") ?>" class="btn waves-effect waves-light blue darken-3 modal-trigger right">Add

@@ -93,6 +93,13 @@ class Login extends CI_Controller {
                     } else {
                         $this->session->set_userdata('isloggedin', true);
                         $this->session->set_userdata('userid', $accountDetails->user_id);
+                        $log = array(
+                            "user_id" => $this->session->userdata("userid"),
+                            "event_description" => "Logged in.",
+                            "event_classification" => "log",
+                            "event_added_at" => time()
+                        );
+                        $this->putToEvents($log);
                         redirect(base_url() . 'admin/');
                     }
                 }

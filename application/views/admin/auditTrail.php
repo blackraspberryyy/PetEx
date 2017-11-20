@@ -24,6 +24,8 @@
                             </li>
                         <?php endforeach; ?> 
                     </ul>
+                
+                    <?= $links?>
                 <?php endif; ?>
 
 
