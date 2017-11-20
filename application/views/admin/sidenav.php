@@ -26,11 +26,11 @@
         </div>
     </li>
     
-    <li>
+<!--    <li>
         <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url()."admin" ? "side-nav-active active" : "black-text"?>" href="<?= $this->config->base_url()?>admin">
             <i class="fa fa-dashboard fa-2x"></i>Dashboard
         </a>
-    </li>
+    </li>-->
     <li>
         <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url()."admin/petDatabase" || $wholeUrl == $this->config->base_url()."admin/petDatabaseAdd" || strpos($wholeUrl, $this->config->base_url()."admin/petDatabaseUpdate") !== FALSE || strpos($wholeUrl, $this->config->base_url()."admin/petDatabaseRemove") !== FALSE || strpos($wholeUrl, $this->config->base_url()."admin/petDatabaseLog") !== FALSE || strpos($wholeUrl, $this->config->base_url()."admin/petDatabaseAdopter") !== FALSE || strpos($wholeUrl, $this->config->base_url()."admin/petDatabaseMedicalRecords") !== FALSE || strpos($wholeUrl, $this->config->base_url()."admin/petDatabaseAddMedical") !== FALSE || strpos($wholeUrl, $this->config->base_url()."admin/petDatabaseEditMedical") !== FALSE || strpos($wholeUrl, $this->config->base_url()."admin/petAdopters") !== FALSE || strpos($wholeUrl, $this->config->base_url()."admin/manageProgress") !== FALSE ? "side-nav-active active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/petDatabase">
             <i class="fa fa-database fa-2x"></i>Pet Database
@@ -51,13 +51,13 @@
         </div>
     </li>
     <li>
-        <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url()."admin/userDatabase" || strpos($wholeUrl, $this->config->base_url()."admin/userDatabaseAdd") !== FALSE ? "side-nav-active active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/userDatabase">
+        <a class="waves-effect collapsible-header <?= strpos($wholeUrl, $this->config->base_url()."admin/userDatabase") !== FALSE || strpos($wholeUrl, $this->config->base_url()."admin/userDatabaseAdd") !== FALSE ? "side-nav-active active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/userDatabase">
             <i class="fa fa-users fa-2x"></i>User Database
         </a>
         <div class="collapsible-body">
             <ul class = "collapsible" data-collapsible="accordion">
                 <li>
-                    <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url()."admin/userDatabaseAdd" ? "side-nav-active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/userDatabaseAdd">
+                    <a class="waves-effect collapsible-header <?= strpos($wholeUrl, $this->config->base_url()."admin/userDatabaseAdd") !== FALSE ? "side-nav-active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/userDatabaseAdd">
                         <i class="fa fa-user-plus fa-2x"></i>Register an Admin
                     </a>
                 </li>
@@ -65,32 +65,32 @@
         </div>
     </li>
     <li>
-        <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url()."admin/schedules" ? "side-nav-active active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/schedules">
+        <a class="waves-effect collapsible-header <?= strpos($wholeUrl, $this->config->base_url()."admin/schedules") !== FALSE ? "side-nav-active active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/schedules">
             <i class="fa fa-calendar fa-2x"></i>Schedules
         </a>
     </li>
     <li>
-        <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url()."admin/reports" ? "side-nav-active active" : "black-text"?>" href= "<?= $this->config->base_url()?>admin/reports">
+        <a class="waves-effect collapsible-header <?= strpos($wholeUrl ,  $this->config->base_url()."admin/reports") !== FALSE ? "side-nav-active active" : "black-text"?>" href= "<?= $this->config->base_url()?>admin/reports">
             <i class="fa fa-bar-chart fa-2x"></i>Reports
         </a>
     </li>
     <li>
-        <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url()."admin/userLogs" ? "side-nav-active active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/userLogs">
+        <a class="waves-effect collapsible-header <?= strpos($wholeUrl ,  $this->config->base_url()."admin/userLogs") !== FALSE ? "side-nav-active active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/userLogs">
             <i class="fa fa-key fa-2x"></i>User Logs
         </a>
     </li>
     <li>
-        <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url()."admin/auditTrail" ? "side-nav-active active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/auditTrail">
+        <a class="waves-effect collapsible-header <?= strpos($wholeUrl ,  $this->config->base_url()."admin/auditTrail") !== FALSE ? "side-nav-active active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/auditTrail">
             <i class="fa fa-list fa-2x"></i>Audit Trail
         </a>
     </li>
     <li>
-        <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url()."admin/settings" ? "side-nav-active active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/settings">
+        <a class="waves-effect collapsible-header <?= strpos($wholeUrl ,  $this->config->base_url()."admin/settings") !== FALSE ? "side-nav-active active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/settings">
             <i class="fa fa-gear fa-2x"></i>Settings
         </a>
     </li>
     <li>
-        <a class="waves-effect collapsible-header <?= $wholeUrl == $this->config->base_url()."admin/logout" ? "side-nav-active active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/logout">
+        <a class="waves-effect collapsible-header <?= strpos($wholeUrl, $this->config->base_url()."admin/logout") !== FALSE ? "side-nav-active active" : "black-text"?>" href="<?= $this->config->base_url()?>admin/logout">
             <i class="fa fa-sign-out fa-2x"></i>Logout
         </a>
     </li>

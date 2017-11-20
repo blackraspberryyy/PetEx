@@ -78,25 +78,57 @@ class Admin extends CI_Controller {
     //-------------------------------------
 
     public function index() {
-        $currentUserId = $this->session->userdata('userid');
-        $currentUser = $this->admin_model->fetch("user", array("user_id" => $currentUserId, "user_status" => 1))[0];
-        $data = array(
-            'title' => 'Admin | ' . $currentUser->user_firstname . " " . $currentUser->user_lastname,
-            'wholeUrl' => base_url(uri_string()),
-        );
-        $this->load->view("admin/includes/header", $data);
-        $this->load->view("admin/navbar");
-        $this->load->view("admin/sidenav");
-        $this->load->view("admin/adminDashboard");
-        $this->load->view("admin/includes/footer");
+        redirect(base_url()."admin/petDatabase");
+//        $currentUserId = $this->session->userdata('userid');
+//        $currentUser = $this->admin_model->fetch("user", array("user_id" => $currentUserId, "user_status" => 1))[0];
+//        $data = array(
+//            'title' => 'Admin | ' . $currentUser->user_firstname . " " . $currentUser->user_lastname,
+//            'wholeUrl' => base_url(uri_string()),
+//        );
+//        $this->load->view("admin/includes/header", $data);
+//        $this->load->view("admin/navbar");
+//        $this->load->view("admin/sidenav");
+//        $this->load->view("admin/adminDashboard");
+//        $this->load->view("admin/includes/footer");
     }
 
     public function petDatabase() {
         $allPets = $this->admin_model->fetch("pet", array("pet_access" => 1));
+        
+        $this->load->library('pagination');
+        
+        $pages = 5;
+        
+        $config['base_url'] = base_url()."admin/petDatabase/";
+        $config['total_rows'] = count($allPets);
+        $config['per_page'] = $pages;
+        $config['full_tag_open'] = '<ul class="pagination center">';
+        $config['full_tag_close']= ' </ul>';
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['first_url']='';
+        $config['last_link']='Last';
+        $config['last_tag_open']='<li>';
+        $config['last_tag_close']='</li>';
+        $config['next_link']='<i class="material-icons">chevron_right</i>';
+        $config['next_tag_open']='<li>';
+        $config['next_tag_close']='</li>';
+        $config['prev_link'] ='<i class="material-icons">chevron_left</i>';
+        $config['prev_tag_open']='<li>';
+        $config['prev_tag_close']='</li>';
+        $config['cur_tag_open']='<li class="active green darken-4"><a href="#">';
+        $config['cur_tag_close']='</a></li>';
+        $config['num_tag_open']='<li>';
+        $config['num_tag_close']='</li>';
+        
+        $this->pagination->initialize($config);
+        
         $data = array(
             'title' => 'Pet Database | Admin',
             'wholeUrl' => base_url(uri_string()),
-            'pets' => $allPets,
+            'pets' => $this->admin_model->fetchAllLimit("pet", $pages, $this->uri->segment(3), array("pet_access" => 1)),
+            'links' => $this->pagination->create_links()
         );
         $this->load->view("admin/includes/header", $data);
         $this->load->view("admin/navbar");
@@ -324,11 +356,43 @@ class Admin extends CI_Controller {
         $selectedPetId = $this->session->userdata("petadopterid");
         $selectedPet = $this->admin_model->fetch("pet", array("pet_access" => 1, "pet_id" => $selectedPetId))[0];
         $transactions = $this->admin_model->fetchjointhree("transaction", "pet", "transaction.pet_id = pet.pet_id", "user", "transaction.user_id = user.user_id", array("transaction.pet_id" => $selectedPetId, "transaction_isFinished" => 0, "user_access" => "user"));
+        
+        $this->load->library('pagination');
+        
+        $pages = 5;
+        
+        $config['base_url'] = base_url()."admin/petDatabaseAdopters/";
+        $config['total_rows'] = count($transactions);
+        $config['per_page'] = $pages;
+        $config['full_tag_open'] = '<ul class="pagination center">';
+        $config['full_tag_close']= ' </ul>';
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['first_url']='';
+        $config['last_link']='Last';
+        $config['last_tag_open']='<li>';
+        $config['last_tag_close']='</li>';
+        $config['next_link']='<i class="material-icons">chevron_right</i>';
+        $config['next_tag_open']='<li>';
+        $config['next_tag_close']='</li>';
+        $config['prev_link'] ='<i class="material-icons">chevron_left</i>';
+        $config['prev_tag_open']='<li>';
+        $config['prev_tag_close']='</li>';
+        $config['cur_tag_open']='<li class="active green darken-4"><a href="#">';
+        $config['cur_tag_close']='</a></li>';
+        $config['num_tag_open']='<li>';
+        $config['num_tag_close']='</li>';
+        
+        $this->pagination->initialize($config);
+        
+        
         $data = array(
             'title' => 'Pet Database | ' . $selectedPet->pet_name,
             'wholeUrl' => base_url(uri_string()),
-            'transactions' => $transactions,
-            'selectedPet' => $selectedPet
+            'transactions' => $this->admin_model->fetchAllLimitJoinThree("transaction", $pages, $this->uri->segment(3), "pet", "transaction.pet_id = pet.pet_id", "user", "transaction.user_id = user.user_id", array("transaction.pet_id" => $selectedPetId, "transaction_isFinished" => 0, "user_access" => "user")),
+            'selectedPet' => $selectedPet,
+            'links' => $this->pagination->create_links()
         );
 
         $this->load->view("admin/includes/header", $data);
@@ -443,10 +507,41 @@ class Admin extends CI_Controller {
     public function getMedicalRecords(){
         $pet_id = $this->session->userdata("petid_medical");
         $selectedPet = $this->admin_model->fetchjoin("medical_record", "pet", "medical_record.pet_id = pet.pet_id", array('pet.pet_id' => $pet_id));
+        
+        $this->load->library('pagination');
+        
+        $pages = 5;
+        
+        $config['base_url'] = base_url()."admin/petDatabaseAdopters/";
+        $config['total_rows'] = count($selectedPet);
+        $config['per_page'] = $pages;
+        $config['full_tag_open'] = '<ul class="pagination center">';
+        $config['full_tag_close']= ' </ul>';
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['first_url']='';
+        $config['last_link']='Last';
+        $config['last_tag_open']='<li>';
+        $config['last_tag_close']='</li>';
+        $config['next_link']='<i class="material-icons">chevron_right</i>';
+        $config['next_tag_open']='<li>';
+        $config['next_tag_close']='</li>';
+        $config['prev_link'] ='<i class="material-icons">chevron_left</i>';
+        $config['prev_tag_open']='<li>';
+        $config['prev_tag_close']='</li>';
+        $config['cur_tag_open']='<li class="active green darken-4"><a href="#">';
+        $config['cur_tag_close']='</a></li>';
+        $config['num_tag_open']='<li>';
+        $config['num_tag_close']='</li>';
+        
+        $this->pagination->initialize($config);
+        
         $data = array(
             'title' => 'Medical Records | Admin',
             'wholeUrl' => base_url(uri_string()),
-            'records' => $selectedPet
+            'records' => $this->admin_model->fetchAllLimitJoin("medical_record", $pages, $this->uri->segment(3), "pet", "medical_record.pet_id = pet.pet_id", array('pet.pet_id' => $pet_id)),
+            'links' => $this->pagination->create_links()
         );
         $this->load->view("admin/includes/header", $data);
         $this->load->view("admin/navbar");
@@ -608,10 +703,41 @@ class Admin extends CI_Controller {
 
     public function userDatabase() {
         $allUsers = $this->admin_model->fetch("user");
+        
+        $this->load->library('pagination');
+        
+        $pages = 10;
+        
+        $config['base_url'] = base_url()."admin/userDatabase/";
+        $config['total_rows'] = count($allUsers);
+        $config['per_page'] = $pages;
+        $config['full_tag_open'] = '<ul class="pagination center">';
+        $config['full_tag_close']= ' </ul>';
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['first_url']='';
+        $config['last_link']='Last';
+        $config['last_tag_open']='<li>';
+        $config['last_tag_close']='</li>';
+        $config['next_link']='<i class="material-icons">chevron_right</i>';
+        $config['next_tag_open']='<li>';
+        $config['next_tag_close']='</li>';
+        $config['prev_link'] ='<i class="material-icons">chevron_left</i>';
+        $config['prev_tag_open']='<li>';
+        $config['prev_tag_close']='</li>';
+        $config['cur_tag_open']='<li class="active green darken-4"><a href="#">';
+        $config['cur_tag_close']='</a></li>';
+        $config['num_tag_open']='<li>';
+        $config['num_tag_close']='</li>';
+        
+        $this->pagination->initialize($config);
+        
         $data = array(
             'title' => 'User Database | Admin',
             'wholeUrl' => base_url(uri_string()),
-            'users' => $allUsers,
+            'users' => $this->admin_model->fetchAllLimit("user", $pages, $this->uri->segment(3)),
+            'links' => $this->pagination->create_links()
         );
         $this->load->view("admin/includes/header", $data);
         $this->load->view("admin/navbar");
@@ -705,11 +831,43 @@ class Admin extends CI_Controller {
 
     public function userLogs() {
         $logs = $this->admin_model->fetchjoin("event", "user", "event.user_id = user.user_id", array("event_classification" => "log"));
+        
+        $this->load->library('pagination');
+        
+        $pages = 10;
+        
+        $config['base_url'] = base_url()."admin/userLogs/";
+        $config['total_rows'] = count($logs);
+        $config['per_page'] = $pages;
+        $config['full_tag_open'] = '<ul class="pagination center">';
+        $config['full_tag_close']= ' </ul>';
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['first_url']='';
+        $config['last_link']='Last';
+        $config['last_tag_open']='<li>';
+        $config['last_tag_close']='</li>';
+        $config['next_link']='<i class="material-icons">chevron_right</i>';
+        $config['next_tag_open']='<li>';
+        $config['next_tag_close']='</li>';
+        $config['prev_link'] ='<i class="material-icons">chevron_left</i>';
+        $config['prev_tag_open']='<li>';
+        $config['prev_tag_close']='</li>';
+        $config['cur_tag_open']='<li class="active green darken-4"><a href="#">';
+        $config['cur_tag_close']='</a></li>';
+        $config['num_tag_open']='<li>';
+        $config['num_tag_close']='</li>';
+        
+        $this->pagination->initialize($config);
+
         $data = array(
             'title' => 'User Logs | Admin',
             'wholeUrl' => base_url(uri_string()),
-            'logs' => $logs
+            'logs' => $this->admin_model->fetchAllLimitJoin("event", $pages, $this->uri->segment(3), "user", "event.user_id = user.user_id", array("event_classification" => "log")),
+            'links' => $this->pagination->create_links()
         );
+        
         $this->load->view("admin/includes/header", $data);
         $this->load->view("admin/navbar");
         $this->load->view("admin/sidenav");
@@ -719,11 +877,43 @@ class Admin extends CI_Controller {
 
     public function auditTrail() {
         $trails = $this->admin_model->fetchjoin("event", "user", "event.user_id = user.user_id", array("event_classification" => "audit"));
+        
+        $this->load->library('pagination');
+        
+        $pages = 10;
+        
+        $config['base_url'] = base_url()."admin/auditTrail/";
+        $config['total_rows'] = count($trails);
+        $config['per_page'] = $pages;
+        $config['full_tag_open'] = '<ul class="pagination center">';
+        $config['full_tag_close']= ' </ul>';
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['first_url']='';
+        $config['last_link']='Last';
+        $config['last_tag_open']='<li>';
+        $config['last_tag_close']='</li>';
+        $config['next_link']='<i class="material-icons">chevron_right</i>';
+        $config['next_tag_open']='<li>';
+        $config['next_tag_close']='</li>';
+        $config['prev_link'] ='<i class="material-icons">chevron_left</i>';
+        $config['prev_tag_open']='<li>';
+        $config['prev_tag_close']='</li>';
+        $config['cur_tag_open']='<li class="active green darken-4"><a href="#">';
+        $config['cur_tag_close']='</a></li>';
+        $config['num_tag_open']='<li>';
+        $config['num_tag_close']='</li>';
+        
+        $this->pagination->initialize($config);
+        
         $data = array(
             'title' => 'Audit Trail | Admin',
             'wholeUrl' => base_url(uri_string()),
-            'trails' => $trails
+            'trails' => $this->admin_model->fetchAllLimitJoin("event", $pages, $this->uri->segment(3), "user", "event.user_id = user.user_id", array("event_classification" => "audit")),
+            'links' => $this->pagination->create_links()
         );
+        
         $this->load->view("admin/includes/header", $data);
         $this->load->view("admin/navbar");
         $this->load->view("admin/sidenav");
