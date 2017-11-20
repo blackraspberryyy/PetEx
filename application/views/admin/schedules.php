@@ -7,11 +7,22 @@
         background: #000 !important;
     }
     .fc-today {
-        background:#c8e6c9 !important;
+        background:#a5d6a7 !important;
+    }
+    .fc-day-top{
+        background: #a5d6a7 !important;
+        border-radius: 0px !important;
     }
     .fc-event {
         font-size: inherit !important;
         font-weight: bold !important;
+        cursor: pointer;
+    }
+    .fc-future{
+        cursor: pointer;
+    }
+    .fc-widget-content{
+        cursor: pointer;
     }
     .fc td, .fc th {
         border-style: none !important;
@@ -20,7 +31,7 @@
     }
     .pulse::before{ 
         -webkit-animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) 1 !important;
-                animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) 1 !important;
+        animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) 1 !important;
     }
     .small{
         height:200px !important;
@@ -47,38 +58,189 @@
     button:focus{
         background:#ccc !important;
     }
+    .btn-link{
+        border:none;
+        outline:none;
+        background:none;
+        cursor:pointer;
+        padding:0px 28px;
+        font-family:inherit;
+        font-size:inherit;
+    }
 </style>
+<script>
+    $(document).ready(function () {
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay,listWeek'
+            },
+            handleWindowResize: true,
+            weekends: true, // Show weekends
+            //navLinks: true,  //can click day/week names to navigate views
+            timeFormat: 'hh:mm A',
+            editable: false,
+            droppable: false,
+            eventLimit: true, // allow "more" link when too many events
+            displayEventTime: true,
+            allDayText: 'Events/Activity',
+            allDay: "",
+            dayClick: function (date, jsEvent, view) {
+                if(moment().date() > date.date()){
+                   alert("You cannot set a schedule before the current date!");
+                }else{
+                    $('#eventForm')[0].reset();
+                    $('#event_startDate').val(date.format("MMMM D, YYYY"));
+                    $('#event_header').html('Add a schedule');
+                    $('#sendReq').css({"display": "inline-block"});
+                    $('#updateReq').css({"display": "none"});
+                    $('#deleteReq').css({"display": "none"});
+                    $("#event_startDate").prop("disabled", false);
+                    $("#event_startTime").prop("disabled", false);
+                    $("#event_endDate").prop("disabled", false);
+                    $("#event_endTime").prop("disabled", false);
+                    $('#customEvent').modal('open');
+                }    
+            },
+            eventClick: function (calEvent, jsEvent, view) {
+                console.log(calEvent.schedule_id);
+                $.ajax({
+                    "method": "POST",
+                    "url": '<?= base_url()?>' + "admin/getsched/",
+                    "dataType": "JSON",
+                    "data": {
+                        'id': calEvent.schedule_id
+                    },
+                    success: function (res) {
+                        $('#event_header').html('Manage schedule');
+                        $('#sendReq').css({"display": "none"});
+                        $('#updateReq').css({"display": "inline-block"});
+                        $('#deleteReq').css({"display": "inline-block"});
+                        $("#event_id").val(res[0].schedule_id);
+                        $("#event_name").val(res[0].schedule_title);
+                        $("#event_description").val(res[0].schedule_desc);
+                        $("#event_color").val(res[0].schedule_color);
+                        $("#event_startDate").val(res[0].schedule_startdate);
+                        $("#event_startDate").prop("disabled", true);
+                        $("#event_startTime").val(res[0].schedule_starttime);
+                        $("#event_startTime").prop("disabled", true);
+                        $("#event_endDate").val(res[0].schedule_enddate);
+                        $("#event_endDate").prop("disabled", true);
+                        $("#event_endTime").val(res[0].schedule_endtime);
+                        $("#event_endTime").prop("disabled", true);
+                        $('#customEvent').modal('open');
+                    }
+                });
+            },
+            events: {
+                method: "POST",
+                url: '<?= base_url() ?>' + 'admin/getscheds/',
+                dataType: 'JSON',
+            },
+            eventRender: function (event, element) {
+                //element.css({"height":"30px"});
+            }
+        });
+        
+        $(document).on('click', '#sendReq', function () {
+            $.ajax({
+                "method": "POST",
+                "url": '<?= base_url()?>' + "admin/setreserve/",
+                "dataType": "JSON",
+                "data": {
+                    'schedule_title': $("#event_name").val(),
+                    'schedule_desc': $("#event_description").val(),
+                    'schedule_color': $("#event_color").val(),
+                    'schedule_startdate': $("#event_startDate").val(),
+                    'schedule_starttime': $("#event_startTime").val(),
+                    'schedule_enddate': $("#event_endDate").val(),
+                    'schedule_endtime': $("#event_endTime").val()
+                },
+                success: function (res) {
+                    if (res.success) {
+                        location.reload();
+                    } else {
+                        alert(res.result);
+                    }
 
+                }
+            });
+
+        });
+        
+        $(document).on('click', '#updateReq', function () {
+            $.ajax({
+                "method": "POST",
+                "url": "<?= base_url()?>" + "admin/updatereserve/",
+                "dataType": "JSON",
+                "data": {
+                    'schedule_id': $("#event_id").val(),
+                    'schedule_title': $("#event_name").val(),
+                    'schedule_desc': $("#event_description").val(),
+                    'schedule_color': $("#event_color").val(),
+                    'schedule_startdate': $("#event_startDate").val(),
+                    'schedule_starttime': $("#event_startTime").val(),
+                    'schedule_enddate': $("#event_endDate").val(),
+                    'schedule_endtime': $("#event_endTime").val()
+                },
+                success: function (res) {
+                    if (res.success) {
+                        location.reload();
+                    } else {
+                        alert(res.result);
+                    }
+                }
+            });
+        });
+        
+        $(document).on('click', '#deleteReq', function () {
+            $.ajax({
+                "method": "POST",
+                "url": "<?= base_url()?>" + "admin/deletereserve/",
+                "dataType": "JSON",
+                "data": {
+                    'schedule_id': $("#event_id").val(),
+                    'schedule_title': $("#event_name").val(),
+                    'schedule_desc': $("#event_description").val(),
+                    'schedule_color': $("#event_color").val(),
+                    'schedule_startdate': $("#event_startDate").val(),
+                    'schedule_starttime': $("#event_startTime").val(),
+                    'schedule_enddate': $("#event_endDate").val(),
+                    'schedule_endtime': $("#event_endTime").val()
+                },
+                success: function (res) {
+                    if (res.success) {
+                        location.reload();
+                    } else {
+                        alert(res.result);
+                    }
+                }
+            });
+        });
+        
+        
+    });
+    </script>
 <div class ="side-nav-offset">
     <div class ="container containerCal">
         <div id="calendar"></div>
-    </div>
-    <div class="fixed-action-btn vertical click-to-toggle">
-        <a class="btn-floating btn-large yellow darken-1 z-depth-2" id = "menuBtn">
-            <i class="material-icons black-text">add</i>
-        </a>
-        <ul>
-            <li><a class="btn-floating green darken-4 tooltipped modal-trigger" href="#customEvent" data-position="left" data-delay="10" data-tooltip="Add an Event"><i class="material-icons">cake</i></a></li>
-        </ul>
     </div>
 </div>
 
 <!-- Custom Event Structure -->
 <div id="customEvent" class="modal modal-fixed-footer">
-    <form action = "<?= base_url()?>admin/schedule_add" method = "POST">
+    <form role = "form" id = "eventForm">
         <div class="modal-content">
-            <h4><i class = "fa fa-calendar-plus-o"></i> Add Event</h4>
+            <h4 id = "event_header">Add Event</h4>
             <div class ="row">
+                <input type ="hidden" name = "event_id" id = "event_id"/>
                 <div class = "col s6">
                     <div class="card small grey lighten-4">
                         <div class="card-content">
                             <div class="input-field green-theme">
                                 <input placeholder=" " id="event_name" type="text" class="validate" autofocus="" >
                                 <label for = "event_name">Event Title</label>
-                            </div>
-                            <div class = "tooltipped green-theme" data-position="bottom" data-delay="50" data-tooltip="Check if the event will be held all day long">
-                                <input type="checkbox" class="filled-in" name = "event_allDay" id="event_allDay" />
-                                <label for="event_allDay">All Day</label>
                             </div>
                         </div>
                     </div>
@@ -107,8 +269,12 @@
                     <div class="card grey lighten-4">
                         <div class="card-content">
                             <div class="input-field green-theme" id = "startDateInputField">
-                                <input type="text" class="datepicker datepickerSched" id = "event_startDate" name = "event_startDate" placeholder=" ">
+                                <input type="text" class="datepicker datepickerSched" id = "event_startDate" name = "event_startDate" placeholder=" " >
                                 <label for="event_startDate">Start Date</label>
+                            </div>
+                            <div class="input-field green-theme" id = "startDateInputField">
+                                <input type="text" class="timePicker timepickerSched" id = "event_startTime" name = "event_startTime" placeholder=" " >
+                                <label for="event_startTime">Time</label>
                             </div>
                         </div>
                     </div>
@@ -117,8 +283,12 @@
                     <div class="card grey lighten-4">
                         <div class="card-content">
                             <div class="input-field green-theme" id = "endDateInputField">
-                                <input type="text" class="datepicker datepickerSched" id = "event_endDate" name = "event_endDate" placeholder = " ">
+                                <input type="text" class="datepicker datepickerSched" id = "event_endDate" name = "event_endDate" placeholder = " " >
                                 <label for="event_endDate">End Date</label>
+                                <div class="input-field green-theme" id = "startDateInputField">
+                                    <input type="text" class="timePicker timepickerSched" id = "event_endTime" name = "event_endTime" placeholder=" " >
+                                    <label for="event_endTime">Time</label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -127,7 +297,7 @@
                     <div class="card grey lighten-4">
                         <div class="card-content">
                             <div class="input-field green-theme">
-                                <textarea id="event_description" name = "event_description" class="materialize-textarea"></textarea>
+                                <textarea id="event_description" name = "event_description" class="materialize-textarea" placeholder=" "></textarea>
                                 <label for="event_description">Event Description</label>
                             </div>
                         </div>
@@ -137,30 +307,18 @@
         </div>
         <div class="modal-footer">
             <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
-            <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat green-text">Add Event</a>
+            <button id = "sendReq" class="btn-link modal-action modal-close waves-effect waves-green btn-flat green-text">Add Event</button>
+            <button id = "deleteReq" class="btn-link modal-action modal-close waves-effect waves-green btn-flat red-text">Delete</button>
+            <button id = "updateReq" class="btn-link modal-action modal-close waves-effect waves-green btn-flat green-text">Update</button>
         </div>
     </form>
 </div>
 
 <script>
-    $("#menuBtn").click(function() {
+    $("#menuBtn").click(function () {
         $(this).toggleClass("pulse");
     });
-    
-    $("#event_allDay").click(function(){
-        if($("#endDateInputField input, #startDateInputField input").prop("disabled")){
-            //All Day disabled
-            $("#endDateInputField input, #startDateInputField input").prop("disabled", false);
-            $("#endDateInputField input, #startDateInputField input").prop("value", "")
-        }else{
-            //All Day enabled
-            $("#endDateInputField input, #startDateInputField input").prop("disabled", true);
-            $("#endDateInputField input, #startDateInputField input").prop("value", "--All Day--")
-        }
-        
-    });
-    
-    $('.colors .radio').click(function(){
+    $('.colors .radio').click(function () {
         $(this).parent().find('.radio').removeClass('selected');
         $(this).addClass('selected');
         var val = $(this).attr('data-value');
@@ -173,9 +331,25 @@
         selectMonths: false, // Creates a dropdown to control month
         selectYears: true, // Creates a dropdown of 15 years to control year,
         format: 'mmmm dd, yyyy',
+        min: 'Today',
         today: 'Today',
         clear: 'Clear',
         close: 'Ok',
         closeOnSelect: false // Close upon selecting a date,
     });
+</script>
+<script>
+    $('.timepicker').pickatime({
+       default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+       fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
+       twelvehour: true, // Use AM/PM or 24-hour format
+       min: 'Today',
+       format: 'h:i A',
+       donetext: 'OK', // text for done-button
+       cleartext: 'Clear', // text for clear-button
+       canceltext: 'Cancel', // Text for cancel-button
+       autoclose: false, // automatic close timepicker
+       ampmclickable: true, // make AM PM clickable
+       aftershow: function(){} //Function for after opening timepicker
+     });
 </script>
