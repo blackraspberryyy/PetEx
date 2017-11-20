@@ -73,8 +73,15 @@ class User extends CI_Controller {
         $this->load->view("user/includes/footer");
     }
 
+    public function myPets_exec() {
+        $pet_id = $this->uri->segment(3);
+        $this->session->set_userdata("petid_edit", $pet_id);
+        redirect(base_url() . "user/myPetsEdit");
+    }
+
     public function myPetsEdit() {
-        $selectedPets = $this->user_model->fetch('pet', array('pet_id' => $this->uri->segment(3), "pet_access" => 1));
+        $pet_id = $this->session->userdata("petid_edit");
+        $selectedPets = $this->user_model->fetch('pet', array('pet_id' => $pet_id, "pet_access" => 1));
         $data = array(
             'title' => 'User | Pet Edit',
             'wholeUrl' => base_url(uri_string()),
