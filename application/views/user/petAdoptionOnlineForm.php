@@ -12,7 +12,7 @@ function get_age($birth_date) {
 ?>
 <?php
     $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session->userid))[0];
-    $pet = $this->user_model->fetch('pet', array('pet_id' => $this->uri->segment(3)))[0];
+   
 ?>
 <main>
     <div class ="side-nav-offset">
@@ -27,7 +27,7 @@ function get_age($birth_date) {
                     </div>
                 </nav>
                 <div class="card-content">
-                    <form method="POST" action ="">
+                    <form method="POST" enctype="multipart/form-data" action ="petAdoptionOnlineForm_send">
                         <div class="row">
                             <div class ="col s3 center"><br><br>
                                 <img src ="<?= base_url();?>images/logo/paws.png" class ="responsive-img">
@@ -69,7 +69,7 @@ function get_age($birth_date) {
                                 <label>Email</label>
                             </div>
                             <div class="input-field col s12 green-theme">
-                                <input type="text" class="validate" name = "address" value="<?= $userInfo->user_address ?>,<?= $userInfo->user_brgy ?>,<?= $userInfo->user_city ?>,<?= $userInfo->user_province ?>" >
+                                <input type="text" class="validate" name = "address" value="<?= $userInfo->user_address ?>, <?= $userInfo->user_city ?>, <?= $userInfo->user_province ?>" >
                                 <label>Address</label>
                             </div>
                             <div class="input-field col s4 green-theme">
@@ -104,27 +104,27 @@ function get_age($birth_date) {
                             <div class = "col s12 m8 l8">
                                 <div class = "row">
                                     <div class="input-field col s6 green-theme">
-                                        <input type="text" class="validate" name = "adoptee_name" disabled = "" value = "<?= $pet->pet_name?>">
+                                        <input type="text" class="validate" name = "adoptee_name" readonly="" value = "<?= $pet->pet_name?>">
                                         <label for = "adoptee_name">Pet Name</label>
                                     </div>
                                     <div class="input-field col s6 green-theme">
-                                        <input type="text" class="validate" name = "adoptee_age" disabled = "" value = "<?= get_age($pet->pet_bday);?>">
+                                        <input type="text" class="validate" name = "adoptee_age" readonly="" value = "<?= get_age($pet->pet_bday);?>">
                                         <label for = "adoptee_age">Age</label>
                                     </div>
                                     <div class="input-field col s3 green-theme">
-                                        <input type="text" class="validate" name = "adoptee_specie" disabled = "" value = "<?= $pet->pet_specie == "canine"? "Dog" : "Cat";?>">
+                                        <input type="text" class="validate" name = "adoptee_specie" readonly="" value = "<?= $pet->pet_specie == "canine"? "Dog" : "Cat";?>">
                                         <label for = "adoptee_specie">Specie</label>
                                     </div>
                                     <div class="input-field col s3 green-theme">
-                                        <input type="text" class="validate" name = "adoptee_sex" disabled = "" value = "<?= $pet->pet_sex == "male"? "Male" : "Female";?>">
+                                        <input type="text" class="validate" name = "adoptee_sex" readonly="" value = "<?= $pet->pet_sex == "male"? "Male" : "Female";?>">
                                         <label for = "adoptee_sex">Sex</label>
                                     </div>
                                     <div class="input-field col s3 green-theme">
-                                        <input type="text" class="validate" name = "adoptee_sterilized" disabled = "" value = "<?= $pet->pet_neutered_spayed == 1 ? "Yes" : "No";?>">
+                                        <input type="text" class="validate" name = "adoptee_sterilized" readonly="" value = "<?= $pet->pet_neutered_spayed == 1 ? "Yes" : "No";?>">
                                         <label for = "adoptee_sterilized"><?= $pet->pet_sex == "male"? "Neutered?" : "Spayed?";?></label>
                                     </div>
                                     <div class="input-field col s3 green-theme">
-                                        <input type="text" class="validate" name = "adoptee_admission" disabled = "" value = "<?= $pet->pet_admission;?>">
+                                        <input type="text" class="validate" name = "adoptee_admission" readonly="" value = "<?= $pet->pet_admission;?>">
                                         <label for = "adoptee_admission">Admission</label>
                                     </div>
                                 </div>
@@ -141,7 +141,7 @@ function get_age($birth_date) {
                                 <label>Name</label>
                             </div>
                             <div class="input-field col s3 green-theme">
-                                <input type="text" class="validate" name = "ageref">
+                                <input type="text" class="validate" name = "relref">
                                 <label>Relationship</label>
                             </div>
                             <div class="input-field col s4 green-theme">
@@ -157,30 +157,30 @@ function get_age($birth_date) {
                             <div class="col s3 green-theme">
                                 <span>Are you interested in</span>
                                 <p>
-                                    <input name="interested" type="radio" id="interested_cat" class = "with-gap" <?= $pet->pet_specie == "feline" ? "checked = \"\"" : "" ?>/>
+                                    <input name="interested" type="radio" id="interested_cat" class = "with-gap" value ="Cat" <?= $pet->pet_specie == "feline" ? "checked = \"\"" : "" ?>/>
                                     <label for="interested_cat">Cat</label>
                                 </p>
                                 <p>
-                                    <input name="interested" type="radio" id="interested_dog" class = "with-gap" <?= $pet->pet_specie == "canine" ? "checked = \"\"" : "" ?>/>
+                                    <input name="interested" type="radio" id="interested_dog" class = "with-gap" value ="Dog" <?= $pet->pet_specie == "canine" ? "checked = \"\"" : "" ?>/>
                                     <label for="interested_dog">Dog</label>
                                 </p>
                             </div>
                             <div class="col s2 green-theme">
                                 <span>Size:</span>
                                 <p>
-                                    <input name="size" type="radio" id="small" class = "with-gap" <?= $pet->pet_size == "small" ? "checked = \"\"" : "" ?> />
+                                    <input name="size" type="radio" id="small" value ="S" class = "with-gap" <?= $pet->pet_size == "small" ? "checked = \"\"" : "" ?> />
                                     <label for="small">S</label>
                                 </p>
                                 <p>
-                                    <input name="size" type="radio" id="medium" class = "with-gap" <?= $pet->pet_size == "medium" ? "checked = \"\"" : "" ?>  />
+                                    <input name="size" type="radio" id="medium" value ="M" class = "with-gap" <?= $pet->pet_size == "medium" ? "checked = \"\"" : "" ?>  />
                                     <label for="medium">M</label>
                                 </p>
                                 <p>
-                                    <input name="size" type="radio" id="large" class = "with-gap" <?= $pet->pet_size == "large" ? "checked = \"\"" : "" ?>  />
+                                    <input name="size" type="radio" id="large" value ="L" class = "with-gap" <?= $pet->pet_size == "large" ? "checked = \"\"" : "" ?>  />
                                     <label for="large">L</label>
                                 </p>
                                 <p>
-                                    <input name="size" type="radio" id="xlarge" class = "with-gap" <?= $pet->pet_size == "xlarge" ? "checked = \"\"" : "" ?>  />
+                                    <input name="size" type="radio" id="xlarge" value ="XL" class = "with-gap" <?= $pet->pet_size == "xlarge" ? "checked = \"\"" : "" ?>  />
                                     <label for="xlarge">XL</label>
                                 </p>
                             </div>
@@ -194,7 +194,7 @@ function get_age($birth_date) {
                                 <label>Age</label>
                             </div>
                             <div class="input-field col s12 green-theme" style = "padding-top:40px !important;">
-                                <textarea id="description" name="description" class="materialize-textarea" placeholder = " "></textarea>
+                                <textarea id="description" name="description" class="materialize-textarea" placeholder = " "><?= $pet->pet_description ?></textarea>
                                 <label for="description" style = "padding-top:40px !important;">Name/description of animal(if animal is available at PARC)</label>
                             </div>
                         </div>
@@ -210,9 +210,9 @@ function get_age($birth_date) {
                             </div>
                             <div class="col s6 green-theme">
                                 <span>2.) Have you adopted from PAWS/PARC atleast once before?</span>
-                                <input type="radio" id="num2yes" name = "num2" class = "with-gap num2"/>
+                                <input type="radio" id="num2yes" name = "num2" value ="Yes" class = "with-gap num2"/>
                                 <label for="num2yes">Yes</label>
-                                <input type="radio" id="num2no" name = "num2"  class = "with-gap num2"/>
+                                <input type="radio" id="num2no" name = "num2" value ="No"  class = "with-gap num2"/>
                                 <label for="num2no">No</label>
                                 
                                 <div id = "num2Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
@@ -223,9 +223,9 @@ function get_age($birth_date) {
                                         </div>
                                         <div class = "col s12">
                                             <span>What animal?</span>
-                                            <input type="radio" id="num2HiddenDog" name = "ifYesSpecie" class = "with-gap rdbutton"/>
+                                            <input type="radio" id="num2HiddenDog" value ="Dog" name = "num2ifYesSpecie" class = "with-gap rdbutton"/>
                                             <label for="num2HiddenDog">Dog</label>
-                                            <input type="radio" id="num2HiddenCat" name = "ifYesSpecie" class = "with-gap rdbutton"/>
+                                            <input type="radio" id="num2HiddenCat" value ="Cat"  name = "num2ifYesSpecie" class = "with-gap rdbutton"/>
                                             <label for="num2HiddenCat">Cat</label>
                                         </div>
                                     </div>
@@ -234,20 +234,20 @@ function get_age($birth_date) {
                         </div>
                         <div class = "row">
                             <div class="col s6">
-                                <span>3.) For whom are you adopting animal?</span>
+                                <span>3.) What type of building do you live in?</span>
                                 <div class = "row">
                                     <div class="col s6 green-theme">
-                                        <input type="radio" id="house" name = "num3" class="with-gap num3"/>
+                                        <input type="radio" id="house" value ="House" name = "num3" class="with-gap num3"/>
                                         <label for="house">House</label><br>
-                                        <input type="radio" id="townhouse" name = "num3" class="with-gap num3"/>
+                                        <input type="radio" id="townhouse" value ="Townhouse" name = "num3" class="with-gap num3"/>
                                         <label for="townhouse">Townhouse</label><br>
                                         <input type="radio" id="other" name = "num3" class="with-gap num3"/>
                                         <label for="other">Other</label><br>
                                     </div>
                                     <div class="col s6 green-theme">
-                                        <input type="radio" id="apartment" name = "num3" class="with-gap num3"/>
+                                        <input type="radio" id="apartment" value ="Apartment" name = "num3" class="with-gap num3"/>
                                         <label for="apartment">Apartment</label><br>
-                                        <input type="radio" id="condo" name = "num3" class="with-gap num3"/>
+                                        <input type="radio" id="condo" value ="Condo" name = "num3" class="with-gap num3"/>
                                         <label for="condo">Condo</label><br>
                                     </div>
                                 </div>
@@ -262,9 +262,9 @@ function get_age($birth_date) {
                             </div>
                             <div class="col s6 green-theme">
                                 <span>4.) Do you Rent?</span>
-                                <input type="radio" id="num4yes" name = "num4" class = "with-gap num4"/>
+                                <input type="radio" id="num4yes" value ="Yes" name = "num4" class = "with-gap num4"/>
                                 <label for="num4yes">Yes</label>
-                                <input type="radio" id="num4no" name = "num4" class = "with-gap num4"/>
+                                <input type="radio" id="num4no" value ="No" name = "num4" class = "with-gap num4"/>
                                 <label for="num4no">No</label><br><br>
                                 <div id="num4Hidden"  class = "animated fadeOutUp" style = "visibility: hidden;">
                                     <div class = "row">
@@ -272,7 +272,7 @@ function get_age($birth_date) {
                                         <div class="file-field input-field">
                                             <div class="btn">
                                                 <span>File</span>
-                                                <input type="file">
+                                                <input type="file" name = "num4file">
                                             </div>
                                             <div class="file-path-wrapper">
                                                 <input class="file-path validate" type="text">
@@ -287,17 +287,17 @@ function get_age($birth_date) {
                                 <span>5.) Who do you live with?</span>
                                 <div class = "row">
                                     <div class="col s6 green-theme">
-                                        <input type="radio" id="parents" name = "num5" class="with-gap num5"/>
+                                        <input type="radio" id="parents" value ="Parents" name = "num5" class="with-gap num5"/>
                                         <label for="parents">Parents</label><br>
-                                        <input type="radio" id="children" name = "num5" class="with-gap num5"/>
+                                        <input type="radio" id="children" value ="Children" name = "num5" class="with-gap num5"/>
                                         <label for="children">Children</label><br>
-                                        <input type="radio" id="roomates" name = "num5" class="with-gap num5"/>
+                                        <input type="radio" id="roomates" value ="Roomate(s)" name = "num5" class="with-gap num5"/>
                                         <label for="roomates">Roomate(s)</label>
                                     </div>
                                     <div class="col s6 green-theme">
-                                        <input type="radio" id="spouse" name = "num5" class="with-gap num5"/>
+                                        <input type="radio" id="spouse" value ="Spouse" name = "num5" class="with-gap num5"/>
                                         <label for="spouse">Spouse</label><br>
-                                        <input type="radio" id="alone" name = "num5" class="with-gap num5"/>
+                                        <input type="radio" id="alone" value ="Alone" name = "num5" class="with-gap num5"/>
                                         <label for="alone">Alone</label><br>
                                         <input type="radio" id="num5other" name = "num5" class="with-gap num5"/>
                                         <label for="num5other">Other</label>
@@ -310,8 +310,8 @@ function get_age($birth_date) {
                                     <div id = "num5Hidden" class = "animated fadeOutUp col s6" style = "visibility: hidden;">
                                         <div class = "row">
                                             <div class = "input-field col s12 green-theme">
-                                                <input id = "num5Other" type="text" name = "num5other" >
-                                                <label for = "num5Other">Please Specify</label>
+                                                <input id = "num5specify" type="text" name = "num5specify" >
+                                                <label for = "num5specify">Please Specify</label>
                                             </div>
                                         </div>
                                     </div>
@@ -319,9 +319,9 @@ function get_age($birth_date) {
                             </div>
                             <div class="col s6 green-theme">
                                 <span>6.) Are you planning to move in the next 6 months?</span>
-                                <input type="radio" id="num6yes" name = "num6" class = "with-gap num6"/>
+                                <input type="radio" id="num6yes" value ="Yes" name = "num6" class = "with-gap num6"/>
                                 <label for="num6yes">Yes</label>
-                                <input type="radio" id="num6no" name = "num6"  class = "with-gap num6"/>
+                                <input type="radio" id="num6no" value ="No" name = "num6"  class = "with-gap num6"/>
                                 <label for="num6no">No</label>
                                 
                                 <div id = "num6Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
@@ -339,13 +339,13 @@ function get_age($birth_date) {
                                 <span>7.) For whom are you adopting animal?</span>
                                 <div class = "row">
                                     <div class="col s6">
-                                        <input type="radio" id="myself" name = "num7" class = "with-gap num7"/>
+                                        <input type="radio" id="myself" value ="for myself" name = "num7" class = "with-gap num7"/>
                                         <label for="myself">for myself</label><br>
-                                        <input type="radio" id="forchildren" name = "num7" class = "with-gap num7"/>
+                                        <input type="radio" id="forchildren" value ="for my children" name = "num7" class = "with-gap num7"/>
                                         <label for="forchildren">for my children</label><br>
                                     </div>
                                     <div class="col s6">
-                                        <input type="radio" id="gift" name = "num7" class = "with-gap num7"/>
+                                        <input type="radio" id="gift" value ="as a gift" name = "num7" class = "with-gap num7"/>
                                         <label for="gift">as a gift</label><br>
                                         <input type="radio" id="num7others" name = "num7" class = "with-gap num7"/>
                                         <label for="num7others">Other</label><br>
@@ -361,19 +361,19 @@ function get_age($birth_date) {
                                 </div>
                             </div>
                             <div class="col s6 green-theme">
-                                <span>8.) Are you planning to move in the next 6 months?</span>
-                                <input type="radio" id="num8yes" name = "num8" class = "with-gap num8"/>
+                                <span>8.) Will the whole family share in the care in the care of animal??</span>
+                                <input type="radio" id="num8yes" value ="Yes" name = "num8" class = "with-gap num8"/>
                                 <label for="num8yes">Yes</label>
-                                <input type="radio" id="num8no" name = "num8"  class = "with-gap num8"/>
+                                <input type="radio" id="num8no" value ="No" name = "num8"  class = "with-gap num8"/>
                                 <label for="num8no">No</label>
                             </div>
                         </div>
                         <div class = "row">
                             <div class="col s6 green-theme">
                                 <span>9.) Is there anyone in your household who has objection(s) to the arrangement?</span><br>
-                                <input type="radio"id="num9yes" name = "num9" class = "with-gap num9"/>
+                                <input type="radio"id="num9yes" value ="Yes" name = "num9" class = "with-gap num9"/>
                                 <label for="num9yes">Yes</label>
-                                <input type="radio"id="num9no" name = "num9" class = "with-gap num9"/>
+                                <input type="radio"id="num9no" value ="No" name = "num9" class = "with-gap num9"/>
                                 <label for="num9no">No</label>
                                 <div id = "num9Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
                                     <div class = "row">
@@ -386,9 +386,9 @@ function get_age($birth_date) {
                             </div>
                             <div class="col s6 green-theme">
                                 <span>10.) Are there any children that visit your home frequently?</span><br>
-                                <input type="radio"id="num10yes" name = "num10" class = "with-gap num10"/>
+                                <input type="radio"id="num10yes" value ="Yes" name = "num10" class = "with-gap num10"/>
                                 <label for="num10yes">Yes</label>
-                                <input type="radio"id="num10no" name = "num10" class = "with-gap num10"/>
+                                <input type="radio"id="num10no" value ="No" name = "num10" class = "with-gap num10"/>
                                 <label for="num10no">No</label>
                                 <div id = "num10Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
                                     <div class = "row">
@@ -403,9 +403,9 @@ function get_age($birth_date) {
                         <div class = "row">
                             <div class="col s6 green-theme">
                                 <span>11.) Are there any other regular visitors to your home, human or animal, with which your new companion must get along?</span><br>
-                                <input type="radio"id="num11yes" name = "num11" class = "with-gap num11"/>
+                                <input type="radio"id="num11yes" value ="Yes" name = "num11" class = "with-gap num11"/>
                                 <label for="num11yes">Yes</label>
-                                <input type="radio"id="num11no" name = "num11" class = "with-gap num11"/>
+                                <input type="radio"id="num11no" value ="No" name = "num11" class = "with-gap num11"/>
                                 <label for="num11no">No</label>
                                 <div id = "num11Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
                                     <div class = "row">
@@ -418,9 +418,9 @@ function get_age($birth_date) {
                             </div>
                             <div class="col s6 green-theme">
                                 <span>12.) Are any members of your household allergic to cats/dogs?</span><br>
-                                <input type="radio"id="num12yes" name = "num12" class = "with-gap num12"/>
+                                <input type="radio"id="num12yes" value ="Yes"  name = "num12" class = "with-gap num12"/>
                                 <label for="num12yes">Yes</label>
-                                <input type="radio"id="num12no" name = "num12" class = "with-gap num12"/>
+                                <input type="radio"id="num12no" value ="No"  name = "num12" class = "with-gap num12"/>
                                 <label for="num12no">No</label>
                                 <div id = "num12Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
                                     <div class = "row">
@@ -455,14 +455,14 @@ function get_age($birth_date) {
                         <div class = "row">
                             <div class="col s6 green-theme">
                                 <span>17.) Do you have regular veterinarian?</span><br>
-                                <input type="radio"id="num17yes" name = "num17" class = "with-gap num17"/>
+                                <input type="radio" id="num17yes" value ="Yes" name = "num17" class = "with-gap num17"/>
                                 <label for="num17yes">Yes</label>
-                                <input type="radio"id="num17no" name = "num17" class = "with-gap num17"/>
+                                <input type="radio" id="num17no" value ="No" name = "num17" class = "with-gap num17"/>
                                 <label for="num17no">No</label>
                                 <div id = "num17Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
                                     <div class = "row">
                                         <div class = "input-field col s12 green-theme">
-                                            <input id = "num17name" type="text"name = "num17name" >
+                                            <input id = "num17name" type="text" name = "num17name" >
                                             <label for = "num17name">Name</label>
                                         </div>
                                     </div>
@@ -470,17 +470,17 @@ function get_age($birth_date) {
                             </div>
                             <div class="col s6 green-theme">
                                 <span>18.) Do you have other companion animal(s) in the past?</span><br>
-                                <input type="radio"id="num18yes" name = "num18" class = "with-gap num18"/>
+                                <input type="radio"id="num18yes" value ="Yes" name = "num18" class = "with-gap num18"/>
                                 <label for="num18yes">Yes</label>
-                                <input type="radio"id="num18no" name = "num18" class = "with-gap num18"/>
+                                <input type="radio"id="num18no" value ="No" name = "num18" class = "with-gap num18"/>
                                 <label for="num18no">No</label>
                                 <div id = "num18Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
                                     <div class = "row">
                                         <div class = "col s12 green-theme">
                                             <br><span>What animal?</span>
-                                            <input type="radio" id="num18HiddenDog" name = "num18animal" class = "with-gap "/>
+                                            <input type="radio" value ="Dog" id="num18HiddenDog" name = "num18animal" class = "with-gap "/>
                                             <label for="num18HiddenDog">Dog</label>
-                                            <input type="radio" id="num18HiddenCat" name = "num18animal" class = "with-gap "/>
+                                            <input type="radio" value ="Cat" id="num18HiddenCat" name = "num18animal" class = "with-gap "/>
                                             <label for="num18HiddenCat">Cat</label>
                                         </div>
                                     </div>
@@ -490,11 +490,11 @@ function get_age($birth_date) {
                         <div class = "row">
                             <div class="col s6 green-theme">
                                 <span>19.) What part of your house do you want this animal to stay?</span><br> 
-                                <input type="radio" id="inside" name = "num19" class = "with-gap"/>
+                                <input type="radio" id="inside" value ="Inside only" name = "num19" class = "with-gap"/>
                                 <label for="inside">Inside only</label><br>
-                                <input type="radio" id="insideoutside" name = "num19" class = "with-gap"/>
+                                <input type="radio" id="insideoutside" value ="Inside/outside" name = "num19" class = "with-gap"/>
                                 <label for="insideoutside">Inside/outside</label><br>
-                                <input type="radio" id="outside" name = "num19" class = "with-gap"/>
+                                <input type="radio" id="outside" value ="Outside only" name = "num19" class = "with-gap"/>
                                 <label for="outside">Outside only</label>
                             </div>
                             <div class="input-field col s6 green-theme" style = "margin-top:0 !important;">
@@ -505,9 +505,9 @@ function get_age($birth_date) {
                         <div class = "row">
                             <div class="col s6 green-theme">
                                 <span>21.) Do you have a fenced yard?</span><br>
-                                <input type="radio"id="num21yes" name = "num21" class = "with-gap num21"/>
+                                <input type="radio"id="num21yes" value ="Yes" name = "num21" class = "with-gap num21"/>
                                 <label for="num21yes">Yes</label>
-                                <input type="radio"id="num21no" name = "num21" class = "with-gap num21"/>
+                                <input type="radio"id="num21no" value ="No" name = "num21" class = "with-gap num21"/>
                                 <label for="num21no">No</label>
                                 <div id = "num21Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
                                     <div class = "row">
@@ -519,7 +519,7 @@ function get_age($birth_date) {
                                     <div class="file-field input-field">
                                         <div class="btn">
                                             <span>File</span>
-                                            <input type="file">
+                                            <input type="file" name ="num21file">
                                         </div>
                                         <div class="file-path-wrapper">
                                             <input class="file-path validate" type="text" placeholder="No File Chosen">
@@ -529,9 +529,9 @@ function get_age($birth_date) {
                             </div>
                             <div class="col s6 green-theme">
                                 <span>22.) If adopting a dog, does fencing completely enclose the yard?</span><br>
-                                <input type="radio"id="num22yes" name = "num22" class = "with-gap num22"/>
+                                <input type="radio" id="num22yes" value ="Yes" name = "num22" class = "with-gap num22"/>
                                 <label for="num22yes">Yes</label>
-                                <input type="radio"id="num22no" name = "num22" class = "with-gap num22"/>
+                                <input type="radio" id="num22no" value ="No" name = "num22" class = "with-gap num22"/>
                                 <label for="num22no">No</label>
                                 <div id = "num22Hidden" class = "animated fadeOutUp" style = "visibility: hidden;">
                                     <div class = "row">
@@ -548,13 +548,13 @@ function get_age($birth_date) {
                                 <span>23.) If adopting a cat, where will the litterbox be kept?</span>
                                 <div class = "row">
                                     <div class="col s6 green-theme">
-                                        <input type="radio" id="insidehouse" name = "num23" class = "with-gap num23"/>
+                                        <input type="radio" value ="Inside house" id="insidehouse" name = "num23" class = "with-gap num23"/>
                                         <label for="insidehouse">Inside house</label><br>
-                                        <input type="radio" id="garage" name = "num23" class = "with-gap num23"/>
+                                        <input type="radio" value ="Garage" id="garage" name = "num23" class = "with-gap num23"/>
                                         <label for="garage">Garage</label>
                                     </div>
                                     <div class="col s6">
-                                        <input type="radio" id="noneed" name = "num23" class = "with-gap num23"/>
+                                        <input type="radio" value ="No need" id="noneed" name = "num23" class = "with-gap num23"/>
                                         <label for="noneed">No need</label><br>
                                         <input type="radio" id="other23" name = "num23" class = "with-gap num23"/>
                                         <label for="other23">Other Location</label>
