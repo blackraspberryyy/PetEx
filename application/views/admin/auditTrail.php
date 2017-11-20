@@ -3,21 +3,30 @@
         <div class = "card row">
             <nav class = "green darken-3">
                 <div class="col s12">
-                    <a href="<?= $wholeUrl?>" class="breadcrumb">Audit Trail</a>
+                    <a href="<?= $wholeUrl ?>" class="breadcrumb">Audit Trail</a>
                 </div>
             </nav>
             <div class="card-content ">
-                 <ul class="collection">
-                    <li class="collection-item avatar">
-                        <img src="<?= $this->config->base_url()?>images/profile/jc.png" alt="" class="circle z-depth-2">
-                        <span class="title">Chubby is added on Pet Database</span>
-                        <p class = "grey-text">
-                            October 31, 2017 | 7:31 am
-                            <br/>
-                            by Juan Carlo Valencia
-                        </p>
-                    </li>
-                </ul>
+
+                <?php if (empty($trails)): ?>
+
+                <?php else: ?>
+                    <ul class="collection">
+                        <?php foreach ($trails as $trail): ?>
+                            <li class="collection-item avatar">
+                                <img src="<?= $this->config->base_url().$trail->user_picture;?>" alt="" class="circle z-depth-2">
+                                <span class="title"><?= $trail->event_description?></span>
+                                <p class = "grey-text">
+                                    <?= date("F d, Y | h:i A", $trail->event_added_at)?>
+                                    <br/>
+                                    by <?= $trail->user_firstname." ".$trail->user_lastname?>
+                                </p>
+                            </li>
+                        <?php endforeach; ?> 
+                    </ul>
+                <?php endif; ?>
+
+
             </div>
         </div>
     </div>

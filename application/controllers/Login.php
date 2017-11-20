@@ -49,6 +49,10 @@ class Login extends CI_Controller {
         }
     }
 
+    public function putToEvents($data){
+        $this->admin_model->singleinsert("event", $data);
+    }
+    
     public function index() {
         $data = array(
             'title' => 'Pet Ex | Login',
@@ -105,6 +109,13 @@ class Login extends CI_Controller {
                     } else {
                         $this->session->set_userdata('isloggedin', true);
                         $this->session->set_userdata('userid', $accountDetails->user_id);
+                        $log = array(
+                            "user_id" => $this->session->userdata("userid"),
+                            "event_description" => "Logged in.",
+                            "event_classification" => "log",
+                            "event_added_at" => time()
+                        );
+                        $this->putToEvents($log);
                         redirect(base_url() . 'user/');
                     }
                 }
@@ -251,6 +262,14 @@ class Login extends CI_Controller {
     public function verifyCode() {
         $code = $this->uri->segment(3);
         $this->user_model->update('user', array('user_isverified' => '1'), array('user_verification_code' => $code));
+        $verifiedUser = $this->admin_model->fetch("user", array('user_verification_code' => $code));
+        $log = array(
+            "user_id" => $verifiedUser->user_id,
+            "event_description" => $verifiedUser->user_username." verified his account.",
+            "event_classification" => "log",
+            "event_added_at" => time()
+        );
+        $this->putToEvents($log);
         echo "<script>alert('Your account is now verified.');"
         . "window.location='" . base_url() . "login/'</script>";
     }
@@ -296,7 +315,15 @@ class Login extends CI_Controller {
             $data = array(
                 'user_password' => sha1($this->input->post('password'))
             );
+            $currUser = $this->user_model->fetch('user', $data, array('user_username' => $user));
             $this->user_model->update('user', $data, array('user_username' => $user));
+                $log = array(
+                "user_id" => $currUser->user_id,
+                "event_description" => $currUser->user_username." changed password.",
+                "event_classification" => "log",
+                "event_added_at" => time()
+            );
+            $this->putToEvents($log);
             echo "<script>alert('Password has been reset');"
             . "window.location='" . base_url() . "login/'</script>";
         }
