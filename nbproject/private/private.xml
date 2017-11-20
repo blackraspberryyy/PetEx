@@ -3,15 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/petex/application/views/admin/manageProgress.php</file>
-            <file>file:/C:/xampp/htdocs/petex/application/views/admin/sidenav.php</file>
-            <file>file:/C:/xampp/htdocs/petex/application/models/admin_model.php</file>
-            <file>file:/C:/xampp/htdocs/petex/application/controllers/Admin.php</file>
-            <file>file:/C:/xampp/htdocs/petex/application/views/admin/petDatabase.php</file>
-            <file>file:/C:/xampp/htdocs/petex/application/views/admin/navbar.php</file>
-            <file>file:/C:/xampp/htdocs/petex/application/views/admin/petDatabaseAdopters.php</file>
-            <file>file:/C:/xampp/htdocs/petex/application/views/admin/schedules.php</file>
-            <file>file:/C:/xampp/htdocs/petex/application/views/admin/includes/header.php</file>
+            <file>file:/C:/xampp/htdocs/PetEx/application/controllers/Admin.php</file>
+            <file>file:/C:/xampp/htdocs/PetEx/application/controllers/Login.php</file>
+            <file>file:/C:/xampp/htdocs/PetEx/application/views/login/login.php</file>
+            <file>file:/C:/xampp/htdocs/PetEx/application/views/admin/settings.php</file>
+            <file>file:/C:/xampp/htdocs/PetEx/application/views/admin/includes/toastErrorsSettings.php</file>
+            <file>file:/C:/xampp/htdocs/PetEx/application/views/login/includes/toastErrorUserRegister.php</file>
         </group>
     </open-files>
 </project-private>
