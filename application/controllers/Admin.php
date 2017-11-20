@@ -39,7 +39,7 @@ class Admin extends CI_Controller {
             return TRUE;
         }
     }
-
+    
     function GetImageExtension($imagetype) {
         if (empty($imagetype))
             return false;
@@ -72,6 +72,9 @@ class Admin extends CI_Controller {
         }
     }
 
+    public function putToEvents($data){
+        $this->admin_model->singleinsert("event", $data);
+    }
     //-------------------------------------
 
     public function index() {
@@ -131,16 +134,16 @@ class Admin extends CI_Controller {
             $this->load->view("admin/petDatabaseAdd");
             $this->load->view("admin/includes/footer");
         } else {
+            $config['upload_path'] = "./images/animals/";
+            $config['allowed_types'] = 'gif|jpg|jpeg|png';
+            $config['file_ext_tolower'] = true;
+            $config['max_size'] = 2000;
+            $new_name = $this->input->post("pet_name")."-".$_FILES["pet_picture"]['name'];
+            $config['file_name'] = $new_name;
+            $this->load->library('upload', $config);
             if (!empty($_FILES["pet_picture"]["name"])) {
-                $file_name = $_FILES["pet_picture"]["name"];
-                $temp_name = $_FILES["pet_picture"]["tmp_name"];
-                $imgtype = $_FILES["pet_picture"]["type"];
-                $ext = $this->GetImageExtension($imgtype);
-                $imagename = date("d-m-Y") . "-" . time() . $ext;
-                $target_path = "./images/animals/" . $imagename;
-
-                if (move_uploaded_file($temp_name, $target_path)) {
-                    $imagePath = $target_path;
+                if ($this->upload->do_upload('pet_picture')){
+                    $imagePath = "./images/animals/" . $this->upload->data("file_name");
                 } else {
                     echo "Unable to find the folder location";
                     //redirect to oops
@@ -170,6 +173,13 @@ class Admin extends CI_Controller {
             );
 
             if ($this->admin_model->singleinsert("pet", $data)) {
+                $log = array(
+                    "user_id" => $this->session->userdata("userid"),
+                    "event_description" => "Added ".$data['pet_name']." to the database.",
+                    "event_classification" => "audit",
+                    "event_added_at" => time()
+                );
+                $this->putToEvents($log);
                 redirect($this->config->base_url() . "admin/petDatabase");
             } else {
                 echo "An Error Ocurred";
@@ -196,7 +206,14 @@ class Admin extends CI_Controller {
     }
 
     public function petDatabaseUpdate() {
-        $selectedPets = $this->admin_model->fetch('pet', array('pet_id' => $this->uri->segment(3), "pet_access" => 1));
+        $pet_id = $this->uri->segment(3);
+        $this->session->set_userdata("petid_update", $pet_id);
+        redirect(base_url()."admin/petDatabaseUpdatePet");
+    }
+
+    public function petDatabaseUpdatePet(){
+        $pet_id = $this->session->userdata("petid_update");
+        $selectedPets = $this->admin_model->fetch('pet', array('pet_id' => $pet_id, "pet_access" => 1));
         $data = array(
             'title' => 'Pet Database | Admin',
             'wholeUrl' => base_url(uri_string()),
@@ -208,15 +225,17 @@ class Admin extends CI_Controller {
         $this->load->view("admin/petDatabaseUpdate");
         $this->load->view("admin/includes/footer");
     }
-
+    
     public function petDatabaseUpdate_exec() {
+        $pet_id = $this->uri->segment(3);
+        $this->session->set_userdata("petid_update", $pet_id);
         $this->form_validation->set_rules('pet_name', "Pet\'s Name", "required|callback__alpha_dash_space|max_length[10]");
         $this->form_validation->set_rules('pet_bday', "Pet\'s Birthday", "required");
         $this->form_validation->set_rules('pet_breed', "Pet\'s Breed", "required|callback__alpha_dash_space|max_length[40]");
         $this->form_validation->set_rules('pet_description', "Pet\'s Description", "required");
         if ($this->form_validation->run() == FALSE) {
             //ERROR IN FORM
-            $selectedPets = $this->admin_model->fetch('pet', array('pet_id' => $this->uri->segment(3), "pet_access" => 1));
+            $selectedPets = $this->admin_model->fetch('pet', array('pet_id' => $pet_id, "pet_access" => 1));
             $data = array(
                 'title' => 'Pet Database | Admin',
                 'wholeUrl' => base_url(uri_string()),
@@ -228,26 +247,26 @@ class Admin extends CI_Controller {
             $this->load->view("admin/petDatabaseUpdate");
             $this->load->view("admin/includes/footer");
         } else {
-            $pet_id = $this->uri->segment(3);
-            $pets = $this->admin_model->fetch("pet", array("pet_id" => $pet_id, "pet_access" => 1));
+            $pets = $this->admin_model->fetch("pet", array("pet_id" => $pet_id, "pet_access" => 1))[0];
             if ($pets) {
-                if (!empty($_FILES["pet_picture"]["name"])) {
-                    $file_name = $_FILES["pet_picture"]["name"];
-                    $temp_name = $_FILES["pet_picture"]["tmp_name"];
-                    $imgtype = $_FILES["pet_picture"]["type"];
-                    $ext = $this->GetImageExtension($imgtype);
-                    $imagename = date("d-m-Y") . "-" . time() . $ext;
-                    $target_path = "./images/animals/" . $imagename;
-
-                    if (move_uploaded_file($temp_name, $target_path)) {
-                        $imagePath = $target_path;
+                $config['upload_path'] = "./images/animals/";
+                $config['allowed_types'] = 'gif|jpg|jpeg|png';
+                $config['file_ext_tolower'] = true;
+                $config['max_size'] = 2000;
+                $new_name = $pets->pet_id . "-" . $pets->pet_name. $_FILES["pet_picture"]['name'];
+                $config['file_name'] = $new_name;
+                $this->load->library('upload', $config);
+                
+                if(!empty($_FILES["pet_picture"]["name"])){
+                    if ($this->upload->do_upload('pet_picture')){
+                        $imagePath = "./images/animals/" . $this->upload->data("file_name");
                     } else {
                         echo "Unable to find the folder location";
                         //redirect to oops
                     }
-                } else {
+                }
+                else {
                     //DO METHOD WITHOUT PICTURE PROVIDED
-                    $pets = $pets[0];
                     if ($pets->pet_picture == "images/tools/dog_temp_pic.png" || $pets->pet_picture == "images/tools/cat_temp_pic.png") {
                         if ($this->input->post('pet_specie') == "canine") {
                             $imagePath = "images/tools/dog_temp_pic.png";
@@ -270,10 +289,16 @@ class Admin extends CI_Controller {
                     'pet_description' => $this->input->post('pet_description'),
                     'pet_history' => $this->input->post('pet_history'),
                     'pet_picture' => $imagePath,
-                    'pet_added_at' => time(),
                     'pet_updated_at' => time()
                 );
                 if ($this->admin_model->update("pet", $data, array("pet_id" => $pet_id))) {
+                    $log = array(
+                        "user_id" => $this->session->userdata("userid"),
+                        "event_description" => "Updated ".$data['pet_name']." to the database.",
+                        "event_classification" => "audit",
+                        "event_added_at" => time()
+                    );
+                    $this->putToEvents($log);
                     redirect($this->config->base_url() . "admin/petDatabase");
                 } else {
                     echo "An Error Ocurred<br>";
@@ -287,6 +312,7 @@ class Admin extends CI_Controller {
                 //NO PETS Detected
             }
         }
+        redirect(base_url()."admin/petDatabase");
     }
 
     public function petDatabaseAdopters_exec() {
@@ -346,7 +372,13 @@ class Admin extends CI_Controller {
                 "adoption_adopted_at" => time()
             );
             if ($this->admin_model->update("transaction", array("transaction_progress" => $nextStep, "transaction_isFinished" => 1), array("transaction_id" => $selectedTransactionId)) != 0 && $this->admin_model->update("pet", array("pet_status" => "adopted"), array("pet_id" => $selectedTransaction->pet_id)) != 0 && $this->admin_model->singleinsert("adoption", $newAdoptionRecord) != 0) {
-                //SUCCESS
+                $log = array(
+                    "user_id" => $this->session->userdata("userid"),
+                    "event_description" => "Finished the transaction of ".$selectedTransaction->user_firstname." ".$selectedTransaction->user_lastname." for pet ".$selectedTransaction->pet_name,
+                    "event_classification" => "audit",
+                    "event_added_at" => time()
+                );
+                $this->putToEvents($log);
             } else {
                 //Error in updating transaction
                 //Error in updating pet
@@ -355,7 +387,13 @@ class Admin extends CI_Controller {
             redirect(base_url() . "admin/petDatabase/");
         } else {
             if ($this->admin_model->update("transaction", array("transaction_progress" => $nextStep), array("transaction_id" => $this->session->userdata("transactionid"))) != 0) {
-                //SUCCESS
+                $log = array(
+                    "user_id" => $this->session->userdata("userid"),
+                    "event_description" => "Transaction of ".$selectedTransaction->user_firstname." ".$selectedTransaction->user_lastname." for pet ".$selectedTransaction->pet_name." from ".$selectedTransaction->transaction_progress . "% to ".$nextStep."%",
+                    "event_classification" => "audit",
+                    "event_added_at" => time()
+                );
+                $this->putToEvents($log);
             } else {
                 //Error in updating
             }
@@ -365,8 +403,15 @@ class Admin extends CI_Controller {
 
     public function petDatabaseRemove() {
         $pet_id = $this->uri->segment(3);
-
-        if ($this->admin_model->update("pet", array("pet_access" => 0), array("pet_id" => $pet_id)) != 0) {
+        $pet = $this->admin_model->fetch("pet", array("pet_id", $pet_id))[0];
+        if ($this->admin_model->update("pet", array("pet_access" => 0, "pet_updated_at" => time()), array("pet_id" => $pet_id)) != 0) {
+            $log = array(
+                "user_id" => $this->session->userdata("userid"),
+                "event_description" => $pet->pet_name." is removed from the database", 
+                "event_classification" => "audit",
+                "event_added_at" => time()
+            );
+            $this->putToEvents($log);
             redirect($this->config->base_url() . "admin/petDatabase");
         } else {
             //Error in updating
@@ -375,7 +420,15 @@ class Admin extends CI_Controller {
 
     public function petDatabaseRestore() {
         $pet_id = $this->uri->segment(3);
-        if ($this->admin_model->update("pet", array("pet_access" => 1), array("pet_id" => $pet_id)) != 0) {
+        $pet = $this->admin_model->fetch("pet", array("pet_id", $pet_id))[0];
+        if ($this->admin_model->update("pet", array("pet_access" => 1, "pet_updated_at" => time()), array("pet_id" => $pet_id)) != 0) {
+            $log = array(
+                "user_id" => $this->session->userdata("userid"),
+                "event_description" => $pet->pet_name." is restored to the database", 
+                "event_classification" => "audit",
+                "event_added_at" => time()
+            );
+            $this->putToEvents($log);
             redirect($this->config->base_url() . "admin/petDatabaseRemovedPet");
         } else {
             //Error in updating
@@ -383,7 +436,13 @@ class Admin extends CI_Controller {
     }
 
     public function petDatabaseMedicalRecords() {
-        $selectedPet = $this->admin_model->fetchjoin("medical_record", "pet", "medical_record.pet_id = pet.pet_id", array('pet.pet_id' => $this->uri->segment(3)));
+        $pet_id = $this->uri->segment(3);
+        $this->session->set_userdata("petid_medical", $pet_id);
+        redirect(base_url()."admin/getMedicalRecords");
+    }
+    public function getMedicalRecords(){
+        $pet_id = $this->session->userdata("petid_medical");
+        $selectedPet = $this->admin_model->fetchjoin("medical_record", "pet", "medical_record.pet_id = pet.pet_id", array('pet.pet_id' => $pet_id));
         $data = array(
             'title' => 'Medical Records | Admin',
             'wholeUrl' => base_url(uri_string()),
@@ -396,12 +455,17 @@ class Admin extends CI_Controller {
         $this->load->view("admin/includes/footer");
     }
 
-    public function petDatabaseAddMedical() {
-        $selectedPet = $this->admin_model->fetchjoin("medical_record", "pet", "medical_record.pet_id = pet.pet_id", array('pet.pet_id' => $this->uri->segment(3)));
+    public function petDatabaseAddMedical(){
+        $pet_id = $this->uri->segment(3);
+        $this->session->set_userdata("petid_medical", $pet_id);
+        redirect(base_url()."admin/petDatabaseAddMedicalRecord");
+    }
+    public function petDatabaseAddMedicalRecord(){
+        $pet_id = $this->session->userdata("petid_medical");
         $data = array(
             'title' => 'Add Medical Record | Admin',
             'wholeUrl' => base_url(uri_string()),
-            'records' => $selectedPet
+            'records' => $pet_id
         );
         $this->load->view("admin/includes/header", $data);
         $this->load->view("admin/navbar");
@@ -411,8 +475,8 @@ class Admin extends CI_Controller {
     }
 
     public function petDatabaseAddMedical_exec() {
-        $selectedPet = $this->admin_model->fetchjoin("medical_record", "pet", "medical_record.pet_id = pet.pet_id", array('pet.pet_id' => $this->uri->segment(3)));
         $pet_id = $this->uri->segment(3);
+        $selectedPet = $this->admin_model->fetchjoin("medical_record", "pet", "medical_record.pet_id = pet.pet_id", array('pet.pet_id' => $pet_id));
         $this->form_validation->set_rules('weight', "Weight", "required|is_numeric");
         $this->form_validation->set_rules('diagnosis', "Diagnosis", "required");
         $this->form_validation->set_rules('treatment', "Treatment", "required");
@@ -437,6 +501,13 @@ class Admin extends CI_Controller {
             );
 
             if ($this->admin_model->singleinsert("medical_record", $data)) {
+                $log = array(
+                    "user_id" => $this->session->userdata("userid"),
+                    "event_description" => "Added a medical record for ".$selectedPet->pet_name.".", 
+                    "event_classification" => "audit",
+                    "event_added_at" => time()
+                );
+                $this->putToEvents($log);
                 redirect($this->config->base_url() . "admin/petDatabaseMedicalRecords/" . $pet_id);
             } else {
                 echo "An Error Ocurred";
@@ -446,12 +517,20 @@ class Admin extends CI_Controller {
                 //Redirect to oops
             }
         }
+        redirect(base_url()."admin/petDatabaseMedicalRecords" . $pet_id);
     }
 
     public function petDatabaseEditMedical() {
-        $selectedPet = $this->admin_model->fetchjoin("medical_record", "pet", "medical_record.pet_id = pet.pet_id", array('medical_record.medicalRecord_id' => $this->uri->segment(3)));
+        $medrec = $this->uri->segment(3);
+        $this->session->set_userdata("medrecid", $medrec);
+        redirect(base_url()."admin/petDatabaseEditMedicalRecord");
+    }
+    
+    public function petDatabaseEditMedicalRecord(){
+        $medrec_id = $this->session->userdata("medrecid");
+        $selectedPet = $this->admin_model->fetchjoin("medical_record", "pet", "medical_record.pet_id = pet.pet_id", array('medical_record.medicalRecord_id' => $medrec_id));
         $data = array(
-            'title' => 'Add Medical Record | Admin',
+            'title' => 'Edit Medical Record | Admin',
             'wholeUrl' => base_url(uri_string()),
             'records' => $selectedPet
         );
@@ -490,6 +569,13 @@ class Admin extends CI_Controller {
             );
 
             if ($this->admin_model->update("medical_record", $data, array("medicalRecord_id" => $medicalRecord_id))) {
+                $log = array(
+                    "user_id" => $this->session->userdata("userid"),
+                    "event_description" => "Edited a medical record for ".$selectedPet->pet_name.".", 
+                    "event_classification" => "audit",
+                    "event_added_at" => time()
+                );
+                $this->putToEvents($log);
                 redirect($this->config->base_url() . "admin/petDatabaseMedicalRecords/" . $pet_id);
             } else {
                 echo "An Error Ocurred<br>";
@@ -505,8 +591,15 @@ class Admin extends CI_Controller {
     public function petDatabaseDeleteMedical() {
         $medicalRecord_id = $this->uri->segment(3);
         $pet_id = $this->uri->segment(4);
-
+        $selectedPet = $this->admin_model->fetch("pet", array("pet_id" => $pet_id));
         if ($this->admin_model->delete("medical_record", array("medicalRecord_id" => $medicalRecord_id))) {
+            $log = array(
+                "user_id" => $this->session->userdata("userid"),
+                "event_description" => "Deleted a medical record for ".$selectedPet->pet_name.".", 
+                "event_classification" => "audit",
+                "event_added_at" => time()
+            );
+            $this->putToEvents($log);
             redirect($this->config->base_url() . "admin/petDatabaseMedicalRecords/" . $pet_id);
         } else {
             //Error in updating
@@ -529,7 +622,15 @@ class Admin extends CI_Controller {
 
     public function activateUser() {
         $user_id = $this->uri->segment(3);
-        if ($this->admin_model->update("user", array("user_status" => 1), array("user_id" => $user_id)) != 0) {
+        $selectedUser = $this->admin_model->fetch("user", array("user_id" => $user_id))[0];
+        if ($this->admin_model->update("user", array("user_status" => 1, "user_updated_at" => time()), array("user_id" => $user_id)) != 0) {
+            $log = array(
+                "user_id" => $this->session->userdata("userid"),
+                "event_description" => $selectedUser->user_firstname." ".$selectedUser->user_lastname." (".$selectedUser->user_username. ") has been activated.", 
+                "event_classification" => "audit",
+                "event_added_at" => time()
+            );
+            $this->putToEvents($log);
             redirect($this->config->base_url() . "admin/userDatabase");
         } else {
             //Error in updating
@@ -538,7 +639,15 @@ class Admin extends CI_Controller {
 
     public function deactivateUser() {
         $user_id = $this->uri->segment(3);
-        if ($this->admin_model->update("user", array("user_status" => 0), array("user_id" => $user_id)) != 0) {
+        $selectedUser = $this->admin_model->fetch("user", array("user_id" => $user_id))[0];
+        if ($this->admin_model->update("user", array("user_status" => 0, "user_updated_at" => time()), array("user_id" => $user_id)) != 0) {
+            $log = array(
+                "user_id" => $this->session->userdata("userid"),
+                "event_description" => $selectedUser->user_firstname." ".$selectedUser->user_lastname." (".$selectedUser->user_username.") has been deactivated.", 
+                "event_classification" => "audit",
+                "event_added_at" => time()
+            );
+            $this->putToEvents($log);
             redirect($this->config->base_url() . "admin/userDatabase");
         } else {
             //Error in updating
@@ -569,18 +678,6 @@ class Admin extends CI_Controller {
         $this->load->view("admin/includes/footer");
     }
 
-    public function schedules_add() {
-        $data = array(
-            'title' => 'User Database | Admin',
-            'wholeUrl' => base_url(uri_string()),
-        );
-        $this->load->view("admin/includes/header", $data);
-        $this->load->view("admin/navbar");
-        $this->load->view("admin/sidenav");
-        //$this->load->view("admin/auditTrail");
-        $this->load->view("admin/includes/footer");
-    }
-
     public function reports() {
         $animalsCount = $this->admin_model->fetchCount("pet");
         $adoptablesCount = $this->admin_model->fetchCount("pet", array("pet_status" => 'adoptable'));
@@ -607,9 +704,11 @@ class Admin extends CI_Controller {
     }
 
     public function userLogs() {
+        $logs = $this->admin_model->fetchjoin("event", "user", "event.user_id = user.user_id", array("event_classification" => "log"));
         $data = array(
             'title' => 'User Logs | Admin',
             'wholeUrl' => base_url(uri_string()),
+            'logs' => $logs
         );
         $this->load->view("admin/includes/header", $data);
         $this->load->view("admin/navbar");
@@ -619,9 +718,11 @@ class Admin extends CI_Controller {
     }
 
     public function auditTrail() {
+        $trails = $this->admin_model->fetchjoin("event", "user", "event.user_id = user.user_id", array("event_classification" => "audit"));
         $data = array(
             'title' => 'Audit Trail | Admin',
             'wholeUrl' => base_url(uri_string()),
+            'trails' => $trails
         );
         $this->load->view("admin/includes/header", $data);
         $this->load->view("admin/navbar");
@@ -646,7 +747,6 @@ class Admin extends CI_Controller {
     }
 
     public function settingsUpdate() {
-
         $currentUser = $this->admin_model->fetch("user", array("user_id" => $this->session->userdata("userid")))[0];
         $column_name = $this->uri->segment(3);
         if ($column_name == "user_picture") {
@@ -672,7 +772,13 @@ class Admin extends CI_Controller {
                     "user_updated_at" => time()
                 );
                 if ($this->admin_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
-                    //Success updating
+                    $log = array(
+                        "user_id" => $this->session->userdata("userid"),
+                        "event_description" => $currentUser->user_firstname." ".$currentUser->user_lastname." (".$currentUser->user_username.")"." changed his profile picture.",
+                        "event_classification" => "log",
+                        "event_added_at" => time()
+                    );
+                    $this->putToEvents($log);
                 } else {
                     //OOPS. ERROR in updating
                 }
@@ -701,6 +807,13 @@ class Admin extends CI_Controller {
                     "user_updated_at" => time()
                 );
                 if ($this->admin_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
+                    $log = array(
+                        "user_id" => $this->session->userdata("userid"),
+                        "event_description" => "Change name from ".$currentUser->user_firstname." ".$currentUser->user_lastname." to ".$data["user_firstname"]." ".$data["user_lastname"].".",
+                        "event_classification" => "log",
+                        "event_added_at" => time()
+                    );
+                    $this->putToEvents($log);
                     redirect(base_url() . "admin/settings");
                 } else {
                     //Oops error in updating
@@ -727,6 +840,13 @@ class Admin extends CI_Controller {
                     "user_updated_at" => time()
                 );
                 if ($this->admin_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
+                    $log = array(
+                        "user_id" => $this->session->userdata("userid"),
+                        "event_description" => "Change username from ".$currentUser->user_username." to ".$data["user_username"].".",
+                        "event_classification" => "log",
+                        "event_added_at" => time()
+                    );
+                    $this->putToEvents($log);
                     redirect(base_url() . "admin/settings");
                 } else {
                     //Oops error in updating
@@ -808,6 +928,13 @@ class Admin extends CI_Controller {
                     "user_updated_at" => time()
                 );
                 if ($this->admin_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
+                    $log = array(
+                        "user_id" => $this->session->userdata("userid"),
+                        "event_description" => "Change Contact No. from ".$currentUser->user_contact_no." to ".$data["user_contact_no"].".",
+                        "event_classification" => "log",
+                        "event_added_at" => time()
+                    );
+                    $this->putToEvents($log);
                     redirect(base_url() . "admin/settings");
                 } else {
                     //Oops error in updating
@@ -838,6 +965,13 @@ class Admin extends CI_Controller {
                     "user_updated_at" => time()
                 );
                 if ($this->admin_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
+                    $log = array(
+                        "user_id" => $this->session->userdata("userid"),
+                        "event_description" => "Change Address from ".$currentUser->user_address.", ".$currentUser->user_city.", ".$currentUser->user_province." to ".$data["user_address"].", ".$data["user_city"].", ".$data["user_province"].".",
+                        "event_classification" => "log",
+                        "event_added_at" => time()
+                    );
+                    $this->putToEvents($log);
                     redirect(base_url() . "admin/settings");
                 } else {
                     //Oops error in updating
@@ -898,6 +1032,13 @@ class Admin extends CI_Controller {
                     "schedule_enddate" => $enddate
                 );
                 $this->admin_model->singleinsert("schedule", $data);
+                $log = array(
+                    "user_id" => $this->session->userdata("userid"),
+                    "event_description" => "Added a schedule named ".$data["schedule_title"],
+                    "event_classification" => "audit",
+                    "event_added_at" => time()
+                );
+                $this->putToEvents($log);
                 echo json_encode(array('success' => true, 'result' => 'Success'));
             }
         }
@@ -922,17 +1063,39 @@ class Admin extends CI_Controller {
                 "schedule_enddate" => $enddate
             );
             $this->admin_model->update("schedule", $data, array("schedule_id" => $this->input->post("schedule_id")));
+            $log = array(
+                    "user_id" => $this->session->userdata("userid"),
+                    "event_description" => "Edited a schedule named ".$data["schedule_title"],
+                    "event_classification" => "audit",
+                    "event_added_at" => time()
+                );
+                $this->putToEvents($log);
             echo json_encode(array('success' => true, 'result' => "Success"));
         }
     }
 
     public function deletereserve() {
         $this->admin_model->delete("schedule", array("schedule_id" => $this->input->post("schedule_id")));
+        $selectedSched = $this->admin_model->fetch("schedule", array("schedule_id" => $this->input->post("schedule_id"))); 
+        $log = array(
+            "user_id" => $this->session->userdata("userid"),
+            "event_description" => "Removed a schedule named ".$selectedSched->schedule_title,
+            "event_classification" => "audit",
+            "event_added_at" => time()
+        );
+        $this->putToEvents($log);
         echo json_encode(array('success' => true, 'result' => "Success"));
     }
 
     public function logout() {
         $this->session->sess_destroy();
+        $log = array(
+            "user_id" => $this->session->userdata("userid"),
+            "event_description" => "Logged Out",
+            "event_classification" => "log",
+            "event_added_at" => time()
+        );
+        $this->putToEvents($log);
         redirect(base_url() . 'login/');
     }
 

@@ -7,16 +7,24 @@
                 </div>
             </nav>
             <div class="card-content ">
-                 <ul class="collection">
-                    <li class="collection-item avatar">
-                        <img src="<?= $this->config->base_url()?>images/profile/jc.png" alt="" class="circle z-depth-2">
-                        <span class="title">Juan Carlo D.R. Valencia Logged in</span>
-                        <p class = "grey-text">
-                            at October 31, 2017<br>
-                            7:31 am
-                        </p>
-                    </li>
-                </ul>
+
+                <?php if (empty($logs)): ?>
+
+                <?php else: ?>
+                    <ul class="collection">
+                        <?php foreach ($logs as $log): ?>
+                            <li class="collection-item avatar">
+                                <img src="<?= $this->config->base_url().$log->user_picture;?>" alt="" class="circle z-depth-2">
+                                <span class="title"><?= $log->event_description?></span>
+                                <p class = "grey-text">
+                                    <?= date("F d, Y | h:i A", $log->event_added_at)?>
+                                    <br/>
+                                    by <?= $log->user_firstname." ".$log->user_lastname?>
+                                </p>
+                            </li>
+                        <?php endforeach; ?> 
+                    </ul>
+                <?php endif; ?>
             </div>
         </div>
     </div>
