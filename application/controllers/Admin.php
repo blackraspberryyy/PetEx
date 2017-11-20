@@ -8,6 +8,7 @@ class Admin extends CI_Controller {
         $this->load->helper('file');
         $this->load->library('email');
         $this->load->model('admin_model');
+        $this->load->library('recaptcha');
         if ($this->session->has_userdata('isloggedin') == FALSE) {
             redirect(base_url() . 'login/');
         } else {
@@ -72,6 +73,39 @@ class Admin extends CI_Controller {
         }
     }
 
+    public function _email_check($email) {
+        $result = $this->user_model->emailAvailability($email);
+
+        if (!$result) {
+            $this->form_validation->set_message('_email_check', 'The %s is not existing');
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+    
+    public function check_recaptcha($response) {
+        if (!empty($response)) {
+            //this function gets the response from the google's api
+            $response = $this->recaptcha->verifyResponse($response);
+            if ($response['success'] === TRUE) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    public function _username_check($username) {
+        $result = $this->user_model->usernameAvailability($username);
+        if (!$result) {
+            $this->form_validation->set_message('_username_check', 'The %s is not existing');
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+    
     public function putToEvents($data){
         $this->admin_model->singleinsert("event", $data);
     }
@@ -745,7 +779,7 @@ class Admin extends CI_Controller {
         $this->load->view("admin/userDatabase");
         $this->load->view("admin/includes/footer");
     }
-
+    
     public function activateUser() {
         $user_id = $this->uri->segment(3);
         $selectedUser = $this->admin_model->fetch("user", array("user_id" => $user_id))[0];
@@ -784,14 +818,78 @@ class Admin extends CI_Controller {
         $data = array(
             'title' => 'User Database | Admin',
             'wholeUrl' => base_url(uri_string()),
+            'script' => $this->recaptcha->getScriptTag(),
+            'widget' => $this->recaptcha->getWidget(),
         );
         $this->load->view("admin/includes/header", $data);
         $this->load->view("admin/navbar");
         $this->load->view("admin/sidenav");
-        //$this->load->view("admin/auditTrail");
+        $this->load->view("admin/userDatabaseAdd");
         $this->load->view("admin/includes/footer");
     }
 
+    public function signup_exec() {
+        $this->load->helper(array('form'));
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('username', "Username ", "required|min_length[5]|is_unique[user.user_username]|strip_tags");
+        $this->form_validation->set_rules('password', "Password ", "required|matches[conpass]|alpha_numeric|min_length[8]|strip_tags");
+        $this->form_validation->set_rules('conpass', "Confirm Password ", "required|matches[password]|alpha_numeric|min_length[8]|strip_tags");
+        $this->form_validation->set_rules('phonenumber', "Phone Number ", "required|regex_match[^(09|\+639)\d{9}$^]|strip_tags");
+        $this->form_validation->set_rules('email', "Email Address ", "required|valid_email|strip_tags");
+        $this->form_validation->set_rules('lastname', "Lastname ", "required|min_length[2]|strip_tags|callback__alpha_dash_space");
+        $this->form_validation->set_rules('firstname', "Firstname ", "required|min_length[2]|strip_tags|callback__alpha_dash_space");
+        $this->form_validation->set_rules('birthday', "Birthday ", "required|strip_tags");
+        $this->form_validation->set_rules('address', "Address ", "required|regex_match[^[#.0-9a-zA-Z\s,-]+$^]|strip_tags");
+        $this->form_validation->set_rules('g-recaptcha-response', "CAPTCHA", "required|callback_check_recaptcha");
+        if ($this->form_validation->run() == FALSE) {
+            $data = array(
+                'title' => 'User Database | Admin',
+                'wholeUrl' => base_url(uri_string()),
+                'script' => $this->recaptcha->getScriptTag(),
+                'widget' => $this->recaptcha->getWidget(),
+            );
+            $this->load->view("admin/includes/header", $data);
+            $this->load->view("admin/navbar");
+            $this->load->view("admin/sidenav");
+            $this->load->view("admin/userDatabaseAdd");
+            $this->load->view("admin/includes/footer");
+        } else {
+            $conpass = $this->input->post('conpass');
+
+            if ($this->input->post('gender') == "Male") {
+                $imagePath = "images/profile/male.png";
+            } else {
+                $imagePath = "images/profile/female.png";
+            }
+
+            $data = array(
+                'user_username' => $this->input->post('username'),
+                'user_password' => sha1($this->input->post('password')),
+                'user_contact_no' => $this->input->post('phonenumber'),
+                'user_email' => $this->input->post('email'),
+                'user_access' => "admin",
+                'user_lastname' => $this->input->post('lastname'),
+                'user_firstname' => $this->input->post('firstname'),
+                'user_bday' => strtotime($this->input->post('birthday')),
+                'user_sex' => $this->input->post('gender'),
+                'user_picture' => $imagePath,
+                'user_address' => $this->input->post('address'),
+                'user_city' => $this->input->post('city'),
+                'user_province' => $this->input->post('province'),
+                'user_verification_code' => $this->generate(),
+                'user_isverified' => 1,
+                'user_added_at' => time(),
+                'user_updated_at' => time()
+            );
+            if ($this->admin_model->singleinsert("user", $data)) {
+                redirect(base_url()."admin/userDatabase");
+            } else {
+                //OOPS error in registration
+            }
+        }
+    }
+    
     public function schedules() {
         $data = array(
             'title' => 'Schedules | Admin',
