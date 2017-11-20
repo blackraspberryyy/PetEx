@@ -162,10 +162,12 @@ class User extends CI_Controller {
 
     public function petAdoption() {
         $allPets = $this->user_model->fetchPetDesc("pet");
+        $petAdopters = $this->user_model->fetchJoinThreeProgressDesc("transaction", "pet", "transaction.pet_id = pet.pet_id", "user", "transaction.user_id = user.user_id");
         $data = array(
             'title' => 'User | Pet Adoption',
             'wholeUrl' => base_url(uri_string()),
-            'pets' => $allPets
+            'pets' => $allPets,
+            'adopters' => $petAdopters
         );
         $this->load->view("user/includes/header", $data);
         $this->load->view("user/navbar");
@@ -220,8 +222,8 @@ class User extends CI_Controller {
         if (!$this->email->send()) {
             $this->email->print_debugger();
         } else {
-           echo "<script>alert('Pet Adoption Application Form has been sent');"
-              . "window.location='" . base_url() . "user/petAdoption'</script>";
+            echo "<script>alert('Pet Adoption Application Form has been sent');"
+            . "window.location='" . base_url() . "user/petAdoption'</script>";
         }
     }
 
