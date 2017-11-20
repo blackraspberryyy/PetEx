@@ -200,15 +200,220 @@ class User extends CI_Controller {
     }
 
     public function settings() {
+        $currentUser = $this->session->userdata("userid");
+        $user = $this->user_model->fetch("user", array("user_id" => $currentUser))[0];
         $data = array(
             'title' => 'User | Settings',
-            'wholeUrl' => base_url(uri_string())
+            'wholeUrl' => base_url(uri_string()),
+            'currentUser' => $user
         );
         $this->load->view("user/includes/header", $data);
         $this->load->view("user/navbar");
         $this->load->view("user/sidenav");
         $this->load->view("user/settings");
         $this->load->view("user/includes/footer");
+    }
+
+    public function settingsUpdate() {
+
+        $currentUser = $this->user_model->fetch("user", array("user_id" => $this->session->userdata("userid")))[0];
+        $column_name = $this->uri->segment(3);
+        if ($column_name == "user_picture") {
+            $config['upload_path'] = "./images/profile/";
+            $config['allowed_types'] = 'gif|jpg|jpeg|png';
+            $config['file_ext_tolower'] = true;
+            $config['max_size'] = 2000;
+            $config['max_width'] = 1024;
+            $config['max_height'] = 768;
+            $new_name = $currentUser->user_id . "-" . $currentUser->user_username . $_FILES["user_picture"]['name'];
+            $config['file_name'] = $new_name;
+            $this->load->library('upload', $config);
+
+            if (!$this->upload->do_upload('user_picture')) {
+                //OOPS! ERROR IN UPLOADING
+                //print_r($this->upload->display_errors());
+                //die();
+            } else {
+                //$image = !empty($this->input->post("user_picture")) ? $this->upload->data($currentUser->user_id."-".$currentUser->user_username) : $image = $currentUser->user_picture;
+                $image = "./images/profile/" . $this->upload->data("file_name");
+                $data = array(
+                    "user_picture" => $image,
+                    "user_updated_at" => time()
+                );
+                if ($this->admin_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
+                    //Success updating
+                } else {
+                    //OOPS. ERROR in updating
+                }
+                redirect(base_url() . "user/settings");
+            }
+        } else if ($column_name == "change_name") {
+            $this->form_validation->set_rules('user_lastname', "Lastname ", "required|min_length[2]|strip_tags|callback__alpha_dash_space");
+            $this->form_validation->set_rules('user_firstname', "Firstname ", "required|min_length[2]|strip_tags|callback__alpha_dash_space");
+            if ($this->form_validation->run() == FALSE) {
+                $currentUser = $this->session->userdata("userid");
+                $user = $this->user_model->fetch("user", array("user_id" => $currentUser))[0];
+                $data = array(
+                    'title' => 'User | Settings',
+                    'wholeUrl' => base_url(uri_string()),
+                    'currentUser' => $user
+                );
+                $this->load->view("user/includes/header", $data);
+                $this->load->view("user/navbar");
+                $this->load->view("user/sidenav");
+                $this->load->view("user/settings");
+                $this->load->view("user/includes/footer");
+            } else {
+                $data = array(
+                    "user_firstname" => $this->input->post("user_firstname"),
+                    "user_lastname" => $this->input->post("user_lastname"),
+                    "user_updated_at" => time()
+                );
+                if ($this->user_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
+                    redirect(base_url() . "user/settings");
+                } else {
+                    //Oops error in updating
+                }
+            }
+        } else if ($column_name == "change_username") {
+            $this->form_validation->set_rules('user_username', "Username ", "required|min_length[5]|is_unique[user.user_username]|strip_tags");
+            if ($this->form_validation->run() == FALSE) {
+                $currentUser = $this->session->userdata("userid");
+                $user = $this->user_model->fetch("user", array("user_id" => $currentUser))[0];
+                $data = array(
+                    'title' => 'User | Settings',
+                    'wholeUrl' => base_url(uri_string()),
+                    'currentUser' => $user
+                );
+                $this->load->view("user/includes/header", $data);
+                $this->load->view("user/navbar");
+                $this->load->view("user/sidenav");
+                $this->load->view("user/settings");
+                $this->load->view("user/includes/footer");
+            } else {
+                $data = array(
+                    "user_username" => $this->input->post("user_username"),
+                    "user_updated_at" => time()
+                );
+                if ($this->user_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
+                    redirect(base_url() . "user/settings");
+                } else {
+                    //Oops error in updating
+                }
+            }
+        } else if ($column_name == "change_password") {
+            $this->form_validation->set_rules('user_password', "Password ", "required|matches[user_conpassword]|min_length[8]|strip_tags");
+            $this->form_validation->set_rules('user_conpassword', "Confirm Password ", "required|matches[user_password]|min_length[8]|strip_tags");
+            if ($this->form_validation->run() == FALSE) {
+                $currentUser = $this->session->userdata("userid");
+                $user = $this->user_model->fetch("user", array("user_id" => $currentUser))[0];
+                $data = array(
+                    'title' => 'User | Settings',
+                    'wholeUrl' => base_url(uri_string()),
+                    'currentUser' => $user
+                );
+                $this->load->view("user/includes/header", $data);
+                $this->load->view("user/navbar");
+                $this->load->view("user/sidenav");
+                $this->load->view("user/settings");
+                $this->load->view("user/includes/footer");
+            } else {
+                $data = array(
+                    "user_password" => sha1($this->input->post("user_password")),
+                    "user_updated_at" => time()
+                );
+                if ($this->user_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
+                    redirect(base_url() . "user/settings");
+                } else {
+                    //Oops error in updating
+                }
+            }
+        } else if ($column_name == "change_email") {
+            $this->form_validation->set_rules('user_email', "Email Address ", "required|valid_email|strip_tags");
+            if ($this->form_validation->run() == FALSE) {
+                $currentUser = $this->session->userdata("userid");
+                $user = $this->user_model->fetch("user", array("user_id" => $currentUser))[0];
+                $data = array(
+                    'title' => 'User | Settings',
+                    'wholeUrl' => base_url(uri_string()),
+                    'currentUser' => $user
+                );
+                $this->load->view("user/includes/header", $data);
+                $this->load->view("user/navbar");
+                $this->load->view("user/sidenav");
+                $this->load->view("user/settings");
+                $this->load->view("user/includes/footer");
+            } else {
+                $data = array(
+                    "user_email" => $this->input->post("user_email"),
+                    "user_verification_code" => $this->generate(),
+                    "user_isverified" => 0,
+                    "user_updated_at" => time()
+                );
+                if ($this->user_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
+                    $this->sendemail($data);
+                } else {
+                    //Oops error in updating
+                }
+            }
+        } else if ($column_name == "change_contactno") {
+            $this->form_validation->set_rules('user_contact_no', "Phone Number ", "required|regex_match[^(09|\+639)\d{9}$^]|strip_tags");
+            if ($this->form_validation->run() == FALSE) {
+                $currentUser = $this->session->userdata("userid");
+                $user = $this->user_model->fetch("user", array("user_id" => $currentUser))[0];
+                $data = array(
+                    'title' => 'User | Settings',
+                    'wholeUrl' => base_url(uri_string()),
+                    'currentUser' => $user
+                );
+                $this->load->view("user/includes/header", $data);
+                $this->load->view("user/navbar");
+                $this->load->view("user/sidenav");
+                $this->load->view("user/settings");
+                $this->load->view("user/includes/footer");
+            } else {
+                $data = array(
+                    "user_contact_no" => $this->input->post("user_contact_no"),
+                    "user_updated_at" => time()
+                );
+                if ($this->user_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
+                    redirect(base_url() . "user/settings");
+                } else {
+                    //Oops error in updating
+                }
+            }
+        } else if ($column_name == "change_address") {
+            $this->form_validation->set_rules('user_address', "Address ", "required|regex_match[^[#.0-9a-zA-Z\s,-]+$^]|strip_tags");
+            $this->form_validation->set_rules('user_province', "Province ", "required|strip_tags");
+            $this->form_validation->set_rules('user_city', "City ", "required|strip_tags");
+            if ($this->form_validation->run() == FALSE) {
+                $currentUser = $this->session->userdata("userid");
+                $user = $this->user_model->fetch("user", array("user_id" => $currentUser))[0];
+                $data = array(
+                    'title' => 'User | Settings',
+                    'wholeUrl' => base_url(uri_string()),
+                    'currentUser' => $user
+                );
+                $this->load->view("user/includes/header", $data);
+                $this->load->view("user/navbar");
+                $this->load->view("user/sidenav");
+                $this->load->view("user/settings");
+                $this->load->view("user/includes/footer");
+            } else {
+                $data = array(
+                    "user_address" => $this->input->post("user_address"),
+                    "user_province" => $this->input->post("user_province"),
+                    "user_city" => $this->input->post("user_city"),
+                    "user_updated_at" => time()
+                );
+                if ($this->user_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
+                    redirect(base_url() . "user/settings");
+                } else {
+                    //Oops error in updating
+                }
+            }
+        }
+        //echo $this->db->last_query();        
     }
 
     public function download($fileName = NULL) {
