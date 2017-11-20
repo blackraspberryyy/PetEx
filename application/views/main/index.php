@@ -143,14 +143,14 @@ if (validation_errors()): {
                 </div>
                 <div class="span4 animated flyIn">
                     <div class="service-box">
-                        <a href="#petLocate" ><img class = "featuresPic" src="<?= $this->config->base_url() ?>images/img/icons/petLocate.png" alt="" /></a>
-                        <h2>Locate your Pet</h2>
+                        <a href="#petLocate" ><img class = "featuresPic" src="<?= $this->config->base_url() ?>images/img/icons/progress.png" alt="" /></a>
+                        <h2>My Progress</h2>
                     </div>
                 </div>
                 <div class="span4 animated-fast flyIn">
                     <div class="service-box">
-                        <a href="#petHistory"><img class = "featuresPic" src="<?= $this->config->base_url() ?>images/img/icons/petHistory.png" alt="" /></a>
-                        <h2>Pet History/Log</h2>
+                        <a href="#petHistory"><img class = "featuresPic" src="<?= $this->config->base_url() ?>images/img/icons/myPets.png" alt="" /></a>
+                        <h2>My Pet/s</h2>
                     </div>
                 </div>
             </div>
@@ -172,9 +172,9 @@ if (validation_errors()): {
                     <div class="span1"></div>
                 </div>
             </div>
-            <div class="span6">
+            <div class="span6" >
                 <br>
-                <img  src="<?= $this->config->base_url() ?>images/img/icons/dummy.png" alt="" />
+                <img  src="<?= $this->config->base_url() ?>images/img/icons/petAdoptionPrev.png" alt="" />
             </div>
         </div>
     </div>
@@ -183,11 +183,11 @@ if (validation_errors()): {
 <!-- section: petLocate -->
 <section id="petLocate" class="section">
     <div class="container clearfix">
-        <h4>Locate your Pet</h4>
+        <h4>My Progress</h4>
         <div class="row">
             <div class="span6">
                 <br>
-                <img  src="<?= $this->config->base_url() ?>images/img/icons/dummy.png" alt="" />
+                <img src="<?= $this->config->base_url() ?>images/img/icons/progressPrev.png" alt="" />
             </div>
             <div class="span6">
                 <div class="row">
@@ -205,7 +205,7 @@ if (validation_errors()): {
 <!-- section: petHistory -->
 <section id="petHistory" class="section">
     <div class="container clearfix" >
-        <h4>Pet History/Log</h4>
+        <h4>My Pet/s</h4>
         <div class="row">
             <div class="span6">
                 <div class="row">
@@ -219,7 +219,7 @@ if (validation_errors()): {
             </div>
             <div class="span6">
                 <br>
-                <img  src="<?= $this->config->base_url() ?>images/img/icons/dummy.png" alt="" />
+                <img src="<?= $this->config->base_url() ?>images/img/icons/myPetsPrev.png" alt="" />
             </div>
         </div>
     </div>
@@ -228,13 +228,11 @@ if (validation_errors()): {
 <section class="spacer bg3">
     <div class="container">
         <div class="row">
-            <div class="span12 aligncenter flyLeft">
-                <blockquote class="large">
-                    We are an established and trusted web agency with a reputation for commitment and high integrity
-                </blockquote>
+            <div class="span6 flyLeft" style="padding-top:100px !important;">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             </div>
-            <div class="span12 aligncenter flyRight">
-                <i class="icon-rocket icon-10x"></i>
+            <div class="span6 flyRight">
+                <img src="<?= $this->config->base_url() ?>images/img/icons/mobilePrev.png" alt="" />
             </div>
         </div>
     </div>
