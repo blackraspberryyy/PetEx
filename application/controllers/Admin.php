@@ -804,7 +804,7 @@ class Admin extends CI_Controller {
                 $this->load->view("admin/includes/footer");
             } else {
                 $data = array(
-                    "user_contact_no" => sha1($this->input->post("user_contact_no")),
+                    "user_contact_no" => $this->input->post("user_contact_no"),
                     "user_updated_at" => time()
                 );
                 if ($this->admin_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
@@ -832,9 +832,9 @@ class Admin extends CI_Controller {
                 $this->load->view("admin/includes/footer");
             } else {
                 $data = array(
-                    "user_address" => sha1($this->input->post("user_address")),
-                    "user_province" => sha1($this->input->post("user_province")),
-                    "user_city" => sha1($this->input->post("user_city")),
+                    "user_address" => $this->input->post("user_address"),
+                    "user_province" => $this->input->post("user_province"),
+                    "user_city" => $this->input->post("user_city"),
                     "user_updated_at" => time()
                 );
                 if ($this->admin_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
