@@ -1376,7 +1376,6 @@ class Admin extends CI_Controller {
     }
 
     public function logout() {
-        $this->session->sess_destroy();
         $log = array(
             "user_id" => $this->session->userdata("userid"),
             "event_description" => "Logged Out",
@@ -1384,6 +1383,7 @@ class Admin extends CI_Controller {
             "event_added_at" => time()
         );
         $this->putToEvents($log);
+        $this->session->sess_destroy();
         redirect(base_url() . 'login/');
     }
 
