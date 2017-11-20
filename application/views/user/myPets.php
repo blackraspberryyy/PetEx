@@ -138,7 +138,7 @@ function get_age($birth_date) {
                                     <h4>Video</h4>
                                     <hr>
                                     <?php if ($myPets->pet_video == NULL): ?>
-                                        <h2>This pet has no Video</h2>
+                                        <h2><i class="fa fa-warning"></i>This pet has no Video</h2>
                                     <?php else: ?>
                                         <video class="responsive-video" controls>
                                             <source src="<?= $this->config->base_url() . $myPets->pet_picture ?>"  type="video/mp4">
