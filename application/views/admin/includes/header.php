@@ -1,5 +1,5 @@
 <?php
-    $userInfo = $this->admin_model->getinfo('user', array('user_id' => $this->session->userid))[0];
+$userInfo = $this->admin_model->getinfo('user', array('user_id' => $this->session->userid))[0];
 ?>
 
 <html>
@@ -27,9 +27,9 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
         <!--Materialize Steppers-->
-         <link rel="stylesheet" href="<?= $this->config->base_url() ?>assets/steppers/materialize-stepper.min.css">
-         <script src="<?= $this->config->base_url() ?>assets/steppers/materialize-stepper.min.js"></script>
-        
+        <link rel="stylesheet" href="<?= $this->config->base_url() ?>assets/steppers/materialize-stepper.min.css">
+        <script src="<?= $this->config->base_url() ?>assets/steppers/materialize-stepper.min.js"></script>
+
         <!--"Document.ready scripts"-->
         <script>
             $(document).ready(function () {
@@ -41,81 +41,6 @@
                 $('.collapsible').collapsible();
                 $('.collapsible').collapsible({
                     accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-                });
-                
-                $('#calendar').fullCalendar({
-                    header: {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'month,agendaWeek,agendaDay,listWeek'
-                    },
-                    handleWindowResize: true,
-                    weekends: true, // Show weekends
-                    //navLinks: true,  //can click day/week names to navigate views
-                    timeFormat: 'hh:mm A',
-                    editable: true,
-                    eventLimit: true, // allow "more" link when too many events
-                    displayEventTime: true,
-                    allDayText: 'Events/Activity',
-                    events: [
-                        {
-                            title: 'PAWS Scaredy Cats and Dogs',
-                            start: '2017-10-30',
-                            editable: true,
-                            color: '#fdd835',
-                            allDay: true
-                        },
-                        {
-                            title: 'Vacation',
-                            start: '2017-10-31',
-                            end: '2017-11-2',
-                            color: '#C2185B'
-
-                        },
-                        {
-                            id: 999,
-                            title: 'Voltaire',
-                            start: '2017-10-03T16:00:00',
-                            description: 'adoptMeTuesday',
-                            color: '#2e7d32',
-                        },
-                        {
-                            id: 999,
-                            title: 'Iris',
-                            start: '2017-10-10T16:00:00',
-                            description: 'adoptMeTuesday',
-                            color: '#2e7d32',
-                        },
-                        {
-                            id: 999,
-                            title: 'Kamie',
-                            start: '2017-10-17T16:00:00',
-                            description: 'adoptMeTuesday',
-                            color: '#2e7d32',
-                        },
-                        {
-                            id: 999,
-                            title: 'Pola',
-                            start: '2017-10-24T16:00:00',
-                            description: 'adoptMeTuesday',
-                            color: '#2e7d32',
-                        },
-                        {
-                            title: 'Conference',
-                            start: '2017-10-11',
-                            end: '2017-10-13'
-                        },
-                        {
-                            title: 'Meeting',
-                            start: '2017-10-12T10:30:00',
-                            end: '2017-10-12T12:30:00',
-                        },
-                        {
-                            title: 'Lunch',
-                            start: '2017-10-12T12:00:00',
-                            color: '#8e24aa'
-                        },
-                    ],
                 });
             });
         </script>
