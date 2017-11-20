@@ -128,7 +128,8 @@ class Login extends CI_Controller {
         if (!$this->email->send()) {
             $this->email->print_debugger();
         } else {
-            
+            echo "<script>alert('Verify your email');"
+            . "window.location='" . base_url() . "login/'</script>";
         }
     }
 
