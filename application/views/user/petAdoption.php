@@ -176,7 +176,7 @@ $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session
                                                 </div>
                                                 <div class="collapsible-body row">
                                                     <center>
-                                                        <a href="<?= base_url() ?>user/petAdoptionOnlineForm/<?= $pet->pet_id?>" class="btn-large waves-effect waves-light blue darken-3">Online Adoption Application<i class="fa fa-pencil-square-o left" aria-hidden="true"></i></a>
+                                                        <a href="<?= base_url() ?>user/petAdoptionOnlineForm_exec/<?= $pet->pet_id?>" class="btn-large waves-effect waves-light blue darken-3">Online Adoption Application<i class="fa fa-pencil-square-o left" aria-hidden="true"></i></a>
                                                     </center>
                                                 </div>
                                             </li>
