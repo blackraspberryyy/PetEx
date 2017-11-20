@@ -8,16 +8,28 @@
     <div class ="container ">
         <?php $number = 1; ?>
         <?php if (!$records): ?>
-            <h2>This pet has no Medical Record/s</h2>
+        <div class = "card row">
+            <nav class = "green darken-3">
+                <div class="col s12">
+                    <a href="<?= $this->config->base_url() ?>admin/petDatabase" class="breadcrumb">Pet Database</a>
+                    <a href="<?= $wholeUrl ?>" class="breadcrumb">Medical Records</a>
+                </div>
+            </nav>
+            <div class="card-content">
+                <center>
+                    <h5 class = "grey-text darken-5">THIS PET HAS NO MEDICAL RECORDS</h5>
+                </center>
+            </div>
+        </div>
         <?php else: ?>
             <div class = "col s12 center">
                 <br>
                 <?php foreach ($records as $record): ?>
                     <img src="<?= $this->config->base_url() . $record->pet_picture ?>" class = "profileImgStyle z-depth-2 circle">
+                    <br>
+                    <h4><?= $record->pet_name?></h4>
                     <?php break; ?>
                 <?php endforeach; ?>
-                <br>
-                <h4>Pet Name</h4>
             </div>
 
             <div class = "card row">
@@ -124,13 +136,14 @@
                         </tbody>
 
                     </table>
-                    <a href="<?= $this->config->base_url() ?>admin/petDatabaseAddMedical/<?= $record->pet_id ?>" class="btn waves-effect waves-light blue darken-3 modal-trigger right">Add
-                        <i class="material-icons right">note_add</i>
-                    </a>
-                    <br>
-                    <br>
                 </div>
             </div>
         <?php endif; ?>
+        <a href="<?= $this->config->base_url() ?>admin/petDatabaseAddMedical/<?= $this->session->userdata("petid_medical") ?>" class="btn waves-effect waves-light blue darken-3 modal-trigger right">Add
+            <i class="material-icons right">note_add</i>
+        </a>
+        <br>
+        <br>
+        <br>
     </div>
 </div>

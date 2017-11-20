@@ -3,14 +3,14 @@ if (validation_errors()) {
     include 'includes/toastErrorsMedicalAdd.php';
 }
 ?>
-<?php $records = $records[0] ?>
+
 <div class ="side-nav-offset">
     <div class ="container ">
-        <form action = "<?= $this->config->base_url() ?>admin/petDatabaseAddMedical_exec/<?= $records->pet_id?>" enctype="multipart/form-data" method = "POST" runat="server">
+        <form action = "<?= $this->config->base_url() ?>admin/petDatabaseAddMedical_exec/<?= $records?>" enctype="multipart/form-data" method = "POST" runat="server">
             <div class = "card row">
                 <nav class = "green darken-3">
                     <div class="col s12">
-                        <a href="<?= $this->config->base_url() ?>admin/petDatabaseMedicalRecords/<?= $records->pet_id?>" class="breadcrumb">Medical Records</a>
+                        <a href="<?= $this->config->base_url() ?>admin/petDatabaseMedicalRecords/<?= $records?>" class="breadcrumb">Medical Records</a>
                         <a href="<?= $wholeUrl ?>" class="breadcrumb">Add Medical Record</a>
                     </div>
                 </nav>
