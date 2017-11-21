@@ -5,6 +5,7 @@ class User extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('user_model');
+        $this->load->model('admin_model');
         $this->load->helper('file');
         $this->load->library('email');
         $this->load->helper('download');
@@ -22,10 +23,10 @@ class User extends CI_Controller {
         }
     }
 
-    public function putToEvents($data){
+    public function putToEvents($data) {
         $this->admin_model->singleinsert("event", $data);
     }
-    
+
     function GetImageExtension($imagetype) {
         if (empty($imagetype))
             return false;
@@ -66,6 +67,34 @@ class User extends CI_Controller {
     }
 
     public function myPets() {
+
+        $pages = 10;
+
+        $config['base_url'] = base_url() . "admin/userLogs/";
+        $config['total_rows'] = count($logs);
+        $config['per_page'] = $pages;
+        $config['full_tag_open'] = '<ul class="pagination center">';
+        $config['full_tag_close'] = ' </ul>';
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['first_url'] = '';
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        $config['next_link'] = '<i class="material-icons">chevron_right</i>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['prev_link'] = '<i class="material-icons">chevron_left</i>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active green darken-4"><a href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+
+        $this->pagination->initialize($config);
+        
         $data = array(
             'title' => 'User | My Pets',
             'wholeUrl' => base_url(uri_string())
@@ -158,7 +187,7 @@ class User extends CI_Controller {
                 if ($this->user_model->update("pet", $data, array("pet_id" => $pet_id))) {
                     $log = array(
                         "user_id" => $this->session->userdata("userid"),
-                        "event_description" => "Edited his pet named ".$data["pet_name"],
+                        "event_description" => "Edited his pet named " . $data["pet_name"],
                         "event_classification" => "audit",
                         "event_added_at" => time()
                     );
@@ -181,10 +210,41 @@ class User extends CI_Controller {
     public function petAdoption() {
         $allPets = $this->user_model->fetchPetDesc("pet");
         $petAdopters = $this->user_model->fetchJoinThreeProgressDesc("transaction", "pet", "transaction.pet_id = pet.pet_id", "user", "transaction.user_id = user.user_id");
+
+        $this->load->library('pagination');
+
+        $pages = 7;
+
+        $config['base_url'] = base_url() . "user/petAdoption/";
+        $config['total_rows'] = count($allPets);
+        $config['per_page'] = $pages;
+        $config['full_tag_open'] = '<ul class="pagination center">';
+        $config['full_tag_close'] = ' </ul>';
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['first_url'] = '';
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        $config['next_link'] = '<i class="material-icons">chevron_right</i>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['prev_link'] = '<i class="material-icons">chevron_left</i>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active green darken-4"><a href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+
+        $this->pagination->initialize($config);
+        
         $data = array(
             'title' => 'User | Pet Adoption',
             'wholeUrl' => base_url(uri_string()),
-            'pets' => $allPets,
+            'pets' => $this->user_model->fetchAllLimit("pet", $pages, $this->uri->segment(3)),
+            'links' => $this->pagination->create_links(),
             'adopters' => $petAdopters
         );
         $this->load->view("user/includes/header", $data);
@@ -326,7 +386,7 @@ class User extends CI_Controller {
             $selectedUser = $this->user_model->fetch("user", array("user_id" => $userId));
             $log = array(
                 "user_id" => $this->session->userdata("userid"),
-                "event_description" => $selectedUser->user_username." sent an adoption form",
+                "event_description" => $selectedUser->user_username . " sent an adoption form",
                 "event_classification" => "audit",
                 "event_added_at" => time()
             );
@@ -393,7 +453,7 @@ class User extends CI_Controller {
                 if ($this->admin_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
                     $log = array(
                         "user_id" => $this->session->userdata("userid"),
-                        "event_description" => $currentUser->user_firstname." ".$currentUser->user_lastname." (".$currentUser->user_username.")"." changed his profile picture.",
+                        "event_description" => $currentUser->user_firstname . " " . $currentUser->user_lastname . " (" . $currentUser->user_username . ")" . " changed his profile picture.",
                         "event_classification" => "log",
                         "event_added_at" => time()
                     );
@@ -428,7 +488,7 @@ class User extends CI_Controller {
                 if ($this->user_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
                     $log = array(
                         "user_id" => $this->session->userdata("userid"),
-                        "event_description" => "Change name from ".$currentUser->user_firstname." ".$currentUser->user_lastname." to ".$data["user_firstname"]." ".$data["user_lastname"].".",
+                        "event_description" => "Change name from " . $currentUser->user_firstname . " " . $currentUser->user_lastname . " to " . $data["user_firstname"] . " " . $data["user_lastname"] . ".",
                         "event_classification" => "log",
                         "event_added_at" => time()
                     );
@@ -461,7 +521,7 @@ class User extends CI_Controller {
                 if ($this->user_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
                     $log = array(
                         "user_id" => $this->session->userdata("userid"),
-                        "event_description" => "Change username from ".$currentUser->user_username." to ".$data["user_username"].".",
+                        "event_description" => "Change username from " . $currentUser->user_username . " to " . $data["user_username"] . ".",
                         "event_classification" => "log",
                         "event_added_at" => time()
                     );
@@ -549,7 +609,7 @@ class User extends CI_Controller {
                 if ($this->user_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
                     $log = array(
                         "user_id" => $this->session->userdata("userid"),
-                        "event_description" => "Change Contact No. from ".$currentUser->user_contact_no." to ".$data["user_contact_no"].".",
+                        "event_description" => "Change Contact No. from " . $currentUser->user_contact_no . " to " . $data["user_contact_no"] . ".",
                         "event_classification" => "log",
                         "event_added_at" => time()
                     );
@@ -586,7 +646,7 @@ class User extends CI_Controller {
                 if ($this->user_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
                     $log = array(
                         "user_id" => $this->session->userdata("userid"),
-                        "event_description" => "Change Address from ".$currentUser->user_address.", ".$currentUser->user_city.", ".$currentUser->user_province." to ".$data["user_address"].", ".$data["user_city"].", ".$data["user_province"].".",
+                        "event_description" => "Change Address from " . $currentUser->user_address . ", " . $currentUser->user_city . ", " . $currentUser->user_province . " to " . $data["user_address"] . ", " . $data["user_city"] . ", " . $data["user_province"] . ".",
                         "event_classification" => "log",
                         "event_added_at" => time()
                     );
