@@ -78,5 +78,42 @@ class admin_model extends CI_Model {
         $this->db->delete($table);
         return $this->db->affected_rows();
     }
-
+    
+    function fetchAllLimit($table, $limit, $offset, $where = NULL){
+        if (!empty($where)) {
+            $this->db->where($where);
+        }
+        $this->db->limit($limit);
+        $this->db->offset($offset);
+        $query = $this->db->get($table); // Select * from item_tbl;
+        return $query->result();
+    }
+    
+    function fetchAllLimitJoin($table, $limit, $offset, $join = NULL, $on = NULL, $where = NULL){
+        if (!empty($where)) {
+            $this->db->where($where);
+        }
+        if (!(empty($join) || empty($on))) {
+            $this->db->join($join, $on, "left outer");
+        }
+        $this->db->limit($limit);
+        $this->db->offset($offset);
+        $query = $this->db->get($table); // Select * from item_tbl;
+        return $query->result();
+    }
+    function fetchAllLimitJoinThree($table, $limit, $offset, $join = NULL, $on = NULL, $join2 = NULL, $on2 = NULL, $where = NULL){
+        if (!empty($where)) {
+            $this->db->where($where);
+        }
+        if (!(empty($join) || empty($on))) {
+            $this->db->join($join, $on, "left outer");
+        }
+        if (!(empty($join2) || empty($on2))) {
+            $this->db->join($join2, $on2, "left outer");
+        }
+        $this->db->limit($limit);
+        $this->db->offset($offset);
+        $query = $this->db->get($table); // Select * from item_tbl;
+        return $query->result();
+    }
 }
