@@ -902,6 +902,40 @@ class Admin extends CI_Controller {
         $this->load->view("admin/includes/footer");
     }
 
+    public function cms(){
+        $cms_data = $this->admin_model->getLastRow("cms")[0];
+        $data = array(
+            'title' => 'CMS | Admin',
+            'wholeUrl' => base_url(uri_string()),
+            'cms' => $cms_data
+        );
+        $this->load->view("admin/includes/header", $data);
+        $this->load->view("admin/navbar");
+        $this->load->view("admin/sidenav");
+        $this->load->view("admin/cms");
+        $this->load->view("admin/includes/footer");
+    }
+    
+    public function cms_exec(){
+        $data = array(
+            'quotation' => $this->input->post("quotation"),
+            'quotationBy' => $this->input->post("quotationBy"),
+            'aboutus_content' => $this->input->post("aboutus_content"),
+            'petadoption_content' => $this->input->post("petadoption_content"),
+            'myprogress_content' => $this->input->post("myprogress_content"),
+            'mypets_content' => $this->input->post("mypets_content"),
+            'mobapp_content' => $this->input->post("mobapp_content"),
+        );        
+        if($this->admin_model->singleinsert("cms", $data)){
+            //success
+        }else{
+            //OOPS something went wrong
+        }
+        
+        redirect(base_url()."admin/cms");
+        
+    }
+    
     public function reports() {
         $animalsCount = $this->admin_model->fetchCount("pet");
         $adoptablesCount = $this->admin_model->fetchCount("pet", array("pet_status" => 'adoptable'));

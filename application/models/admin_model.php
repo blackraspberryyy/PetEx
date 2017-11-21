@@ -116,4 +116,10 @@ class admin_model extends CI_Model {
         $query = $this->db->get($table); // Select * from item_tbl;
         return $query->result();
     }
+    public function getLastRow($table){
+        $this->db->order_by("cms_id","DESC");
+        $this->db->limit(1);
+        $query = $this->db->get($table); // Select * from item_tbl;
+        return $query->result();
+    }
 }

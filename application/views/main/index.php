@@ -46,7 +46,7 @@ if (validation_errors()): {
         <div class="row">
             <div class="span6 alignright flyLeft">
                 <blockquote class="large">
-                    Saving one dog will not change the world, but surely for that one dog, the world will change forever. <cite> Karen Davison</cite>
+                    <?= strip_tags($cms->quotation)?><cite><?= strip_tags($cms->quotationBy)?></cite>
                 </blockquote>
             </div>
             <div class="span6 aligncenter flyRight">
@@ -63,10 +63,8 @@ if (validation_errors()): {
         <div class="row">
             <div class="span4 offset1">
                 <div>
-                    <h2>We live with <strong>creativity</strong></h2>
-                    <p>
-                        Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi traductores.
-                    </p>
+                    <h2>We are the <b>Codebusters</b></h2>
+                    <?= strip_tags($cms->aboutus_content)?>
                 </div>
             </div>
             <div class="span6">
@@ -137,19 +135,19 @@ if (validation_errors()): {
             <div id="menu-main">
                 <div class="span4 animated-fast flyIn">
                     <div class="service-box">
-                        <a href="#petAdoption"><img class = "featuresPic" src="<?= $this->config->base_url() ?>images/img/icons/petAdoption.png" alt="" /></a>        
+                        <a href="#petAdoption" style = "cursor:none;"><img class = "featuresPic" src="<?= $this->config->base_url() ?>images/img/icons/petAdoption.png" alt="" /></a>        
                         <h2>Pet Adoption</h2>
                     </div>
                 </div>
                 <div class="span4 animated flyIn">
                     <div class="service-box">
-                        <a href="#petLocate" ><img class = "featuresPic" src="<?= $this->config->base_url() ?>images/img/icons/progress.png" alt="" /></a>
+                        <a href="#petLocate" style = "cursor:none;"><img class = "featuresPic" src="<?= $this->config->base_url() ?>images/img/icons/progress.png" alt="" /></a>
                         <h2>My Progress</h2>
                     </div>
                 </div>
                 <div class="span4 animated-fast flyIn">
                     <div class="service-box">
-                        <a href="#petHistory"><img class = "featuresPic" src="<?= $this->config->base_url() ?>images/img/icons/myPets.png" alt="" /></a>
+                        <a href="#petHistory" style = "cursor:none;"><img class = "featuresPic" src="<?= $this->config->base_url() ?>images/img/icons/myPets.png" alt="" /></a>
                         <h2>My Pet/s</h2>
                     </div>
                 </div>
@@ -167,7 +165,7 @@ if (validation_errors()): {
                 <div class="row">
                     <div class="span1"></div>
                     <div class="span4"><br><br><br>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <?= $cms->petadoption_content?>
                     </div>
                     <div class="span1"></div>
                 </div>
@@ -193,7 +191,7 @@ if (validation_errors()): {
                 <div class="row">
                     <div class="span1"></div>
                     <div class="span4"><br><br><br>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <p><?= strip_tags($cms->myprogress_content)?></p>
                     </div>
                     <div class="span1"></div>
                 </div>
@@ -211,7 +209,7 @@ if (validation_errors()): {
                 <div class="row">
                     <div class="span1"></div>
                     <div class="span4"><br><br><br>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <p><?= strip_tags($cms->mypets_content)?></p>
 
                     </div>
                     <div class="span1"></div>
@@ -229,7 +227,7 @@ if (validation_errors()): {
     <div class="container">
         <div class="row">
             <div class="span6 flyLeft" style="padding-top:100px !important;">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p><?= strip_tags($cms->mobapp_content)?></p>
             </div>
             <div class="span6 flyRight">
                 <img src="<?= $this->config->base_url() ?>images/img/icons/mobilePrev.png" alt="" />

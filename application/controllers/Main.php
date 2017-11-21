@@ -5,6 +5,7 @@ class Main extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('user_model');
+        $this->load->model('admin_model');
         $this->load->library('email');
     }
 
@@ -44,10 +45,12 @@ class Main extends CI_Controller {
         $this->form_validation->set_rules('email', "Email ", "required|valid_email");
         $this->form_validation->set_rules('subject', "Subject ", "required|min_length[5]");
         $this->form_validation->set_rules('message', "Message ", "required|min_length[5]");
+        
         $data = array(
             'title' => 'Pet Ex | Homepage',
             'wholeUrl' => base_url(uri_string()),
-            'pets' => $allPets
+            'pets' => $allPets,
+            'cms' => $this->admin_model->getLastRow("cms")[0]
         );
         if ($this->form_validation->run() == FALSE) {
             $this->load->view("main/includes/header", $data);
