@@ -61,11 +61,12 @@
                                 <span> Progress : <?= $transaction->transaction_progress?>%</span>
                             </p>
                             <a href = "<?= base_url()?>admin/manageProgress_exec/<?= $transaction->transaction_id;?>" class = "btn waves-effect waves-light green darken-4 secondary-content" style = "margin-top:10px !important;">Manage Progress</a>
-                            
                         </li>
                         <?php endforeach;?>
                     <?php endif;?>
                     </ul>
+                    <br>
+                    <?= $links?>
                 </div>
             </div>
         </div>

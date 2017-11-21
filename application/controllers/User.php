@@ -22,6 +22,10 @@ class User extends CI_Controller {
         }
     }
 
+    public function putToEvents($data){
+        $this->admin_model->singleinsert("event", $data);
+    }
+    
     function GetImageExtension($imagetype) {
         if (empty($imagetype))
             return false;
@@ -152,6 +156,13 @@ class User extends CI_Controller {
                     'pet_updated_at' => time()
                 );
                 if ($this->user_model->update("pet", $data, array("pet_id" => $pet_id))) {
+                    $log = array(
+                        "user_id" => $this->session->userdata("userid"),
+                        "event_description" => "Edited his pet named ".$data["pet_name"],
+                        "event_classification" => "audit",
+                        "event_added_at" => time()
+                    );
+                    $this->putToEvents($log);
                     redirect($this->config->base_url() . "user/myPets");
                 } else {
                     echo "An Error Ocurred<br>";
@@ -312,6 +323,14 @@ class User extends CI_Controller {
             'transaction_started_at' => time()
         );
         if ($this->user_model->insert("transaction", $data)) {
+            $selectedUser = $this->user_model->fetch("user", array("user_id" => $userId));
+            $log = array(
+                "user_id" => $this->session->userdata("userid"),
+                "event_description" => $selectedUser->user_username." sent an adoption form",
+                "event_classification" => "audit",
+                "event_added_at" => time()
+            );
+            $this->putToEvents($log);
             $this->sendAdoptionForm($dataEmail);
         } else {
             
@@ -372,7 +391,13 @@ class User extends CI_Controller {
                     "user_updated_at" => time()
                 );
                 if ($this->admin_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
-                    //Success updating
+                    $log = array(
+                        "user_id" => $this->session->userdata("userid"),
+                        "event_description" => $currentUser->user_firstname." ".$currentUser->user_lastname." (".$currentUser->user_username.")"." changed his profile picture.",
+                        "event_classification" => "log",
+                        "event_added_at" => time()
+                    );
+                    $this->putToEvents($log);
                 } else {
                     //OOPS. ERROR in updating
                 }
@@ -401,6 +426,13 @@ class User extends CI_Controller {
                     "user_updated_at" => time()
                 );
                 if ($this->user_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
+                    $log = array(
+                        "user_id" => $this->session->userdata("userid"),
+                        "event_description" => "Change name from ".$currentUser->user_firstname." ".$currentUser->user_lastname." to ".$data["user_firstname"]." ".$data["user_lastname"].".",
+                        "event_classification" => "log",
+                        "event_added_at" => time()
+                    );
+                    $this->putToEvents($log);
                     redirect(base_url() . "user/settings");
                 } else {
                     //Oops error in updating
@@ -427,6 +459,13 @@ class User extends CI_Controller {
                     "user_updated_at" => time()
                 );
                 if ($this->user_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
+                    $log = array(
+                        "user_id" => $this->session->userdata("userid"),
+                        "event_description" => "Change username from ".$currentUser->user_username." to ".$data["user_username"].".",
+                        "event_classification" => "log",
+                        "event_added_at" => time()
+                    );
+                    $this->putToEvents($log);
                     redirect(base_url() . "user/settings");
                 } else {
                     //Oops error in updating
@@ -508,6 +547,13 @@ class User extends CI_Controller {
                     "user_updated_at" => time()
                 );
                 if ($this->user_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
+                    $log = array(
+                        "user_id" => $this->session->userdata("userid"),
+                        "event_description" => "Change Contact No. from ".$currentUser->user_contact_no." to ".$data["user_contact_no"].".",
+                        "event_classification" => "log",
+                        "event_added_at" => time()
+                    );
+                    $this->putToEvents($log);
                     redirect(base_url() . "user/settings");
                 } else {
                     //Oops error in updating
@@ -538,6 +584,13 @@ class User extends CI_Controller {
                     "user_updated_at" => time()
                 );
                 if ($this->user_model->update("user", $data, array("user_id" => $this->session->userdata("userid")))) {
+                    $log = array(
+                        "user_id" => $this->session->userdata("userid"),
+                        "event_description" => "Change Address from ".$currentUser->user_address.", ".$currentUser->user_city.", ".$currentUser->user_province." to ".$data["user_address"].", ".$data["user_city"].", ".$data["user_province"].".",
+                        "event_classification" => "log",
+                        "event_added_at" => time()
+                    );
+                    $this->putToEvents($log);
                     redirect(base_url() . "user/settings");
                 } else {
                     //Oops error in updating
@@ -564,6 +617,13 @@ class User extends CI_Controller {
     }
 
     public function logout() {
+        $log = array(
+            "user_id" => $this->session->userdata("userid"),
+            "event_description" => "Logged Out",
+            "event_classification" => "log",
+            "event_added_at" => time()
+        );
+        $this->putToEvents($log);
         $this->session->sess_destroy();
         redirect(base_url() . 'login/');
     }
