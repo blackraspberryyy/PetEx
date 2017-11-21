@@ -87,13 +87,6 @@ class user_model extends CI_Model {
         return ($query->num_rows() > 0) ? $query->result() : false;
     }
 
-    function fetchAllLimit($limit, $offset) {
-        $this->db->limit($limit);
-        $this->db->offset($offset);
-        $query = $this->db->get("pet"); // Select * from item_tbl;
-        return $query->result();
-    }
-
     function countItems() {
         $query = $this->db->get('pet');
         return $query->num_rows();
@@ -160,6 +153,16 @@ class user_model extends CI_Model {
         }
         $this->db->delete($table);
         return $this->db->affected_rows();
+    }
+
+    function fetchAllLimit($table, $limit, $offset, $where = NULL) {
+        if (!empty($where)) {
+            $this->db->where($where);
+        }
+        $this->db->limit($limit);
+        $this->db->offset($offset);
+        $query = $this->db->get($table); // Select * from item_tbl;
+        return $query->result();
     }
 
 }

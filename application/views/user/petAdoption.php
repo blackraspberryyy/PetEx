@@ -59,7 +59,7 @@ $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session
                                         <div class="card-action">
                                             <a href ="#detail<?= $pet->pet_id; ?>" class = "modal-trigger tooltipped pull-left" data-position="bottom" data-delay="50" data-tooltip="View Full Details"><i class = "fa fa-eye fa-lg"></i></a>
                                             <a href ="#video<?= $pet->pet_id; ?>"  class="modal-trigger tooltipped pull-left"   data-position="bottom" data-delay="50" data-tooltip="Play Video"><i class = "fa fa-video-camera fa-lg"></i></a>
-                                            <a href ="#adopters<?= $pet->pet_id; ?>"  class="modal-trigger tooltipped pull-left"   data-position="bottom" data-delay="50" data-tooltip="Adopters"><i class = "fa fa-user fa-lg"></i></a>
+                                            <a href ="#adopters<?= $pet->pet_id; ?>"  class="modal-trigger tooltipped pull-left"   data-position="bottom" data-delay="50" data-tooltip="Adopters"><i class = "fa fa-users fa-lg"></i></a>
                                             <a href ="#adopt<?= $pet->pet_id; ?>"  class="modal-trigger tooltipped pull-right"   data-position="bottom" data-delay="50" data-tooltip="Adopt a Pet"><i class="fa fa-star-o fa-lg" aria-hidden="true"></i></a>
                                         </div>
                                     </div>
@@ -135,7 +135,7 @@ $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session
                                         <h4>Video</h4>
                                         <hr>
                                         <?php if ($pet->pet_video == NULL): ?>
-                                        <h2><i class="fa fa-warning"></i> This pet has no Video</h2>
+                                            <h2><i class="fa fa-warning"></i> This pet has no Video</h2>
                                         <?php else: ?>
                                             <video class="responsive-video" controls>
                                                 <source src="<?= $this->config->base_url() . $pet->pet_picture ?>"  type="video/mp4">
@@ -143,7 +143,48 @@ $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session
                                         <?php endif; ?>
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red white-text">Close</a>
+                                        <a class="modal-action modal-close waves-effect waves-green btn-flat red white-text ">Close</a>
+                                    </div>
+                                </div>
+
+                                <!-- Adopters Modal -->
+                                <div id="adopters<?= $pet->pet_id; ?>" class="modal modal-fixed-footer">
+                                    <div class="modal-content">
+                                        <h4>Potential Pet Adopters</h4>
+                                        <hr>
+                                        <div class="row">
+                                            <?php if (!$adopters): ?>
+                                                <h2><i class="fa fa-warning"></i> This pet has no Adopters</h2>
+                                            <?php else: ?>
+                                                <?php foreach ($adopters as $adopter): ?>
+                                                    <?php if ($adopter->pet_id == $pet->pet_id): ?>
+                                                        <div class="col s12">
+                                                            <div class="col s6">
+                                                                <h6><strong>Name: </strong><?= $adopter->user_firstname ?></h6>
+                                                            </div>
+                                                            <div class="col s6">
+                                                                <h6><strong>Pet Name: </strong><?= $adopter->pet_name ?></h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col s12">
+                                                            <div class="checkout-wrap" style="margin-bottom:200px !important;">
+                                                                <ul class="checkout-bar">
+                                                                    <li class="<?= $adopter->transaction_progress >= 20 ? "active" : "" ?>">Adoption Form</li>
+                                                                    <li class="<?= $adopter->transaction_progress >= 40 ? "active" : "" ?>">Meet And Greet</li>
+                                                                    <li class="<?= $adopter->transaction_progress >= 60 ? "active" : "" ?>">Interview</li>
+                                                                    <li class="<?= $adopter->transaction_progress >= 80 ? "active" : "" ?>">Ocular Visit</li>
+                                                                    <li class="<?= $adopter->transaction_progress == 100 ? "active" : "" ?>">Visit Your Pet</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
+
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a class="modal-action modal-close waves-effect waves-green btn-flat red white-text ">Close</a>
                                     </div>
                                 </div>
 
@@ -176,29 +217,23 @@ $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session
                                                 </div>
                                                 <div class="collapsible-body row">
                                                     <center>
-                                                        <a href="<?= base_url() ?>user/petAdoptionOnlineForm_exec/<?= $pet->pet_id?>" class="btn-large waves-effect waves-light blue darken-3">Online Adoption Application<i class="fa fa-pencil-square-o left" aria-hidden="true"></i></a>
+                                                        <a href="<?= base_url() ?>user/petAdoptionOnlineForm_exec/<?= $pet->pet_id ?>" class="btn-large waves-effect waves-light blue darken-3">Online Adoption Application<i class="fa fa-pencil-square-o left" aria-hidden="true"></i></a>
                                                     </center>
                                                 </div>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red white-text">Close</a>
+                                        <a class="modal-action modal-close waves-effect waves-green btn-flat red white-text ">Close</a>
                                     </div>
                                 </div>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
-                <ul class="pagination center">
-                    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                    <li class="active"><a href="#!">1</a></li>
-                    <li class="waves-effect"><a href="#!">2</a></li>
-                    <li class="waves-effect"><a href="#!">3</a></li>
-                    <li class="waves-effect"><a href="#!">4</a></li>
-                    <li class="waves-effect"><a href="#!">5</a></li>
-                    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-                </ul>
+                <div class = "col s12">
+                    <?= $links ?>
+                </div>
             </div>
         </div>
     </div>
