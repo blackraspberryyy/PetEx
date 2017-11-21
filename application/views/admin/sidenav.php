@@ -70,6 +70,11 @@
         </a>
     </li>
     <li>
+        <a class="waves-effect collapsible-header <?= strpos($wholeUrl, $this->config->base_url() . "admin/cms") !== FALSE ? "side-nav-active active" : "black-text" ?>" href= "<?= $this->config->base_url() ?>admin/cms">
+            <i class="fa fa-font fa-2x"></i>CMS
+        </a>
+    </li>
+    <li>
         <a class="waves-effect collapsible-header <?= strpos($wholeUrl ,  $this->config->base_url()."admin/reports") !== FALSE ? "side-nav-active active" : "black-text"?>" href= "<?= $this->config->base_url()?>admin/reports">
             <i class="fa fa-bar-chart fa-2x"></i>Reports
         </a>

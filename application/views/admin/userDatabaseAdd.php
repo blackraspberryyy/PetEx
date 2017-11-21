@@ -126,3 +126,19 @@ $dataString = json_encode($dataString);
     }).trigger('change');
 
 </script>
+<script>
+    $(document).ready(function(){
+        var d = new Date();
+        d.setFullYear(d.getFullYear() - 18);
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 150, // Creates a dropdown of 15 years to control year,
+            format: 'mmmm dd, yyyy',
+            max: d,
+            clear: 'Clear',
+            close: 'Ok',
+            closeOnSelect: false // Close upon selecting a date,
+        });
+    });
+    
+</script>

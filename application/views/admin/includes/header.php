@@ -30,6 +30,9 @@ $userInfo = $this->admin_model->getinfo('user', array('user_id' => $this->sessio
         <link rel="stylesheet" href="<?= $this->config->base_url() ?>assets/steppers/materialize-stepper.min.css">
         <script src="<?= $this->config->base_url() ?>assets/steppers/materialize-stepper.min.js"></script>
 
+        <!--Turbowyg-->
+        <script src="<?= base_url();?>assets/trumbowyg/dist/trumbowyg.min.js"></script>
+        <link rel="stylesheet" href="<?= base_url();?>assets/trumbowyg/dist/ui/trumbowyg.min.css">
         <!--"Document.ready scripts"-->
         <script>
             $(document).ready(function () {
