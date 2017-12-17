@@ -52,17 +52,19 @@ $userInfo = $this->user_model->getinfo('user', array('user_id' => $this->session
                             </a>
                         </li>
                     </ul>
-                </div>
+                </div><!--
                 <div class="col m2">
                     <a href="#" class="dropdown-button tooltipped" data-position="left" data-delay="50" data-tooltip="Notifications"  data-activates='dropdown1'><i class="material-icons">notifications_none</i></a>
-                    <!-- Dropdown Structure -->
-                    <ul id='dropdown1' class='dropdown-content'>
-                        <li><a href="#!">one</a></li>
-                        <li><a href="#!">two</a></li>
-                    </ul>
+                -->
+                <!-- Dropdown Structure
+                <ul id='dropdown1' class='dropdown-content'>
+                    <li><a href="#!">one</a></li>
+                    <li><a href="#!">two</a></li>
+                </ul>
+               
+            </div> -->
 
-                </div>
-            </div>
         </div>
-    </nav>
+</div>
+</nav>
 </div>

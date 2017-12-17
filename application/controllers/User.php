@@ -68,33 +68,6 @@ class User extends CI_Controller {
 
     public function myPets() {
 
-        $pages = 10;
-
-        $config['base_url'] = base_url() . "admin/userLogs/";
-        $config['total_rows'] = count($logs);
-        $config['per_page'] = $pages;
-        $config['full_tag_open'] = '<ul class="pagination center">';
-        $config['full_tag_close'] = ' </ul>';
-        $config['first_link'] = 'First';
-        $config['first_tag_open'] = '<li>';
-        $config['first_tag_close'] = '</li>';
-        $config['first_url'] = '';
-        $config['last_link'] = 'Last';
-        $config['last_tag_open'] = '<li>';
-        $config['last_tag_close'] = '</li>';
-        $config['next_link'] = '<i class="material-icons">chevron_right</i>';
-        $config['next_tag_open'] = '<li>';
-        $config['next_tag_close'] = '</li>';
-        $config['prev_link'] = '<i class="material-icons">chevron_left</i>';
-        $config['prev_tag_open'] = '<li>';
-        $config['prev_tag_close'] = '</li>';
-        $config['cur_tag_open'] = '<li class="active green darken-4"><a href="#">';
-        $config['cur_tag_close'] = '</a></li>';
-        $config['num_tag_open'] = '<li>';
-        $config['num_tag_close'] = '</li>';
-
-        $this->pagination->initialize($config);
-        
         $data = array(
             'title' => 'User | My Pets',
             'wholeUrl' => base_url(uri_string())
